@@ -1,9 +1,10 @@
-import java.io.IOException;
-import java.util.ArrayList;
-
 /**
  * Created by Arturs Gumenuks on 08.04.2018.
  */
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class GoalPrioritizer {
 
     private static ArrayList<Cell> goalCells = new ArrayList<>();
@@ -12,7 +13,7 @@ public class GoalPrioritizer {
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
-        String pathToLevel = "C:\\wTESTING\\AIlevels\\SAD1.lvl"; // << Set path to level file here
+        String pathToLevel = "SAD1.lvl"; // << Set path to level file here
         boolean wObstacles = true; // walls are obstacles
         boolean aObstacles = true; // agents are obstacles
         boolean bObstacles = true; // boxes are obstacles
@@ -23,15 +24,16 @@ public class GoalPrioritizer {
         try {
             level = levelReader.getLevel(pathToLevel);
         } catch (IOException e) {
+            System.out.println("######################");
             System.out.println("Probably incorrect path");
         }
 
-        for (ArrayList<Cell> row: level){
-            for (Cell cell: row){
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
+//        for (ArrayList<Cell> row: level){
+//            for (Cell cell: row){
+//                System.out.print(cell + " ");
+//            }
+//            System.out.println();
+//        }
 
         boxCells = levelReader.getBoxCells();
         goalCells = levelReader.getGoalCells();
@@ -52,7 +54,7 @@ public class GoalPrioritizer {
         System.out.println("Ordering relations found: " + goalPartOrd.size());
         for (ArrayList<Cell> item: goalPartOrd){
             for (Cell relCell: item){
-                System.out.print(relCell.getI() + ":" + relCell.getJ() + ":" + relCell.getLettMark()+ " ");
+                System.out.print(relCell.getI() + ":" + relCell.getJ() + ":" + relCell.getGoalLetter()+ " ");
             }
             System.out.println();
         }
@@ -76,14 +78,30 @@ public class GoalPrioritizer {
         for (int i=0; i<goalCells.size(); i++){
             //System.out.println("EXECUTED");
            // goalPriorities.get(goalPriorities.size()-1).add(goalCells.get(i));
+            // get location of the goal cell currently being processed
             int curI = goalCells.get(i).getI();
             int curJ = goalCells.get(i).getJ();
-            Cell.Type oldType = level.get(curI).get(curJ).getType();
-            level.get(curI).get(curJ).setType(Cell.Type.Box); // supposing there are more than one box
+            Type oldType = level.get(curI).get(curJ).getType();
+            Entity oldEntity = level.get(curI).get(curJ).getEntity();
+            Entity someBox = null; // take first box with this letter (in reality the one we test)
+            //iter through boxes and find one with letter of the current goal (just for now)
+            for (Cell boxCell: boxCells){
+                Box curBox = (Box) boxCell.getEntity();
+                if (Character.toLowerCase(curBox.getLetter()) == goalCells.get(i).getGoalLetter()){
+                    someBox = curBox;
+                    boxCells.remove(boxCell); // remove cur box cell from the list as it is free now
+                    boxCell.setEntity(null); // and remove entity from it correspondingly
+                    break;
+                }
+            }
+
+            level.get(curI).get(curJ).setEntity(someBox); // and put the box on the cur. goal
             int numOfBlockedGoals = 0;
             for (int j=0; j<goalCells.size(); j++){
-                // fix i and j to curI and curJ
-                if(j!=i && !pathFinder.pathExists(level, agentCell, goalCells.get(j), wObstacles,aObstacles,bObstacles)) {
+
+                if(i!=j && !pathFinder.pathExists(level, agentCell, goalCells.get(j),
+                        wObstacles,aObstacles,bObstacles)) {
+
                     numOfBlockedGoals++; // will be used later
 
                     goalPartOrd.add(new ArrayList<Cell>());
@@ -93,6 +111,7 @@ public class GoalPrioritizer {
             }
 
             level.get(curI).get(curJ).setType(oldType);
+            level.get(curI).get(curJ).setEntity(oldEntity);
         }
         return goalPartOrd;
     }

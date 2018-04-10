@@ -70,17 +70,17 @@ public class PathFinder {
             ArrayList<Integer> simpleRow = new ArrayList<>();
             for (Cell cell: row){
                 int num; // 0 for free, 1 for occupied
-                if ((cell.getType()== Cell.Type.Wall && wObstacles) ||
-                        (cell.getType()==Cell.Type.Box && bObstacles) ||
-                        (cell.getType()== Cell.Type.Agent && aObstacles)){
+                if ((cell.getType()== Type.Wall && wObstacles) ||
+                        (cell.getType()==Type.Space && cell.getEntity() instanceof Box && bObstacles) ||
+                        (cell.getType()== Type.Space && cell.getEntity() instanceof Agent && aObstacles)){
                     num = 1;
                 }
                 else {
                     num = 0;
                 }
                 simpleRow.add(num);
-                boolean isOccupied = (num==1) ? true : false;
-                cell.setOccupied(isOccupied);
+                //boolean isOccupied = (num==1) ? true : false;
+                //cell.setOccupied(isOccupied);
             }
             simpleLevel.add(simpleRow);
         }
@@ -94,112 +94,4 @@ public class PathFinder {
 
 }
 
-class Cell {
-    private int i, j;
-    private boolean isOccupied; // use to denote cell as occupied or free (e.g. goal can be occupied or free)
-    enum Type{          // use to denote type of cell
-        Wall, Box, Agent, Goal, Empty
-    }
 
-    private Type type;
-
-    private char lettMark;
-
-    Cell(int i, int j){
-        this.i = i;
-        this.j = j;
-    }
-
-    Cell(int i, int j, Type type, boolean isOccupied, char lettMark){
-        this.i = i;
-        this.j = j;
-        this.type = type;
-        this.isOccupied = isOccupied;
-        this.lettMark = lettMark;
-    }
-
-
-    int getI() {
-        return i;
-    }
-
-    int getJ() {
-        return j;
-    }
-
-    char getLettMark(){
-        return lettMark;
-    }
-
-    void setOccupied(boolean isOccupied){
-        this.isOccupied = isOccupied;
-    }
-    void setType(Type type){
-        this.type = type;
-    }
-
-    boolean getOccupied(){
-        return this.isOccupied;
-    }
-
-    Type getType(){
-        return this.type;
-    }
-
-    // Returns true if we do not try to move into a wall or outside the level
-    private boolean isLegalMove(int i, int j, Integer[][] level){
-        if ((i < 0 || i >= level.length) || (j < 0 || j >= level[i].length) || level[i][j] == 1){
-            return false;
-        }
-        return true;
-    }
-
-
-    // Returns neighboring cells which are results of legal moves
-    ArrayList<Cell> getChildren(Integer[][] level){
-        int[][] values={{0,1},{0,-1},{1,0},{-1,0}};
-        ArrayList<Cell> children = new ArrayList<>();
-        for (int i = 0; i < values.length; i++){
-            if (isLegalMove(this.getI()+values[i][0], this.getJ()+values[i][1],level)){
-                children.add(new Cell(this.getI()+values[i][0], this.getJ()+values[i][1]));
-            }
-        }
-        //the code below achieves the same goal; still here for clarity
-
-//        if (isLegalMove(this.getI(), this.getJ()+1, level)) {
-//            children.add(new Cell(this.getI(), this.getJ()+1));
-//        }
-//        if (isLegalMove(this.getI(), this.getJ()-1, level)) {
-//            children.add(new Cell(this.getI(), this.getJ()-1));
-//        }
-//        if (isLegalMove(this.getI()+1, this.getJ(), level)) {
-//            children.add(new Cell(this.getI()+1, this.getJ()));
-//        }
-//        if (isLegalMove(this.getI()-1, this.getJ(), level)) {
-//            children.add(new Cell(this.getI()-1, this.getJ()));
-//        }
-        return children;
-    }
-
-    @Override
-    public boolean equals(Object o){
-        if (o == this){
-            return true;
-        }
-        if (o instanceof Cell){
-            Cell p = (Cell) o;
-            return  (getI() == p.getI()) && (getJ() == p.getJ());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(i,j);
-    }
-
-    @Override
-    public String toString() {
-        return i + ":" + j;
-    }
-}
