@@ -47,7 +47,7 @@ class Agent extends Entity{
 
     @Override
     public String toString() {
-        return "agent on: " + currentCell.getI() + " : " + currentCell.getJ();
+        return "agent " + getNumber() + " on: " + currentCell.getI() + " : " + currentCell.getJ();
     }
 }
 
@@ -69,7 +69,7 @@ class Box extends Entity{
 
     @Override
     public String toString() {
-        return "box on: " + currentCell.getI() + " : " + currentCell.getJ();
+        return "box " + getLetter() + " on: " + currentCell.getI() + " : " + currentCell.getJ();
     }
 }
 

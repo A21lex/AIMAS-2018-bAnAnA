@@ -15,8 +15,8 @@ public class Cell {
     //logic will work something like in the following line:
     //if cell.isGoal() && cell.getGoalLetter()==cell.getEntity().getGoalLetter() then goalComplete=true
 
-    public boolean isGoal(Cell cell){
-        char c = cell.getGoalLetter();
+    public boolean isGoal(){
+        char c = this.getGoalLetter();
         return 'a' <= c && c <= 'z'; // will return true if goalLetter is a lowercase letter
     }
 
