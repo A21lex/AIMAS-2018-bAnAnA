@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+# IntelliJ projects file
+*.iml
+
 # Package Files #
 *.jar
 *.war
