@@ -4,6 +4,15 @@
 # Log file
 *.log
 
+# User-specific stuff (IntelliJ)
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# IntelliJ
+/out/
+
 # Package Files #
 *.jar
 *.war
