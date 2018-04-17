@@ -9,13 +9,14 @@ import java.util.ArrayList;
 
 public class LevelReader {
 
-    private static ArrayList<Cell> goalCells = new ArrayList<>();
-    private static ArrayList<Cell> boxCells = new ArrayList<>();
-    private static ArrayList<Cell> agentCells = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> goalCellCorrds = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> agentCellCorrds = new ArrayList<>();
+
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
-        String pathToLevel = "SAD1.lvl"; // << Set path to level file here
+        String pathToLevel = "testNode.lvl"; // << Set path to level file here
         boolean wObstacles = true; // walls are obstacles
         boolean aObstacles = true; // agents are obstacles
         boolean bObstacles = true; // boxes are obstacles
@@ -28,7 +29,7 @@ public class LevelReader {
         } catch (IOException e) {
             System.out.println("Probably incorrect path");
         }
-
+        System.out.println("Printing level");
         for (ArrayList<Cell> row: level){
             for (Cell cell: row){
                 System.out.print(cell + " ");
@@ -51,8 +52,8 @@ public class LevelReader {
             System.out.println();
         }
 
-        System.out.println("boxes: " + boxCells);
-        System.out.println("goals " + goalCells);
+        System.out.println("boxes: " + boxCellCoords);
+        System.out.println("goals " + goalCellCorrds);
 
         PathFinder pathFinder = new PathFinder();
         boolean pathExists = pathFinder.pathExists(level, startingCell, finishingCell,
@@ -90,7 +91,7 @@ public class LevelReader {
                         cell.setType(Type.Space);
                         //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
                         row.add(cell);
-                        agentCells.add(cell);
+                        agentCellCorrds.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
@@ -100,13 +101,13 @@ public class LevelReader {
                         cell.setType(Type.Space);
                        // Cell boxCell = new Cell(curRow, curCol, Cell.Type.Box, true, c);
                         row.add(cell);
-                        boxCells.add(cell);
+                        boxCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('a' <= c && c <= 'z'){
                         Cell cell = new Cell(curRow, curCol, Type.Space, null, c);
                         //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
                         row.add(cell);
-                        goalCells.add(cell);
+                        goalCellCorrds.add(new Cell.CoordinatesPair(cell));
                     }
                 }
                 level.add(row); // add a row to the level
@@ -120,15 +121,18 @@ public class LevelReader {
         }
     }
 
-    public ArrayList<Cell> getGoalCells(){
-        return goalCells;
+    public static ArrayList<Cell.CoordinatesPair> getGoalCellCorrds(){
+        return goalCellCorrds;
     }
 
-    public ArrayList<Cell> getBoxCells(){
-        return boxCells;
+    public static ArrayList<Cell.CoordinatesPair> getBoxCellCoords(){
+        return boxCellCoords;
     }
 
-    public ArrayList<Cell> getAgentCells(){
-        return agentCells;
+//    public static void setAgentCellCoords(ArrayList<Cell> agentCellCorrds){
+//        agentCellCorrds = agentCellCorrds;
+//    }
+    public static ArrayList<Cell.CoordinatesPair> getAgentCellCorrds(){
+        return agentCellCorrds;
     }
 }

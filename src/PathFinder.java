@@ -38,18 +38,26 @@ public class PathFinder {
         //    System.out.println();
         }
         // commence BFS
-        HashSet<Cell> visited = new HashSet<>();
-        ArrayDeque<Cell> frontier = new ArrayDeque<>();
-        frontier.addLast(startingCell); // startingCell is a root here
-        System.out.println("Starting cell: " + startingCell.toString());
-        System.out.println("Finishing cell: " + finishingCell.toString());
+        //HashSet<Cell> visited = new HashSet<>();
+        //ArrayDeque<Cell> frontier = new ArrayDeque<>();
+        HashSet<Cell.CoordinatesPair> visited = new HashSet<>();
+        ArrayDeque<Cell.CoordinatesPair> frontier = new ArrayDeque<>();
+        Cell.CoordinatesPair startingCoordinatesPair = new Cell.CoordinatesPair(startingCell);
+        Cell.CoordinatesPair finishingCoordinatesPair = new Cell.CoordinatesPair(finishingCell);
+        //frontier.addLast(startingCell); // startingCell is a root here
+        frontier.addLast(startingCoordinatesPair);
+        //System.out.println("Starting cell: " + startingCell.toString());
+        //System.out.println("Finishing cell: " + finishingCell.toString());
+        System.out.println("Starting cell: " + startingCoordinatesPair.toString());
+        System.out.println("Finishing cell: " + finishingCoordinatesPair.toString());
         while (!frontier.isEmpty()){
-            Cell subtreeRoot = frontier.pollFirst(); // get first element of the queue
-
-            if (subtreeRoot.equals(finishingCell)){ // reached the goal!
+            //Cell subtreeRoot = frontier.pollFirst(); // get first element of the queue
+            Cell.CoordinatesPair subtreeRoot = frontier.pollFirst();
+            if (subtreeRoot.equals(finishingCoordinatesPair)){
+            //if (subtreeRoot.equals(finishingCell)){ // reached the goal!
                 return true;
             }
-            for (Cell child: subtreeRoot.getChildren(simplifiedLevel)){
+            for (Cell.CoordinatesPair child: subtreeRoot.getChildren(simplifiedLevel)){
                 if (visited.contains(child)){
                     continue;
                 }
@@ -61,6 +69,7 @@ public class PathFinder {
         }
         return false;
     }
+
 
     private Integer[][] getSimplifiedLevelArray(ArrayList<ArrayList<Cell>> level,
                                                 boolean wObstacles, boolean aObstacles, boolean bObstacles){

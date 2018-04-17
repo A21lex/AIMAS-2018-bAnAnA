@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class GoalPrioritizer {
 
-    private static ArrayList<Cell> goalCells = new ArrayList<>();
-    private static ArrayList<Cell> boxCells = new ArrayList<>();
-    private static ArrayList<Cell> agentCells = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
@@ -18,7 +18,7 @@ public class GoalPrioritizer {
         boolean aObstacles = true; // agents are obstacles
         boolean bObstacles = true; // boxes are obstacles
         Cell startingCell = new Cell(1,1); // << Set starting cell
-        Cell finishingCell = new Cell(1,3); // << Set finishing cell
+        Cell finishingCell = new Cell(5,17); // << Set finishing cell
 
         ArrayList<ArrayList<Cell>> level = null;
         try {
@@ -35,13 +35,13 @@ public class GoalPrioritizer {
 //            System.out.println();
 //        }
 
-        boxCells = levelReader.getBoxCells();
-        goalCells = levelReader.getGoalCells();
-        agentCells = levelReader.getAgentCells();
+        boxCellCoords = levelReader.getBoxCellCoords();
+        goalCellCoords = levelReader.getGoalCellCorrds();
+        agentCellCoords = levelReader.getAgentCellCorrds();
 
-        System.out.println("boxes: " + boxCells);
-        System.out.println("goals " + goalCells);
-        System.out.println("agents " + agentCells);
+        System.out.println("boxes: " + boxCellCoords);
+        System.out.println("goals " + goalCellCoords);
+        System.out.println("agents " + agentCellCoords);
 
         PathFinder pathFinder = new PathFinder();
         boolean pathExists = pathFinder.pathExists(level, startingCell, finishingCell,
@@ -49,12 +49,13 @@ public class GoalPrioritizer {
         System.out.println("path exists = " + pathExists);
 
         GoalPrioritizer goalPrioritizer = new GoalPrioritizer();
-        ArrayList<ArrayList<Cell>> goalPartOrd = goalPrioritizer.prioritizeGoals(levelReader, pathFinder, level);
+        ArrayList<ArrayList<Cell.CoordinatesPair>> goalPartOrd = goalPrioritizer.prioritizeGoals(levelReader, pathFinder, level);
 
         System.out.println("Ordering relations found: " + goalPartOrd.size());
-        for (ArrayList<Cell> item: goalPartOrd){
-            for (Cell relCell: item){
-                System.out.print(relCell.getI() + ":" + relCell.getJ() + ":" + relCell.getGoalLetter()+ " ");
+        for (ArrayList<Cell.CoordinatesPair> item: goalPartOrd){
+            for (Cell.CoordinatesPair relCell: item){
+                System.out.print(relCell.getX() + ":" + relCell.getY() + ":"
+                        + level.get(relCell.getX()).get(relCell.getY()).getGoalLetter()+ " ");
             }
             System.out.println();
         }
@@ -65,48 +66,52 @@ public class GoalPrioritizer {
     // agent; please note that for now the agent should initially be able to achieve any goal
     // otherwise we can work with set (of Cell type objects) differences
 
-    private ArrayList<ArrayList<Cell>> prioritizeGoals(LevelReader levelReader,
+    private ArrayList<ArrayList<Cell.CoordinatesPair>> prioritizeGoals(LevelReader levelReader,
                                                             PathFinder pathFinder, ArrayList<ArrayList<Cell>> level ){
         boolean wObstacles = true; // walls are obstacles
         boolean aObstacles = false; // agents are obstacles
         boolean bObstacles = true;
 
-        ArrayList<ArrayList<Cell>> goalPartOrd = new ArrayList<ArrayList<Cell>>();
+        ArrayList<ArrayList<Cell.CoordinatesPair>> goalPartOrd = new ArrayList<ArrayList<Cell.CoordinatesPair>>();
 
-        Cell agentCell = levelReader.getAgentCells().get(0); // taking any agent for now, since colors are omitted
-       // goalPriorities.add(new ArrayList<Cell>());
-        for (int i=0; i<goalCells.size(); i++){
+        Cell.CoordinatesPair agentCellCoords = LevelReader.getAgentCellCorrds().get(0); // taking any agent for now, since colors are omitted
+        Cell agentCell = level.get(agentCellCoords.getX()).get(agentCellCoords.getY());
+        // goalPriorities.add(new ArrayList<Cell>());
+        for (int i = 0; i< goalCellCoords.size(); i++){
             //System.out.println("EXECUTED");
-           // goalPriorities.get(goalPriorities.size()-1).add(goalCells.get(i));
+           // goalPriorities.get(goalPriorities.size()-1).add(goalCellCoords.get(i));
             // get location of the goal cell currently being processed
-            int curI = goalCells.get(i).getI();
-            int curJ = goalCells.get(i).getJ();
+            int curI = goalCellCoords.get(i).getX();
+            int curJ = goalCellCoords.get(i).getY();
             Type oldType = level.get(curI).get(curJ).getType();
             Entity oldEntity = level.get(curI).get(curJ).getEntity();
             Entity someBox = null; // take first box with this letter (in reality the one we test)
             //iter through boxes and find one with letter of the current goal (just for now)
-            for (Cell boxCell: boxCells){
-                Box curBox = (Box) boxCell.getEntity();
-                if (Character.toLowerCase(curBox.getLetter()) == goalCells.get(i).getGoalLetter()){
+            for (Cell.CoordinatesPair boxCellCoord: boxCellCoords){
+                Box curBox = (Box) level.get(boxCellCoord.getX()).get(boxCellCoord.getY()).getEntity();
+                char goalLetter =
+                        level.get(goalCellCoords.get(i).getX()).get(goalCellCoords.get(i).getY()).getGoalLetter();
+                if (Character.toLowerCase(curBox.getLetter()) == goalLetter){
                     someBox = curBox;
-                    boxCells.remove(boxCell); // remove cur box cell from the list as it is free now
-                    boxCell.setEntity(null); // and remove entity from it correspondingly
+                    boxCellCoords.remove(boxCellCoord); // remove cur box cell from the list as it is free now
+                    level.get(boxCellCoord.getX()).get(boxCellCoord.getY()).setEntity(null); // and remove entity from it correspondingly
                     break;
                 }
             }
 
             level.get(curI).get(curJ).setEntity(someBox); // and put the box on the cur. goal
             int numOfBlockedGoals = 0;
-            for (int j=0; j<goalCells.size(); j++){
+            for (int j = 0; j< goalCellCoords.size(); j++){
 
-                if(i!=j && !pathFinder.pathExists(level, agentCell, goalCells.get(j),
+                Cell goalCell = level.get(goalCellCoords.get(j).getX()).get(goalCellCoords.get(j).getY());
+                if(i!=j && !pathFinder.pathExists(level, agentCell, goalCell,
                         wObstacles,aObstacles,bObstacles)) {
 
                     numOfBlockedGoals++; // will be used later
 
-                    goalPartOrd.add(new ArrayList<Cell>());
-                    goalPartOrd.get(goalPartOrd.size()-1).add(goalCells.get(j));
-                    goalPartOrd.get(goalPartOrd.size()-1).add(goalCells.get(i));
+                    goalPartOrd.add(new ArrayList<Cell.CoordinatesPair>());
+                    goalPartOrd.get(goalPartOrd.size()-1).add(goalCellCoords.get(j));
+                    goalPartOrd.get(goalPartOrd.size()-1).add(goalCellCoords.get(i));
                 }
             }
 
