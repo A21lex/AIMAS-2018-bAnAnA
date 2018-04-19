@@ -7,12 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LevelReader {
+public final class LevelReader {
 
     private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
     private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
-
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
@@ -63,7 +62,7 @@ public class LevelReader {
     }
 
     // read file
-    public ArrayList<ArrayList<Cell>> getLevel(String pathToLevel) throws IOException{
+    public static ArrayList<ArrayList<Cell>> getLevel(String pathToLevel) throws IOException{
         ArrayList<ArrayList<Cell>> level = new ArrayList<>(); // store level here
         BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToLevel));
         try {

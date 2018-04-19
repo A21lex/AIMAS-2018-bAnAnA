@@ -12,20 +12,19 @@ public class BestFirstSearch {
 
     public static void main(String[] args){
         Node start = new Node(null);
-        LevelReader lr = new LevelReader();
         try {
-            start.setLevel(lr.getLevel("testNode.lvl"));
+            start.setLevel(LevelReader.getLevel("testNode.lvl"));
         } catch (IOException e) {
             System.out.println("########");
             System.out.println("Probably incorrect path");
         }
-        start.setBoxCellCoords(start.copyList(LevelReader.getBoxCellCoords()));
-        start.setAgentCellCoords(start.copyList(LevelReader.getAgentCellCoords()));
-        start.setGoalCellCoords(start.copyList(LevelReader.getGoalCellCoords()));
+        start.setBoxCellCoords(Node.copyList(LevelReader.getBoxCellCoords()));
+        start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
+        start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
         BestFirstSearch bfs = new BestFirstSearch();
         int h = bfs.heuristic(start, 'a');
         double startTime = System.nanoTime();
-        ArrayList<Node> shortestPath = new BestFirstSearch().AStar(start, 'a');
+        ArrayList<Node> shortestPath = AStar(start, 'a');
         double timeElapsed = (System.nanoTime() - startTime) / 1000000000.0;
         //boolean solved = new BestFirstSearch().aStar(start,'a');
         System.out.println("Printing shortest path");
@@ -51,14 +50,8 @@ public class BestFirstSearch {
      * @param goalToSatisfy Letter of the goal we would like to satisfy
      * @return ArrayList with Nodes of the shortest path order.
      */
-    ArrayList<Node> AStar(Node startState, char goalToSatisfy){
+    static ArrayList<Node> AStar(Node startState, char goalToSatisfy){
         ArrayList<Node> shortestPath = new ArrayList<>();
-       /* Comparator<Node> comparator = new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return 0;
-            }
-        };*/
         // The set of nodes already evaluated
         HashSet<Node> visited = new HashSet<>();
         // The set of currently discovered nodes that are not evaluated yet
@@ -76,14 +69,11 @@ public class BestFirstSearch {
         HashMap<Node, Integer> fScore = new HashMap<>();
         fScore.put(startState, heuristic(startState, goalToSatisfy));
         Node currentNode;
-        int loopCounter = 0;
         while (!frontier.isEmpty()){
-            loopCounter++;
-            try
-            {Thread.sleep(0);}
-            catch (Exception e)
-            {e.printStackTrace();}
-            //System.out.println("While loop number " + loopCounter);
+//            try
+//            {Thread.sleep(0);}
+//            catch (Exception e)
+//            {e.printStackTrace();}
             currentNode = getLowestFNode(fScore);
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); << uncomment this to see steps taken while executing
@@ -118,7 +108,7 @@ public class BestFirstSearch {
         return shortestPath;
     }
 
-    static ArrayList<Node> reconstructPath(HashMap<Node, Node> cameFrom, Node currentNode){
+    private static ArrayList<Node> reconstructPath(HashMap<Node, Node> cameFrom, Node currentNode){
         ArrayList<Node> totalPath = new ArrayList<>();
         totalPath.add(currentNode);
         while (cameFrom.keySet().contains(currentNode)){
@@ -129,7 +119,7 @@ public class BestFirstSearch {
     }
 
     // Returns the Node with the lowest F value
-    private Node getLowestFNode(HashMap<Node, Integer> fScore){
+    private static Node getLowestFNode(HashMap<Node, Integer> fScore){
         Node lowestFValueNode = (Node) fScore.keySet().toArray()[0]; // get some Node
         Integer lowestFValue = fScore.get(lowestFValueNode); // and its F value
         ArrayList<Node> bestOptionNodes = new ArrayList<>();
@@ -156,7 +146,7 @@ public class BestFirstSearch {
 
     }
 
-    int heuristic(Node start, char goalToSatisfy){
+    private static int heuristic(Node start, char goalToSatisfy){
         ArrayList<ArrayList<Cell>> level = start.getLevel();
         Cell.CoordinatesPair agentCellCoords = start.getAgentCellCoords().get(0); // just take the only agent for now
         Cell agentCell = start.getCellAtCoords(agentCellCoords);
@@ -175,7 +165,7 @@ public class BestFirstSearch {
             if (cell.getEntity() instanceof Box){
                 Box box = (Box) cell.getEntity();
                 // let's try to satisfy given goal with any box that matches the goal
-                if (box.getLetter()==Character.toUpperCase(goalToSatisfy)){
+                if (box.getLetter() == Character.toUpperCase(goalToSatisfy)){
                     boxRow = cell.getI();
                     boxCol = cell.getJ();
                     break; // got our box
@@ -190,7 +180,7 @@ public class BestFirstSearch {
         int goalRow = 0;
         int goalCol = 0;
         for (Cell cell: goalCells){
-            if (cell.getGoalLetter()==goalToSatisfy){
+            if (cell.getGoalLetter() == goalToSatisfy){
                 goalRow = cell.getI();
                 goalCol = cell.getJ();
                 break;
@@ -205,7 +195,7 @@ public class BestFirstSearch {
     }
 
     // From Warm-Up assignment
-    public int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
+    private static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
         int diffI = Math.abs(i1 - i2);
         int diffJ = Math.abs(j1 - j2);
         return diffI + diffJ;
