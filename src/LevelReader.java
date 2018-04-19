@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class LevelReader {
 
-    private static ArrayList<Cell.CoordinatesPair> goalCellCorrds = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> agentCellCorrds = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
 
 
     public static void main(String[] args){
@@ -53,7 +53,7 @@ public class LevelReader {
         }
 
         System.out.println("boxes: " + boxCellCoords);
-        System.out.println("goals " + goalCellCorrds);
+        System.out.println("goals " + goalCellCoords);
 
         PathFinder pathFinder = new PathFinder();
         boolean pathExists = pathFinder.pathExists(level, startingCell, finishingCell,
@@ -91,7 +91,7 @@ public class LevelReader {
                         cell.setType(Type.Space);
                         //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
                         row.add(cell);
-                        agentCellCorrds.add(new Cell.CoordinatesPair(cell));
+                        agentCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
@@ -107,7 +107,7 @@ public class LevelReader {
                         Cell cell = new Cell(curRow, curCol, Type.Space, null, c);
                         //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
                         row.add(cell);
-                        goalCellCorrds.add(new Cell.CoordinatesPair(cell));
+                        goalCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                 }
                 level.add(row); // add a row to the level
@@ -121,18 +121,15 @@ public class LevelReader {
         }
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getGoalCellCorrds(){
-        return goalCellCorrds;
+    public static ArrayList<Cell.CoordinatesPair> getGoalCellCoords(){
+        return goalCellCoords;
     }
 
     public static ArrayList<Cell.CoordinatesPair> getBoxCellCoords(){
         return boxCellCoords;
     }
 
-//    public static void setAgentCellCoords(ArrayList<Cell> agentCellCorrds){
-//        agentCellCorrds = agentCellCorrds;
-//    }
-    public static ArrayList<Cell.CoordinatesPair> getAgentCellCorrds(){
-        return agentCellCorrds;
+    public static ArrayList<Cell.CoordinatesPair> getAgentCellCoords(){
+        return agentCellCoords;
     }
 }

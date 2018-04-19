@@ -23,8 +23,9 @@ public class Node {
             System.out.println("########");
             System.out.println("Probably incorrect path.");
         }
-        ArrayList<Cell.CoordinatesPair> agentCellCoords = LevelReader.getAgentCellCorrds();
+        ArrayList<Cell.CoordinatesPair> agentCellCoords = LevelReader.getAgentCellCoords();
         ArrayList<Cell.CoordinatesPair> boxCellCoords = LevelReader.getBoxCellCoords();
+        ArrayList<Cell.CoordinatesPair> goalCellCoords = LevelReader.getGoalCellCoords();
         Node node = new Node(null);
         ArrayList<ArrayList<Cell>> newLevel = node.copyLevel(level);
         System.out.println("NEW level");
@@ -33,7 +34,7 @@ public class Node {
         node.setLevel(level);
         node.setAgentCellCoords(agentCellCoords);
         node.setBoxCellCoords(boxCellCoords);
-
+        node.setGoalCellCoords(goalCellCoords);
         //Node node2 = new Node(null);
         //node2.setLevel(level);
         //boolean equals = node.equals(node2);
@@ -41,20 +42,32 @@ public class Node {
         System.out.println(node);
 
         ArrayList<Node> testArrayOfNodes = node.getNeighbourNodes(0);
-        System.out.println(testArrayOfNodes);
+        for (int i = 0; i < testArrayOfNodes.size(); i++){
+            System.out.println("Node " + i);
+            System.out.println(testArrayOfNodes.get(i));
+        }
         System.out.println(node.getAgents());
-        boolean test = true;
+        for (Node thisNode : testArrayOfNodes){
+            if (thisNode.isSatisfied('a')){
+                System.out.println("this node is satisfied");
+                Node satisfiedNode = thisNode;
+                boolean test = true;
+            }
+        }
+        //boolean test = true;
 
     }
     private Node parent;
     private ArrayList<ArrayList<Cell>> level;
-    private int g; // length of the path from the start node to the current node
+    public int g; // length of the path from the start node to the current node
+    public int f; // g+h
     private Command action; // command which let to this node
     // Each node has its own copy of the following data structures as they change for every state
-    // (at least for agent)...
+    // (at least the agent)
     private ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
     private ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
-
+    // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
+    private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
 
     private static int nodeCount; // total amount of nodes generated
 
@@ -99,6 +112,10 @@ public class Node {
         this.action = action;
     }
 
+    public Command getAction(){
+        return this.action;
+    }
+
     public boolean isInitialState() {
         return this.parent == null;
     }
@@ -119,11 +136,19 @@ public class Node {
         return boxCellCoords;
     }
 
+    public static ArrayList<Cell.CoordinatesPair> getGoalCellCoords() {
+        return goalCellCoords;
+    }
+
     public void setAgentCellCoords(ArrayList<Cell.CoordinatesPair> agentCellCoords){
         this.agentCellCoords = agentCellCoords;
     }
     public void setBoxCellCoords(ArrayList<Cell.CoordinatesPair> boxCellCoords){
         this.boxCellCoords = boxCellCoords;
+    }
+
+    public void setGoalCellCoords(ArrayList<Cell.CoordinatesPair> goalCellCoords){
+        this.goalCellCoords = goalCellCoords;
     }
 
     public int getNodeCount() {
@@ -169,9 +194,6 @@ public class Node {
                     Node n = new Node(this); // create a child node with curr node as the parent
                     n.setAction(c); // action c led us to the new node
 
-                    // Update level
-                    /*ArrayList<ArrayList<Cell>> updatedLevel =
-                            (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
                     ArrayList<ArrayList<Cell>> updatedLevel = copyLevel(this.getLevel());
 
                     updatedLevel.get(curAgentRow).get(curAgentCol).setEntity(null);
@@ -183,19 +205,11 @@ public class Node {
                     // And add the node to the list of neighbors
                     neighbourNodes.add(n);
 
-
-                    // Update agent cell container
-                    char goalLetter =
-                            getGoalLetter(newAgentRow, newAgentCol);
                     Cell.CoordinatesPair updatedAgentCellCoords = new Cell.CoordinatesPair(newAgentRow, newAgentCol);
                     n.getAgentCellCoords().remove(curAgentCellCoords);
                     // Only add coords if not already in the list
                     if (!n.getAgentCellCoords().contains(updatedAgentCellCoords))
                     n.getAgentCellCoords().add(updatedAgentCellCoords);
-                    //LevelReader.getAgentCellCorrds().remove(curAgentCellCoords);
-                    //LevelReader.getAgentCellCorrds().add(updatedAgentCellCoords);
-                    // Update cur agent coords
-                    //curAgentCellCoords = new Cell.CoordinatesPair(newAgentRow, newAgentCol);
 
                 }
             }
@@ -228,24 +242,16 @@ public class Node {
                         neighbourNodes.add(n);
 
                         // Update agent and box cell containers
-                        char newAgentCellGoalLetter = getGoalLetter(newAgentRow, newAgentCol);
-                        char newBoxCellGoalLetter = getGoalLetter(newBoxRow, newBoxCol);
                         Cell.CoordinatesPair updatedAgentCellCoords =
                                 new Cell.CoordinatesPair(newAgentRow, newAgentCol);
                         n.getAgentCellCoords().remove(curAgentCellCoords); // remove cur cell coord from new node
                         if (!n.getAgentCellCoords().contains(updatedAgentCellCoords))
                         n.getAgentCellCoords().add(updatedAgentCellCoords); // add updated cell coord to new node
-                        //LevelReader.getAgentCellCorrds().remove(curAgentCellCoords);
-                        //LevelReader.getAgentCellCorrds().add(updatedAgentCellCoords);
                         Cell.CoordinatesPair updatedBoxCellCoords =
                                 new Cell.CoordinatesPair(newBoxRow, newBoxCol);
                         n.getBoxCellCoords().remove(curBoxCellCoords);
                         if (!n.getBoxCellCoords().contains(updatedBoxCellCoords))
                         n.getBoxCellCoords().add(updatedBoxCellCoords);
-                        //LevelReader.getBoxCellCoords().remove(curBoxCellCoords);
-                        //LevelReader.getBoxCellCoords().add(updatedBoxCellCoords);
-                        // Update cur agent coords
-                        //curAgentCellCoords = new Cell.CoordinatesPair(newAgentRow, newAgentCol);
                     }
                 }
             }
@@ -272,31 +278,23 @@ public class Node {
                         // (no need to remove him from the previous location as it is done when the box is moved)
                         updatedLevel.get(newAgentRow).get(newAgentCol).setEntity(curAgent);
                         n.setLevel(updatedLevel);
-                        // THE LINES BELOW NEED TO BE FIXED AS IT COPIES REFERENCE, NOT NEW VALUES
                         n.agentCellCoords = copyList(getAgentCellCoords()); // give current agent cell coords to new node
                         n.boxCellCoords = copyList(getBoxCellCoords()); // ..same with box cell coords
                         // Add the node to the list of neighbours
                         neighbourNodes.add(n);
 
                         // Update agent and box cell containers
-                        char newAgentCellGoalLetter = getGoalLetter(newAgentRow, newAgentCol);
-                        char newBoxCellGoalLetter = getGoalLetter(curAgentRow, curAgentCol);
                         Cell.CoordinatesPair updatedAgentCellCoords =
                                 new Cell.CoordinatesPair(newAgentRow, newAgentCol);
                         n.getAgentCellCoords().remove(curAgentCellCoords);
                         if (!n.getAgentCellCoords().contains(updatedAgentCellCoords))
                         n.getAgentCellCoords().add(updatedAgentCellCoords);
-                        //LevelReader.getAgentCellCorrds().remove(curAgentCellCoords);
-                        //LevelReader.getAgentCellCorrds().add(updatedAgentCellCoords);
+
                         Cell.CoordinatesPair updatedBoxCellCoords =
                                 new Cell.CoordinatesPair(curAgentRow, curAgentCol);
                         n.getBoxCellCoords().remove(curBoxCellCoords);
                         if (!n.getBoxCellCoords().contains(updatedBoxCellCoords))
                         n.getBoxCellCoords().add(updatedBoxCellCoords);
-                        //LevelReader.getBoxCellCoords().remove(curBoxCellCoords);
-                        //LevelReader.getBoxCellCoords().add(updatedBoxCellCoords);
-                        // Update cur agent coords
-                        //curAgentCellCoords = new Cell.CoordinatesPair(newAgentRow, newAgentCol);
                     }
                 }
             }
@@ -327,7 +325,7 @@ public class Node {
     // Check if the goal with the given character is satisfied at this node
     boolean isSatisfied(char goalLetter){
         // change the following to be static field of Node class instead, makes more sense
-        ArrayList<Cell.CoordinatesPair> goalCoords = LevelReader.getGoalCellCorrds();
+        ArrayList<Cell.CoordinatesPair> goalCoords = Node.getGoalCellCoords();
         ArrayList<Cell> goalCells = new ArrayList<>();
         for (Cell.CoordinatesPair coordinatesPair : goalCoords){
             goalCells.add(getCellAtCoords(coordinatesPair));
@@ -376,12 +374,14 @@ public class Node {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o){ // if agents and boxes are in same location, two nodes are same state
         if (o == this){
             return true;
         }
         if (o instanceof Node){
             Node p = (Node) o;
+//            return getAgentCellCoords().equals(p.getAgentCellCoords()) &&
+//                    getBoxCellCoords().equals(p.getBoxCellCoords());
             return getLevel().equals(p.getLevel());
         }
         return false;
@@ -415,7 +415,7 @@ public class Node {
                     stringBuilder.append(cell.getEntity()).append(" ");
                 }
                 else{
-                    stringBuilder.append(cell.getType()).append(" ");
+                    stringBuilder.append(cell.getType().equals(Type.Wall) ? 'w' : 's').append(" ");
                 }
                 //stringBuilder.append(cell.getType()).append(" ");
             }

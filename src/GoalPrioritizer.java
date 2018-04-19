@@ -36,8 +36,8 @@ public class GoalPrioritizer {
 //        }
 
         boxCellCoords = levelReader.getBoxCellCoords();
-        goalCellCoords = levelReader.getGoalCellCorrds();
-        agentCellCoords = levelReader.getAgentCellCorrds();
+        goalCellCoords = levelReader.getGoalCellCoords();
+        agentCellCoords = levelReader.getAgentCellCoords();
 
         System.out.println("boxes: " + boxCellCoords);
         System.out.println("goals " + goalCellCoords);
@@ -74,7 +74,7 @@ public class GoalPrioritizer {
 
         ArrayList<ArrayList<Cell.CoordinatesPair>> goalPartOrd = new ArrayList<ArrayList<Cell.CoordinatesPair>>();
 
-        Cell.CoordinatesPair agentCellCoords = LevelReader.getAgentCellCorrds().get(0); // taking any agent for now, since colors are omitted
+        Cell.CoordinatesPair agentCellCoords = LevelReader.getAgentCellCoords().get(0); // taking any agent for now, since colors are omitted
         Cell agentCell = level.get(agentCellCoords.getX()).get(agentCellCoords.getY());
         // goalPriorities.add(new ArrayList<Cell>());
         for (int i = 0; i< goalCellCoords.size(); i++){
