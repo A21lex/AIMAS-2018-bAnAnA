@@ -87,7 +87,7 @@ public class Node {
         nodeCount++;
     }
 
-    public void setAction(Command action){
+    private void setAction(Command action){
         this.action = action;
     }
 
@@ -107,15 +107,15 @@ public class Node {
         this.level = level;
     }
 
-    public ArrayList<Cell.CoordinatesPair> getAgentCellCoords(){
+    ArrayList<Cell.CoordinatesPair> getAgentCellCoords(){
         return agentCellCoords;
     }
 
-    public ArrayList<Cell.CoordinatesPair> getBoxCellCoords(){
+    ArrayList<Cell.CoordinatesPair> getBoxCellCoords(){
         return boxCellCoords;
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getGoalCellCoords() {
+    private static ArrayList<Cell.CoordinatesPair> getGoalCellCoords() {
         return goalCellCoords;
     }
 
@@ -287,7 +287,7 @@ public class Node {
         return neighbourNodes;
     }
 
-    boolean cellIsFree(int row, int col){
+    private boolean cellIsFree(int row, int col){
         if (this.getLevel().get(row).get(col).getType().equals(Type.Wall)
                 || this.getLevel().get(row).get(col).getEntity() != null){
             return false;
@@ -295,7 +295,7 @@ public class Node {
         return true;
     }
 
-    boolean boxAt(int row, int col){
+    private boolean boxAt(int row, int col){
         if (this.getLevel().get(row).get(col).getEntity() instanceof Box){
             return true;
         }
@@ -327,7 +327,7 @@ public class Node {
     /**
      * Use this to copy a level - else cells of a new level refer to the cells of the original
      * ... lovely OOP and Java in particular
-     * @param oldLevel
+     * @param oldLevel Old ArrayList<ArrayList<Cell>> representing a level
      * @return New level just like the old one
      */
     private static ArrayList<ArrayList<Cell>> copyLevel(ArrayList<ArrayList<Cell>> oldLevel){
@@ -345,7 +345,7 @@ public class Node {
 
     /**
      * Same as above for an arrayList
-     * @param oldList
+     * @param oldList Old ArrayList<Cell.CoordinatesPair> representing a list of coords
      * @return Cloned list
      */
     public static ArrayList<Cell.CoordinatesPair> copyList(ArrayList<Cell.CoordinatesPair> oldList){
@@ -365,7 +365,7 @@ public class Node {
             Node p = (Node) o;
             return getAgentCellCoords().equals(p.getAgentCellCoords()) &&
                     getBoxCellCoords().equals(p.getBoxCellCoords());
-            //return getLevel().equals(p.getLevel());
+            //return getLevel().equals(p.getLevel()); <- this is super performance heavy so don't use it!
         }
         return false;
     }

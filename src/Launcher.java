@@ -19,6 +19,7 @@ public class Launcher {
             System.out.println("########");
             System.out.println("Probably incorrect path");
         }
+        // The lines below are mandatory as nodes are compared using box/agent coords!
         start.setBoxCellCoords(Node.copyList(LevelReader.getBoxCellCoords()));
         start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
         start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));

@@ -139,8 +139,6 @@ public class Cell {
                 Box box = (Box) original.entity;
                 this.entity = new Box(box);
             }
-                //this.entity = new Agent(original.entity);
-            //this.entity = new Entity(original.entity);  //original.entity;
         }
         else {
             this.entity = null;
