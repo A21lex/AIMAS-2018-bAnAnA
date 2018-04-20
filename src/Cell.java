@@ -3,7 +3,7 @@ import java.util.Objects;
 
 // use to denote type of cell - empty vs wall
 enum Type{
-    Wall, Space
+    WALL, SPACE
 }
 
 public class Cell {

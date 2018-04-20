@@ -115,7 +115,7 @@ public class Node {
         return boxCellCoords;
     }
 
-    private static ArrayList<Cell.CoordinatesPair> getGoalCellCoords() {
+    public static ArrayList<Cell.CoordinatesPair> getGoalCellCoords() {
         return goalCellCoords;
     }
 
@@ -288,7 +288,7 @@ public class Node {
     }
 
     private boolean cellIsFree(int row, int col){
-        if (this.getLevel().get(row).get(col).getType().equals(Type.Wall)
+        if (this.getLevel().get(row).get(col).getType().equals(Type.WALL)
                 || this.getLevel().get(row).get(col).getEntity() != null){
             return false;
         }
@@ -398,7 +398,7 @@ public class Node {
                     stringBuilder.append(cell.getEntity()).append(" ");
                 }
                 else{
-                    stringBuilder.append(cell.getType().equals(Type.Wall) ? 'w' : 's').append(" ");
+                    stringBuilder.append(cell.getType().equals(Type.WALL) ? 'w' : 's').append(" ");
                 }
                 //stringBuilder.append(cell.getType()).append(" ");
             }

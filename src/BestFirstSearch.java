@@ -172,7 +172,7 @@ public class BestFirstSearch {
                 }
             }
         }
-        ArrayList<Cell.CoordinatesPair> goalCellCoords = LevelReader.getGoalCellCoords();
+        ArrayList<Cell.CoordinatesPair> goalCellCoords = Node.getGoalCellCoords();
         ArrayList<Cell> goalCells = new ArrayList<>();
         for (Cell.CoordinatesPair coordinatesPair : goalCellCoords){
             goalCells.add(start.getCellAtCoords(coordinatesPair));

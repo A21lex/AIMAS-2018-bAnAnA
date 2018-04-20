@@ -74,36 +74,36 @@ public final class LevelReader {
                     char c = line.charAt(curCol);
                     if(c == ' '){
                         // Add a new cell of type SPACE with nothing(NULL) on it and which is NOT a goal(thus c=0)
-                        row.add(new Cell(curRow, curCol, Type.Space, null, '0'));
+                        row.add(new Cell(curRow, curCol, Type.SPACE, null, '0'));
                         //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
                     }
                     else if (c == '+'){
-                        row.add(new Cell(curRow, curCol, Type.Wall, null, '0'));
-                        //row.add(new Cell(curRow, curCol, Cell.Type.Wall, true, c));
+                        row.add(new Cell(curRow, curCol, Type.WALL, null, '0'));
+                        //row.add(new Cell(curRow, curCol, Cell.Type.WALL, true, c));
                     }
                     else if ('0' <= c && c <= '9'){
                         // Create a cell with coords only as agent will be created later and he needs a cell
                         Cell cell = new Cell(curRow, curCol);
-                        Agent agent = new Agent(cell, Color.blue, Character.getNumericValue(c));
+                        Agent agent = new Agent(cell, Color.BLUE, Character.getNumericValue(c));
                         cell.setEntity(agent);
                         cell.setGoalLetter('0'); // this is a non goal cell
-                        cell.setType(Type.Space);
+                        cell.setType(Type.SPACE);
                         //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
                         row.add(cell);
                         agentCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
-                        Box box = new Box(cell, Color.blue, c);
+                        Box box = new Box(cell, Color.BLUE, c);
                         cell.setEntity(box);
                         cell.setGoalLetter('0');
-                        cell.setType(Type.Space);
+                        cell.setType(Type.SPACE);
                        // Cell boxCell = new Cell(curRow, curCol, Cell.Type.Box, true, c);
                         row.add(cell);
                         boxCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('a' <= c && c <= 'z'){
-                        Cell cell = new Cell(curRow, curCol, Type.Space, null, c);
+                        Cell cell = new Cell(curRow, curCol, Type.SPACE, null, c);
                         //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
                         row.add(cell);
                         goalCellCoords.add(new Cell.CoordinatesPair(cell));

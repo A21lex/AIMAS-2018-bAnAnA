@@ -36,7 +36,7 @@ public class Entity {
 // Available colors taken from the programming project description
 // For SA track colors of boxes and agents will be set to BLUE as that's default
 enum Color{
-    blue, red, green, cyan, magenta, orange, pink, yellow
+    BLUE, RED, GREEN, CYAN, MAGENTA, ORANGE, PINK, YELLOW
 }
 
 class Agent extends Entity{

@@ -5,7 +5,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class PathFinder {
     // based on simple representation like below;
@@ -79,9 +78,9 @@ public class PathFinder {
             ArrayList<Integer> simpleRow = new ArrayList<>();
             for (Cell cell: row){
                 int num; // 0 for free, 1 for occupied
-                if ((cell.getType()== Type.Wall && wObstacles) ||
-                        (cell.getType()==Type.Space && cell.getEntity() instanceof Box && bObstacles) ||
-                        (cell.getType()== Type.Space && cell.getEntity() instanceof Agent && aObstacles)){
+                if ((cell.getType()== Type.WALL && wObstacles) ||
+                        (cell.getType()==Type.SPACE && cell.getEntity() instanceof Box && bObstacles) ||
+                        (cell.getType()== Type.SPACE && cell.getEntity() instanceof Agent && aObstacles)){
                     num = 1;
                 }
                 else {
