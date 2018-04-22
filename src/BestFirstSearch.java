@@ -74,9 +74,10 @@ public class BestFirstSearch {
 //            {Thread.sleep(0);}
 //            catch (Exception e)
 //            {e.printStackTrace();}
-            currentNode = getLowestFNode(fScore);
+            currentNode = getLowestFNode(fScore, frontier);
             //System.out.println("Going here: ");
-            //System.out.println(currentNode.getAction()); << uncomment this to see steps taken while executing
+            //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
+            //System.out.println(currentNode);
             if (currentNode.isSatisfied(goalToSatisfy)){
                 System.out.println("satisfied h yeah");
                 shortestPath = reconstructPath(cameFrom, currentNode);
@@ -118,36 +119,19 @@ public class BestFirstSearch {
         return  totalPath;
     }
 
-    // Returns the Node with the lowest F value
-    private static Node getLowestFNode(HashMap<Node, Integer> fScore){
-        Node lowestFValueNode = (Node) fScore.keySet().toArray()[0]; // get some Node
-        Integer lowestFValue = fScore.get(lowestFValueNode); // and its F value
-        ArrayList<Node> bestOptionNodes = new ArrayList<>();
-        for (Node thisNode : fScore.keySet()){
-            if (fScore.get(thisNode) < lowestFValue){
-                lowestFValue = fScore.get(thisNode);
-            }
-        }
-        //System.out.println("lowest f = " + lowestFValue) ;
-        for (Node thisNode: fScore.keySet()){
-            if (Objects.equals(fScore.get(thisNode), lowestFValue)){
-                //System.out.println("another node with lowest f value");
-                //System.out.println(thisNode.getAction());
-                bestOptionNodes.add(thisNode);
-            }
-        }
-        //System.out.println("printing best moves ");
-        //for (Node node: bestOptionNodes){
-            //System.out.println(node.getAction());
-        //}
-        Collections.shuffle(bestOptionNodes);
-        //System.out.println("returning random best move " + bestOptionNodes.get(0).getAction());
-        return bestOptionNodes.get(0);
+    // Returns the Node with the lowest F value in frontier
+    private static Node getLowestFNode(HashMap<Node, Integer> fScore, HashSet<Node> frontier){
 
+        Node lowestFValueNode = frontier.iterator().next(); // get some Node from frontier
+        for (Node node : frontier){
+            if (fScore.get(node) < fScore.get(lowestFValueNode)){
+                lowestFValueNode = node;
+            }
+        }
+        return lowestFValueNode;
     }
 
     private static int heuristic(Node start, char goalToSatisfy){
-        ArrayList<ArrayList<Cell>> level = start.getLevel();
         Cell.CoordinatesPair agentCellCoords = start.getAgentCellCoords().get(0); // just take the only agent for now
         Cell agentCell = start.getCellAtCoords(agentCellCoords);
         //Cell agentCell = LevelReader.getAgentCellCoords().get(0);
@@ -189,7 +173,12 @@ public class BestFirstSearch {
         // Now we have coords of agent, box and goal we try to satisfy. Let's roll.
         int fromBoxToGoal = manhDist(boxRow, boxCol, goalRow, goalCol);
         int fromAgentToBox = manhDist(agentRow, agentCol, boxRow, boxCol);
-        int h = fromBoxToGoal + fromAgentToBox;
+
+        // int fromAgentToGoal = manhDist(agentRow, agentCol, goalRow, goalCol);
+//        System.out.println("Agent to box: " + fromAgentToBox);
+//        System.out.println("Box to goal: " + fromBoxToGoal);
+//        System.out.println();
+        int h = fromBoxToGoal + fromAgentToBox; /*+ fromAgentToGoal*/
 
         return h;
     }

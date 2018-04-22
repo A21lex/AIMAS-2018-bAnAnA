@@ -129,7 +129,7 @@ public class Cell {
 
     @Override
     public int hashCode() {
-        return Objects.hash(i,j);
+        return Objects.hash(i,j,type,entity,goalLetter);
     }
 
     @Override

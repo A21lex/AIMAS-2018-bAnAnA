@@ -365,14 +365,14 @@ public class Node {
             Node p = (Node) o;
             return getAgentCellCoords().equals(p.getAgentCellCoords()) &&
                     getBoxCellCoords().equals(p.getBoxCellCoords());
-            //return getLevel().equals(p.getLevel()); <- this is super performance heavy so don't use it!
+            //return getLevel().equals(p.getLevel()); //<- this is super performance heavy so don't use it!
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(parent, level, action, boxCellCoords, agentCellCoords);
+        return Objects.hash(boxCellCoords, agentCellCoords);
     }
 
     @Override
@@ -398,7 +398,7 @@ public class Node {
                     stringBuilder.append(cell.getEntity()).append(" ");
                 }
                 else{
-                    stringBuilder.append(cell.getType().equals(Type.WALL) ? 'w' : 's').append(" ");
+                    stringBuilder.append(cell.getType().equals(Type.WALL) ? '+' : ' ').append(" ");
                 }
                 //stringBuilder.append(cell.getType()).append(" ");
             }

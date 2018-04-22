@@ -20,7 +20,7 @@ public class GoalPrioritizer {
     private static ArrayList<ArrayList<Cell>> level = new ArrayList<>();
 
     public static void main(String[] args){
-        String pathToLevel = "C:\\wTESTING\\AIlevels\\SACrunch.lvl"; // << Set path to level file here
+        String pathToLevel = "testNode.lvl"; // << Set path to level file here
         boolean wObstacles = true; // walls are obstacles
         boolean aObstacles = true; // agents are obstacles
         boolean bObstacles = true; // boxes are obstacles
