@@ -47,8 +47,8 @@ public class PathFinder {
         frontier.addLast(startingCoordinatesPair);
         //System.out.println("Starting cell: " + startingCell.toString());
         //System.out.println("Finishing cell: " + finishingCell.toString());
-        System.out.println("Starting cell: " + startingCoordinatesPair.toString());
-        System.out.println("Finishing cell: " + finishingCoordinatesPair.toString());
+        //System.out.println("Starting cell: " + startingCoordinatesPair.toString());
+        //System.out.println("Finishing cell: " + finishingCoordinatesPair.toString());
         while (!frontier.isEmpty()){
             //Cell subtreeRoot = frontier.pollFirst(); // get first element of the queue
             Cell.CoordinatesPair subtreeRoot = frontier.pollFirst();

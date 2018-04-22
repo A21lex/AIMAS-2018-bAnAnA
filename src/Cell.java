@@ -107,9 +107,22 @@ public class Cell {
         }
         if (o instanceof Cell){
             Cell p = (Cell) o;
-            return  (getEntity() == null ? p.getEntity() == null : (getI() == p.getI()) && (getJ() == p.getJ())
-                    && getType().equals(p.getType()) && getEntity().equals(p.getEntity())
-                    && getGoalLetter() == p.getGoalLetter());
+//            return  (getEntity() == null ? (p.getEntity() == null) : (getI() == p.getI()) && (getJ() == p.getJ())
+//                    && getType().equals(p.getType()) && getEntity().equals(p.getEntity())
+//                    && getGoalLetter() == p.getGoalLetter());
+
+            if (getEntity() == null){
+                if (p.getEntity() == null){
+                    return (getI() == p.getI()) && (getJ() == p.getJ())
+                            && getType().equals(p.getType()) && getGoalLetter() == p.getGoalLetter();
+                }
+            }
+            else {
+                return (getI() == p.getI()) && (getJ() == p.getJ())
+                        && getType().equals(p.getType()) && getEntity().equals(p.getEntity())
+                        && getGoalLetter() == p.getGoalLetter();
+            }
+
         }
         return false;
     }
