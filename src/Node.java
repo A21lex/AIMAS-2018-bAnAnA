@@ -5,7 +5,9 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Class for storing current node in the state space
@@ -66,7 +68,22 @@ public class Node {
     // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
     private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
 
-    private static int nodeCount; // total amount of nodes generated
+    public static int nodeCount; // total amount of nodes generated
+
+    public int gScore; // for A*
+    public int fScore; // for A*
+
+    public Node(Node parent) {
+        this.parent = parent;
+        if (parent == null){ // g of start node is 0
+            this.gScore = 0;
+        }
+        else {
+            this.gScore = Integer.MAX_VALUE; // as node is unknown when generated
+        }
+        this.fScore = Integer.MAX_VALUE; // same as above
+        nodeCount++;
+    }
 
     public ArrayList<Agent> getAgents(){
         ArrayList<Agent> agents = new ArrayList<>();
@@ -81,10 +98,16 @@ public class Node {
         }
         return agents;
     }
-
-    public Node(Node parent) {
-        this.parent = parent;
-        nodeCount++;
+    // Check if there is a goal with this letter somewhere in the level
+    public boolean isInLevel(char goalLetter){
+        for (ArrayList<Cell> row : this.level){
+            for (Cell cell : row){
+                if (cell.getGoalLetter() == goalLetter){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void setAction(Command action){
@@ -128,10 +151,6 @@ public class Node {
 
     public void setGoalCellCoords(ArrayList<Cell.CoordinatesPair> goalCellCoords){
         this.goalCellCoords = goalCellCoords;
-    }
-
-    public int getNodeCount() {
-        return nodeCount;
     }
 
     // Return cell of this node's level with the specific coordinates
@@ -284,8 +303,10 @@ public class Node {
             }
 
         }
+        Collections.shuffle(neighbourNodes, RND);
         return neighbourNodes;
     }
+    private static final Random RND = new Random(2);
 
     private boolean cellIsFree(int row, int col){
         if (this.getLevel().get(row).get(col).getType().equals(Type.WALL)
