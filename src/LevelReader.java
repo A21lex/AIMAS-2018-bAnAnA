@@ -12,6 +12,8 @@ public final class LevelReader {
     private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
     private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> spaceCells = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> tunnelCells = new ArrayList<>();
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
@@ -74,8 +76,14 @@ public final class LevelReader {
                     char c = line.charAt(curCol);
                     if(c == ' '){
                         // Add a new cell of type SPACE with nothing(NULL) on it and which is NOT a goal(thus c=0)
-                        row.add(new Cell(curRow, curCol, Type.SPACE, null, '0'));
+                        Cell cell = new Cell(curRow, curCol, Type.SPACE, null, '0');
+                        row.add(cell);
                         //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
+                        //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
+                        //TODO: check for last row
+                        if(curCol!=0 && curRow!=0 && curCol!=line.length()-1){
+                            spaceCells.add(new Cell.CoordinatesPair(cell));
+                        }
                     }
                     else if (c == '+'){
                         row.add(new Cell(curRow, curCol, Type.WALL, null, '0'));
@@ -91,6 +99,7 @@ public final class LevelReader {
                         //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
                         row.add(cell);
                         agentCellCoords.add(new Cell.CoordinatesPair(cell));
+                        spaceCells.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
@@ -101,17 +110,55 @@ public final class LevelReader {
                        // Cell boxCell = new Cell(curRow, curCol, Cell.Type.Box, true, c);
                         row.add(cell);
                         boxCellCoords.add(new Cell.CoordinatesPair(cell));
+                        spaceCells.add(new Cell.CoordinatesPair(cell));
                     }
                     else if ('a' <= c && c <= 'z'){
                         Cell cell = new Cell(curRow, curCol, Type.SPACE, null, c);
                         //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
                         row.add(cell);
                         goalCellCoords.add(new Cell.CoordinatesPair(cell));
+                        spaceCells.add(new Cell.CoordinatesPair(cell));
                     }
                 }
                 level.add(row); // add a row to the level
                 curRow++; // ..and advance to the next row
                 line = bufferedReader.readLine();
+            }
+
+            //determine tunnel cells
+            for (Cell.CoordinatesPair spc: spaceCells) {
+                // wall on top and bellow or  wall on sides
+                if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL))) {
+                    tunnelCells.add(spc);
+                }
+
+                //wall on diagonals
+                if ((level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL))
+                        || (level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL))) {
+                    tunnelCells.add(spc);
+                }
+
+                //one wall on side and one wall in diagonal
+                //TODO make hasmap to avoid duplicates; disegard corners
+                if ((level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)
+                        && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)
+                                && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL)
+                                && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL)
+                                && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL)
+                                && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL)
+                                && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)
+                                && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
+                        (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)
+                                && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL))) {
+                    tunnelCells.add(spc);
+                }
             }
             return level;
         }
@@ -130,5 +177,9 @@ public final class LevelReader {
 
     public static ArrayList<Cell.CoordinatesPair> getAgentCellCoords(){
         return agentCellCoords;
+    }
+
+    public static ArrayList<Cell.CoordinatesPair> getTunnelCellCoords(){
+        return tunnelCells;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
  * Also contains getNeighbourNodes method inspired by the Warm-Up Assignment
  */
 public class Node {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
             level = LevelReader.getLevel("testNode.lvl");
@@ -25,6 +25,7 @@ public class Node {
         ArrayList<Cell.CoordinatesPair> agentCellCoords = LevelReader.getAgentCellCoords();
         ArrayList<Cell.CoordinatesPair> boxCellCoords = LevelReader.getBoxCellCoords();
         ArrayList<Cell.CoordinatesPair> goalCellCoords = LevelReader.getGoalCellCoords();
+
         Node node = new Node(null);
         ArrayList<ArrayList<Cell>> newLevel = Node.copyLevel(level);
         System.out.println("NEW level");
@@ -55,7 +56,8 @@ public class Node {
         }
         //boolean test = true;
 
-    }
+    }*/
+
     private Node parent;
     private ArrayList<ArrayList<Cell>> level;
     private Command action; // command which let to this node
@@ -65,6 +67,7 @@ public class Node {
     private ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
     // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
     private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
+    private static ArrayList<Cell.CoordinatesPair> tunnelCellCoords = new ArrayList<>();
 
     private static int nodeCount; // total amount of nodes generated
 
@@ -119,6 +122,10 @@ public class Node {
         return goalCellCoords;
     }
 
+    ArrayList<Cell.CoordinatesPair> getTunnelCellCoords(){
+        return tunnelCellCoords;
+    }
+
     public void setAgentCellCoords(ArrayList<Cell.CoordinatesPair> agentCellCoords){
         this.agentCellCoords = agentCellCoords;
     }
@@ -128,6 +135,10 @@ public class Node {
 
     public void setGoalCellCoords(ArrayList<Cell.CoordinatesPair> goalCellCoords){
         this.goalCellCoords = goalCellCoords;
+    }
+
+    public void setTunnelCellCoords(ArrayList<Cell.CoordinatesPair> tunnelCellCoords){
+        this.tunnelCellCoords = tunnelCellCoords;
     }
 
     public int getNodeCount() {

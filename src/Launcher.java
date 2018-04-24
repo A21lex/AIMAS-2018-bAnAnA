@@ -25,6 +25,11 @@ public class Launcher {
         start.setBoxCellCoords(Node.copyList(LevelReader.getBoxCellCoords()));
         start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
         start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
+        start.setTunnelCellCoords(Node.copyList(LevelReader.getTunnelCellCoords()));
+
+        //test tunnels
+        System.out.println("tunnels:");
+        System.out.println(start.getTunnelCellCoords());
 
         double startTime = System.nanoTime();
         ArrayList<Node> shortestPath = BestFirstSearch.AStar(start, 'a');
