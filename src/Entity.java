@@ -9,6 +9,7 @@ public class Entity {
     //protected Cell currentCell;
     protected Color color;
 
+
 //    Cell getCurrentCell(){
 //        return this.currentCell;
 //    }
@@ -40,6 +41,7 @@ enum Color{
 }
 
 class Agent extends Entity{
+    //public static final Agent NO_AGENT = new Agent(Color.BLUE, -1);
 
     private int number;
     public int getNumber() {
@@ -67,6 +69,7 @@ class Agent extends Entity{
 }
 
 class Box extends Entity{
+    //public static final Box NO_BOX = new Box(Color.BLUE, '0');
 
     private char letter;
     public char getLetter() {

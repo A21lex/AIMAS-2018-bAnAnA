@@ -6,7 +6,7 @@ import java.util.*;
  */
 
 /**
- * TODO: make this work for our purpose (search through level, goal satisfiability, etc)
+ * TODO: 58000 at SAmicromouseBoxAtStart.lvl - improve performance
  */
 public class BestFirstSearch {
 
@@ -50,7 +50,14 @@ public class BestFirstSearch {
      * @param goalToSatisfy Letter of the goal we would like to satisfy
      * @return ArrayList with Nodes of the shortest path order.
      */
+    static HashMap<Node, Integer> fScore;
     static ArrayList<Node> AStar(Node startState, char goalToSatisfy){
+        if (!startState.isInLevel(goalToSatisfy)){
+            System.out.println("The goal " + goalToSatisfy + " does not exist in the level.");
+            System.out.println("A* quitting.");
+            return new ArrayList<>();
+        }
+
         ArrayList<Node> shortestPath = new ArrayList<>();
         // The set of nodes already evaluated
         HashSet<Node> visited = new HashSet<>();
@@ -61,13 +68,14 @@ public class BestFirstSearch {
         // Will eventually contain the most efficient previous step.
         HashMap<Node, Node> cameFrom = new HashMap<>();
         // Each node has a g value - cost of getting from the start node to that node
-        HashMap<Node, Integer> gScore = new HashMap<>();
-        gScore.put(startState, 0); //it costs 0 t get from startnode to itself
+        //HashMap<Node, Integer> gScore = new HashMap<>();
+        //gScore.put(startState, 0); //it costs 0 t get from startnode to itself
         //getOrDefault(key, defaultValue) <- for default infinity values (thanks to Java 8!)
         // For each node, the total cost of getting from the start node to the goal
         // by passing by that node. For the first node it is completely heuristic.
-        HashMap<Node, Integer> fScore = new HashMap<>();
-        fScore.put(startState, heuristic(startState, goalToSatisfy));
+        //fScore = new HashMap<>();
+        //fScore.put(startState, heuristic(startState, goalToSatisfy));
+        startState.fScore = heuristic(startState, goalToSatisfy);
         Node currentNode;
         while (!frontier.isEmpty()){
 //            try
@@ -78,6 +86,8 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
+            System.out.println(Node.nodeCount);
+
             if (currentNode.isSatisfied(goalToSatisfy)){
                 System.out.println("satisfied h yeah");
                 shortestPath = reconstructPath(cameFrom, currentNode);
@@ -95,14 +105,16 @@ public class BestFirstSearch {
                     frontier.add(neighbour);
                 }
                 // Distance from start to a neighbour
-                int tentativeG = gScore.get(currentNode) + 1; // neighbour is always 1 node away
-                if (tentativeG >= gScore.getOrDefault(neighbour, Integer.MAX_VALUE)){
+                int tentativeG = currentNode.gScore + 1; // neighbour is always 1 node away
+                if (tentativeG >= neighbour.gScore){
                     continue;
                 }
                 cameFrom.put(neighbour, currentNode);
-                gScore.put(neighbour,tentativeG);
-                fScore.put(neighbour, (gScore.getOrDefault(neighbour, Integer.MAX_VALUE)
-                        + heuristic(neighbour, goalToSatisfy)));
+                neighbour.gScore = tentativeG;
+                //gScore.put(neighbour,tentativeG);
+                neighbour.fScore = neighbour.gScore + heuristic(neighbour, goalToSatisfy);
+                //fScore.put(neighbour, (gScore.getOrDefault(neighbour, Integer.MAX_VALUE)
+                //        + heuristic(neighbour, goalToSatisfy)));
             }
 
         }
@@ -124,7 +136,10 @@ public class BestFirstSearch {
 
         Node lowestFValueNode = frontier.iterator().next(); // get some Node from frontier
         for (Node node : frontier){
-            if (fScore.get(node) < fScore.get(lowestFValueNode)){
+//            if (fScore.get(node) < fScore.get(lowestFValueNode)){
+//                lowestFValueNode = node;
+//            }
+            if (node.fScore < lowestFValueNode.fScore){
                 lowestFValueNode = node;
             }
         }
@@ -133,40 +148,29 @@ public class BestFirstSearch {
 
     private static int heuristic(Node start, char goalToSatisfy){
         Cell.CoordinatesPair agentCellCoords = start.getAgentCellCoords().get(0); // just take the only agent for now
-        Cell agentCell = start.getCellAtCoords(agentCellCoords);
-        //Cell agentCell = LevelReader.getAgentCellCoords().get(0);
-        int agentRow = agentCell.getI();
-        int agentCol = agentCell.getJ();
+        int agentRow = agentCellCoords.getX();
+        int agentCol = agentCellCoords.getY();
 
-        ArrayList<Cell.CoordinatesPair> boxCellCoords = start.getBoxCellCoords();
-        ArrayList<Cell> boxCells = new ArrayList<>();
-        for (Cell.CoordinatesPair coordinatesPair : boxCellCoords){
-            boxCells.add(start.getCellAtCoords(coordinatesPair));
-        }
         int boxRow = 0;
         int boxCol = 0;
-        for (Cell cell: boxCells){
-            if (cell.getEntity() instanceof Box){
-                Box box = (Box) cell.getEntity();
-                // let's try to satisfy given goal with any box that matches the goal
+        ArrayList<Cell.CoordinatesPair> boxCellCoords = start.getBoxCellCoords();
+        for (Cell.CoordinatesPair coordinatesPair : boxCellCoords){
+            if (start.getCellAtCoords(coordinatesPair).getEntity() instanceof Box){
+                Box box = (Box) start.getCellAtCoords(coordinatesPair).getEntity();
                 if (box.getLetter() == Character.toUpperCase(goalToSatisfy)){
-                    boxRow = cell.getI();
-                    boxCol = cell.getJ();
-                    break; // got our box
+                    boxRow = coordinatesPair.getX();
+                    boxCol = coordinatesPair.getY();
+                    break;
                 }
             }
         }
-        ArrayList<Cell.CoordinatesPair> goalCellCoords = Node.getGoalCellCoords();
-        ArrayList<Cell> goalCells = new ArrayList<>();
-        for (Cell.CoordinatesPair coordinatesPair : goalCellCoords){
-            goalCells.add(start.getCellAtCoords(coordinatesPair));
-        }
         int goalRow = 0;
         int goalCol = 0;
-        for (Cell cell: goalCells){
-            if (cell.getGoalLetter() == goalToSatisfy){
-                goalRow = cell.getI();
-                goalCol = cell.getJ();
+        ArrayList<Cell.CoordinatesPair> goalCellCoords = Node.getGoalCellCoords();
+        for (Cell.CoordinatesPair coordinatesPair : goalCellCoords){
+            if (start.getCellAtCoords(coordinatesPair).getGoalLetter() == goalToSatisfy){
+                goalRow = coordinatesPair.getX();
+                goalCol = coordinatesPair.getY();
                 break;
             }
         }
@@ -178,9 +182,8 @@ public class BestFirstSearch {
 //        System.out.println("Agent to box: " + fromAgentToBox);
 //        System.out.println("Box to goal: " + fromBoxToGoal);
 //        System.out.println();
-        int h = fromBoxToGoal + fromAgentToBox; /*+ fromAgentToGoal*/
 
-        return h;
+        return fromBoxToGoal + fromAgentToBox;
     }
 
     // From Warm-Up assignment

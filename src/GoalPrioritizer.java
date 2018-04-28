@@ -16,7 +16,7 @@ public class GoalPrioritizer {
     private static ArrayList<Cell> agentCells = new ArrayList<>();
 
     private static ArrayList<ArrayList<Cell>> globalCombs = new ArrayList<>();
-    private static ArrayList<String> instantiations = new ArrayList<>();
+    public static ArrayList<String> instantiations = new ArrayList<>();
     private static ArrayList<ArrayList<Cell>> level = new ArrayList<>();
 
     public static void main(String[] args){
@@ -299,7 +299,7 @@ public class GoalPrioritizer {
         return false;
     }
 
-    private HashMap<Cell, ArrayList<ArrayList<ArrayList<Cell>>>> findLinearizations(PathFinder pathFinder,
+    public HashMap<Cell, ArrayList<ArrayList<ArrayList<Cell>>>> findLinearizations(PathFinder pathFinder,
                                                                                     ArrayList<ArrayList<Cell>> level ) {
 
         HashMap<Cell, ArrayList<ArrayList<ArrayList<Cell>>>> reachabilityMap =
@@ -358,7 +358,7 @@ public class GoalPrioritizer {
         return reachabilityMap;
     }
 
-    private String makeCellName(Cell cell){
+    public String makeCellName(Cell cell){
         return cell.getGoalLetter()+cell.toString();
     }
 

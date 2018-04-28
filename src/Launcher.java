@@ -41,5 +41,8 @@ public class Launcher {
             }
         }
         System.out.println("the time elapsed: " + timeElapsed);
+
+        // TODO: Test GoalPrioritizer in combination with A*
+
     }
 }
