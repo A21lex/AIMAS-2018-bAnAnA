@@ -50,14 +50,14 @@ public class BestFirstSearch {
      * @param goalToSatisfy Letter of the goal we would like to satisfy
      * @return ArrayList with Nodes of the shortest path order.
      */
-    static HashMap<Node, Integer> fScore;
     static ArrayList<Node> AStar(Node startState, char goalToSatisfy){
         if (!startState.isInLevel(goalToSatisfy)){
             System.out.println("The goal " + goalToSatisfy + " does not exist in the level.");
             System.out.println("A* quitting.");
             return new ArrayList<>();
         }
-
+        startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
+        startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
         ArrayList<Node> shortestPath = new ArrayList<>();
         // The set of nodes already evaluated
         HashSet<Node> visited = new HashSet<>();
@@ -67,14 +67,8 @@ public class BestFirstSearch {
         // For each node, which node it can be most efficiently be reached from
         // Will eventually contain the most efficient previous step.
         HashMap<Node, Node> cameFrom = new HashMap<>();
-        // Each node has a g value - cost of getting from the start node to that node
-        //HashMap<Node, Integer> gScore = new HashMap<>();
-        //gScore.put(startState, 0); //it costs 0 t get from startnode to itself
-        //getOrDefault(key, defaultValue) <- for default infinity values (thanks to Java 8!)
         // For each node, the total cost of getting from the start node to the goal
         // by passing by that node. For the first node it is completely heuristic.
-        //fScore = new HashMap<>();
-        //fScore.put(startState, heuristic(startState, goalToSatisfy));
         startState.fScore = heuristic(startState, goalToSatisfy);
         Node currentNode;
         while (!frontier.isEmpty()){
@@ -82,7 +76,7 @@ public class BestFirstSearch {
 //            {Thread.sleep(0);}
 //            catch (Exception e)
 //            {e.printStackTrace();}
-            currentNode = getLowestFNode(fScore, frontier);
+            currentNode = getLowestFNode(frontier);
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
@@ -96,8 +90,8 @@ public class BestFirstSearch {
             frontier.remove(currentNode);
             visited.add(currentNode);
 
-            ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
-            for (Node neighbour : curNeighbours){
+//            ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
+            for (Node neighbour : currentNode.getNeighbourNodes(0)){
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }
@@ -109,7 +103,8 @@ public class BestFirstSearch {
                 if (tentativeG >= neighbour.gScore){
                     continue;
                 }
-                cameFrom.put(neighbour, currentNode);
+                neighbour.setParent(currentNode); // better path
+                //cameFrom.put(neighbour, currentNode);
                 neighbour.gScore = tentativeG;
                 //gScore.put(neighbour,tentativeG);
                 neighbour.fScore = neighbour.gScore + heuristic(neighbour, goalToSatisfy);
@@ -121,18 +116,23 @@ public class BestFirstSearch {
         return shortestPath;
     }
 
+//    static ArrayList<Node> FullAStar(Node startState, ArrayList<Character> listOfGoals){
+//
+//    }
+
     private static ArrayList<Node> reconstructPath(HashMap<Node, Node> cameFrom, Node currentNode){
-        ArrayList<Node> totalPath = new ArrayList<>();
+        /*ArrayList<Node> totalPath = new ArrayList<>();
         totalPath.add(currentNode);
         while (cameFrom.keySet().contains(currentNode)){
             currentNode = cameFrom.get(currentNode);
             totalPath.add(currentNode);
         }
-        return  totalPath;
+        return  totalPath;*/
+        return currentNode.extractPlan();
     }
 
     // Returns the Node with the lowest F value in frontier
-    private static Node getLowestFNode(HashMap<Node, Integer> fScore, HashSet<Node> frontier){
+    private static Node getLowestFNode(HashSet<Node> frontier){
 
         Node lowestFValueNode = frontier.iterator().next(); // get some Node from frontier
         for (Node node : frontier){

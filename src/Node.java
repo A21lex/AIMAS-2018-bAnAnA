@@ -87,7 +87,9 @@ public class Node {
         this.fScore = Integer.MAX_VALUE; // same as above
         nodeCount++;
     }
-
+    public void setParent(Node parent){
+        this.parent = parent;
+    }
     public ArrayList<Agent> getAgents(){
         ArrayList<Agent> agents = new ArrayList<>();
         ArrayList<ArrayList<Cell>> level = this.level;
@@ -205,7 +207,7 @@ public class Node {
             if (c.actionType == Command.Type.Move) {
                 if (this.cellIsFree(newAgentRow, newAgentCol)) {
                     Node n = new Node(this); // create a child node with curr node as the parent
-                    n.setAction(c); // action c led us to the new node
+                    n.action = c; // action c led us to the new node
 
                     ArrayList<ArrayList<Cell>> updatedLevel = copyLevel(this.getLevel());
 
@@ -237,7 +239,7 @@ public class Node {
                     // And that new cell of the box is free
                     if (this.cellIsFree(newBoxRow, newBoxCol)){
                         Node n = new Node(this);
-                        n.setAction(c);
+                        n.action = c;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
@@ -281,7 +283,7 @@ public class Node {
                         Cell curBoxCell = this.getLevel().get(boxRow).get(boxCol);
                         Cell.CoordinatesPair curBoxCellCoords = new Cell.CoordinatesPair(curBoxCell);
                         Node n = new Node(this);
-                        n.setAction(c);
+                        n.action = c;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
@@ -318,7 +320,7 @@ public class Node {
             }
 
         }
-        Collections.shuffle(neighbourNodes, RND);
+        //Collections.shuffle(neighbourNodes, RND);
         return neighbourNodes;
     }
     private static final Random RND = new Random(2);
@@ -358,6 +360,16 @@ public class Node {
             }
         }
         return false;
+    }
+
+    public ArrayList<Node> extractPlan(){
+        ArrayList<Node> plan = new ArrayList<>();
+        Node n = this;
+        while (n.parent!=null){
+            plan.add(n);
+            n = n.parent;
+        }
+        return plan;
     }
 
     /**
@@ -427,11 +439,11 @@ public class Node {
         for (ArrayList<Cell> row: level){
             for (Cell cell: row){
                 //System.out.print(cell + " ");
-                if(cell.isGoal()){
-                    stringBuilder.append(cell.getGoalLetter()).append(" ");
-                }
-                else if (cell.getEntity() != null){
+                if (cell.getEntity() != null){
                     stringBuilder.append(cell.getEntity()).append(" ");
+                }
+                else if(cell.isGoal()){
+                    stringBuilder.append(cell.getGoalLetter()).append(" ");
                 }
                 else{
                     stringBuilder.append(cell.getType().equals(Type.WALL) ? '+' : ' ').append(" ");
