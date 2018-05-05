@@ -1,3 +1,5 @@
+package aimas;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -58,24 +60,17 @@ public class BestFirstSearch {
         }
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
+
         ArrayList<Node> shortestPath = new ArrayList<>();
-        // The set of nodes already evaluated
         HashSet<Node> visited = new HashSet<>();
-        // The set of currently discovered nodes that are not evaluated yet
         HashSet<Node> frontier = new HashSet<>();
         frontier.add(startState); // start node is the only one known initially
-        // For each node, which node it can be most efficiently be reached from
-        // Will eventually contain the most efficient previous step.
-        HashMap<Node, Node> cameFrom = new HashMap<>();
         // For each node, the total cost of getting from the start node to the goal
         // by passing by that node. For the first node it is completely heuristic.
         startState.fScore = heuristic(startState, goalToSatisfy);
         Node currentNode;
         while (!frontier.isEmpty()){
-//            try
-//            {Thread.sleep(0);}
-//            catch (Exception e)
-//            {e.printStackTrace();}
+
             currentNode = getLowestFNode(frontier);
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
@@ -84,7 +79,7 @@ public class BestFirstSearch {
 
             if (currentNode.isSatisfied(goalToSatisfy)){
                 System.out.println("satisfied h yeah");
-                shortestPath = reconstructPath(cameFrom, currentNode);
+                shortestPath = reconstructPath(currentNode);
                 return shortestPath;
             }
             frontier.remove(currentNode);
@@ -104,12 +99,8 @@ public class BestFirstSearch {
                     continue;
                 }
                 neighbour.setParent(currentNode); // better path
-                //cameFrom.put(neighbour, currentNode);
                 neighbour.gScore = tentativeG;
-                //gScore.put(neighbour,tentativeG);
                 neighbour.fScore = neighbour.gScore + heuristic(neighbour, goalToSatisfy);
-                //fScore.put(neighbour, (gScore.getOrDefault(neighbour, Integer.MAX_VALUE)
-                //        + heuristic(neighbour, goalToSatisfy)));
             }
 
         }
@@ -120,14 +111,7 @@ public class BestFirstSearch {
 //
 //    }
 
-    private static ArrayList<Node> reconstructPath(HashMap<Node, Node> cameFrom, Node currentNode){
-        /*ArrayList<Node> totalPath = new ArrayList<>();
-        totalPath.add(currentNode);
-        while (cameFrom.keySet().contains(currentNode)){
-            currentNode = cameFrom.get(currentNode);
-            totalPath.add(currentNode);
-        }
-        return  totalPath;*/
+    private static ArrayList<Node> reconstructPath(Node currentNode){
         return currentNode.extractPlan();
     }
 
@@ -136,9 +120,6 @@ public class BestFirstSearch {
 
         Node lowestFValueNode = frontier.iterator().next(); // get some Node from frontier
         for (Node node : frontier){
-//            if (fScore.get(node) < fScore.get(lowestFValueNode)){
-//                lowestFValueNode = node;
-//            }
             if (node.fScore < lowestFValueNode.fScore){
                 lowestFValueNode = node;
             }

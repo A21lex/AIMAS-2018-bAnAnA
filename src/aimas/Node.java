@@ -1,11 +1,9 @@
-/**
+package aimas; /**
  * Created by aleksandrs on 4/14/18.
  */
 
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 

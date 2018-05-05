@@ -1,7 +1,8 @@
+package aimas;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
 
 /**
  * Created by aleksandrs on 4/19/18.
@@ -50,25 +51,11 @@ public class Launcher {
         ArrayList<Character> goalsToAchieve = new ArrayList<>();
           //goalsToAchieve.add('w');
 
-        //goalsToAchieve.add('c');
-        //goalsToAchieve.add('b');
-        goalsToAchieve.add('b');
-        goalsToAchieve.add('c');
-//         goalsToAchieve.add('a');
-        goalsToAchieve.add('d');
-
+//        goalsToAchieve.add('b');
 //        goalsToAchieve.add('c');
 //        goalsToAchieve.add('d');
-//        goalsToAchieve.add('f');
-//        goalsToAchieve.add('h');
-//        goalsToAchieve.add('g');
-//        goalsToAchieve.add('e');
-
-
-        /*goalsToAchieve.add('b');
-        goalsToAchieve.add('c');
         goalsToAchieve.add('a');
-        goalsToAchieve.add('d');*/
+
         ArrayList<Node> totalShortestPath = new ArrayList<>(); // combine paths from A* and GP to solve level
         Node curNode = start;
         for (Character goal : goalsToAchieve){
