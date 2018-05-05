@@ -1,67 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="079c9cba-7f41-4d84-b8f5-32df0457d60d" name="Default" comment="">
+    <list default="true" id="079c9cba-7f41-4d84-b8f5-32df0457d60d" name="Default" comment="structure change">
+      <change afterPath="$PROJECT_DIR$/src/aimas/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aimas/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aimas/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BestFirstSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BestFirstSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GoalPrioritizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoalPrioritizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LevelReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LevelReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PartialOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PartialOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PathFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PathFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAAIoliMAsh.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAAIoliMAsh.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MABeliebers.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MABeliebers.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MABlinky.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MABlinky.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MABoxBunny.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MABoxBunny.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MABronies.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MABronies.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MADAT.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MADAT.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MADoDo.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MADoDo.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAEvilCorp.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAEvilCorp.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAFooBar.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAFooBar.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAGeneralAI.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAGeneralAI.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAGroupOne.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAGroupOne.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAHALnineK.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAHALnineK.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAHiveMind.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAHiveMind.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAIamGreedy.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAIamGreedy.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAJomarki.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAJomarki.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAKalle.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAKalle.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MALemmings.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MALemmings.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MALiquorice.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MALiquorice.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAMASters.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAMASters.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAMasAiArne.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAMasAiArne.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MANeverMind.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MANeverMind.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAOmnics.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAOmnics.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MATALK.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MATALK.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAgroupname.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAgroupname.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/MAtnrbts.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/MAtnrbts.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAAIoliMAsh.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAAIoliMAsh.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SABeliebers.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SABeliebers.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SABlinky.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SABlinky.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SABoxBunny.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SABoxBunny.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SABronies.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SABronies.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SADAT.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SADAT.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SADoDo.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SADoDo.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAEvilCorp.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAEvilCorp.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAFooBar.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAFooBar.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAGeneralAI.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAGeneralAI.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAGroupOne.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAGroupOne.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAHALnineK.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAHALnineK.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAHiveMind.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAHiveMind.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAIamGreedy.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAIamGreedy.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAJomarki.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAJomarki.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAKalle.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAKalle.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SALemmings.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SALemmings.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SALiquorice.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SALiquorice.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAMASters.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAMASters.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAMasAiArne.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAMasAiArne.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SANeverMind.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SANeverMind.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAOmnics.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAOmnics.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SATALK.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SATALK.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAgroupname.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAgroupname.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/competition_levelsSP17/SAtnrbts.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/competition_levelsSP17/SAtnrbts.lvl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testNode.lvl" beforeDir="false" afterPath="$PROJECT_DIR$/testNode.lvl" afterDir="false" />
     </list>
     <ignored path="AIMAS_Programming_Project_2018.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,10 +30,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="BestFirstSearch.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BestFirstSearch.java">
+        <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
+              <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#main#0;class#BestFirstSearch#0" />
@@ -110,10 +54,10 @@
         </entry>
       </file>
       <file leaf-file-name="Cell.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Cell.java">
+        <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
-              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -127,10 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Launcher.java">
+      <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="240">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -138,23 +83,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Command.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Command.java">
+      <file leaf-file-name="Command.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/Command.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+            <state relative-caret-position="270">
+              <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#528#537#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="LevelReader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/LevelReader.java">
+        <entry file="file://$PROJECT_DIR$/src/aimas/LevelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="137" column="55" selection-start-line="137" selection-start-column="55" selection-end-line="137" selection-end-column="55" />
+            <state relative-caret-position="375">
+              <caret line="74" column="71" lean-forward="true" selection-start-line="74" selection-start-column="71" selection-end-line="74" selection-end-column="71" />
               <folding>
                 <element signature="method#main#0;class#LevelReader#0" />
               </folding>
@@ -163,7 +108,7 @@
         </entry>
       </file>
       <file leaf-file-name="GoalPrioritizer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GoalPrioritizer.java">
+        <entry file="file://$PROJECT_DIR$/src/aimas/GoalPrioritizer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="50">
               <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
@@ -218,6 +163,7 @@
         <option value="$PROJECT_DIR$/src/aimas/Launcher.java" />
         <option value="$PROJECT_DIR$/src/dtu.aimas/Launcher.java" />
         <option value="$PROJECT_DIR$/src/Command.java" />
+        <option value="$PROJECT_DIR$/src/aimas/Command.java" />
       </list>
     </option>
   </component>
@@ -252,7 +198,45 @@
             <path>
               <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
               <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="aimas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="aimas" type="462c0819:PsiDirectoryNode" />
+              <item name="Cell.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="aimas" type="462c0819:PsiDirectoryNode" />
+              <item name="Entity.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
           </expand>
           <select />
@@ -273,9 +257,9 @@
       <recent name="$PROJECT_DIR$/res/competition_levelsSP17" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/aimas" />
       <recent name="$PROJECT_DIR$/res/levels" />
       <recent name="$PROJECT_DIR$/src/dtu.aimas" />
-      <recent name="$PROJECT_DIR$/src/aimas" />
       <recent name="$PROJECT_DIR$/src/" />
       <recent name="$PROJECT_DIR$/src/dk/dtu/aimas" />
     </key>
@@ -292,32 +276,27 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.LevelReader">
+  <component name="RunManager" selected="Application.Launcher">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HEIGHT" value="0" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="WIDTH" value="0" />
     </configuration>
-    <configuration name="GoalPrioritizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GoalPrioritizer" />
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Launcher" />
       <module name="AIMAS_Programming_Project_2018" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="Launcher (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="aimas.Launcher" />
       <module name="AIMAS_Programming_Project_2018" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="aimas.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-    </configuration>
-    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Launcher" />
-      <module name="AIMAS_Programming_Project_2018" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
     <configuration name="LevelReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="aimas.LevelReader" />
@@ -329,11 +308,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-    </configuration>
-    <configuration name="Node" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Node" />
-      <module name="AIMAS_Programming_Project_2018" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -549,19 +523,14 @@
       <method />
     </configuration>
     <list>
-      <item itemvalue="Application.GoalPrioritizer" />
       <item itemvalue="Application.Launcher" />
-      <item itemvalue="Application.Node" />
-      <item itemvalue="Application.Launcher (1)" />
       <item itemvalue="Application.LevelReader" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LevelReader" />
-        <item itemvalue="Application.Launcher (1)" />
         <item itemvalue="Application.Launcher" />
-        <item itemvalue="Application.GoalPrioritizer" />
-        <item itemvalue="Application.Node" />
+        <item itemvalue="Application.Launcher" />
+        <item itemvalue="Application.LevelReader" />
       </list>
     </recent_temporary>
   </component>
@@ -625,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525519503392</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="structure change">
+      <created>1525525088323</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1525525088323</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -639,6 +615,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32972136" />
@@ -648,12 +625,12 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32972136" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32917318" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.6848674" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32972136" />
       <window_info id="Capture Tool" order="2" />
       <window_info anchor="right" id="Designer" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26363635" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26363635" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -716,14 +693,15 @@
     <MESSAGE value="Performance improvements; added Launcher class" />
     <MESSAGE value="Minor things added (some comments and removed some old stuff)" />
     <MESSAGE value="A*: path finding and chaining fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="A*: path finding and chaining fixed." />
+    <MESSAGE value="structure change" />
+    <option name="LAST_COMMIT_MESSAGE" value="structure change" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="153" />
+      <option name="time" value="155" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -766,7 +744,7 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Launcher.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="12" column="78" selection-start-line="12" selection-start-column="78" selection-end-line="12" selection-end-column="78" />
@@ -776,21 +754,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cell.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2646">
           <caret line="172" column="17" selection-start-line="172" selection-start-column="17" selection-end-line="172" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1332">
           <caret line="79" column="30" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BestFirstSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
@@ -810,7 +788,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Node.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
           <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
@@ -824,7 +802,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BestFirstSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
@@ -850,35 +828,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GoalPrioritizer.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/GoalPrioritizer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cell.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/LevelReader.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/LevelReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2160">
           <caret line="127" column="18" selection-start-line="127" selection-start-column="18" selection-end-line="127" selection-end-column="18" />
@@ -888,7 +866,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Node.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
@@ -901,7 +879,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BestFirstSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1458">
           <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
@@ -914,7 +892,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="666">
           <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
@@ -1026,7 +1004,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="885">
           <caret line="73" column="23" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
@@ -1040,7 +1018,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1185">
           <caret line="191" column="1" selection-start-line="191" selection-start-column="1" selection-end-line="191" selection-end-column="1" />
@@ -1051,7 +1029,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Node.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4110">
           <caret line="362" column="27" selection-start-line="362" selection-start-column="27" selection-end-line="362" selection-end-column="27" />
@@ -1065,17 +1043,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="870">
           <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BestFirstSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
+          <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#main#0;class#BestFirstSearch#0" />
@@ -1085,7 +1063,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GoalPrioritizer.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/GoalPrioritizer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
@@ -1106,29 +1084,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/LevelReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="137" column="55" selection-start-line="137" selection-start-column="55" selection-end-line="137" selection-end-column="55" />
-          <folding>
-            <element signature="method#main#0;class#LevelReader#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cell.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1152,12 +1111,32 @@
     <entry file="file://$PROJECT_DIR$/res/levels/competition_levelsSP17/MABlinky.lvl">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Command.java">
+    <entry file="file://$PROJECT_DIR$/src/aimas/LevelReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="74" column="71" lean-forward="true" selection-start-line="74" selection-start-column="71" selection-end-line="74" selection-end-column="71" />
+          <folding>
+            <element signature="method#main#0;class#LevelReader#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+          <folding>
+            <element signature="e#528#537#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1179,7 +1158,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>No facets are configured</last-edited>
+          <last-edited />
           <splitter-proportions>
             <option name="proportions">
               <list>
