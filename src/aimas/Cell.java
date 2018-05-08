@@ -52,7 +52,7 @@ public class Cell {
     public Entity getEntity() {
         return this.entity;
     }
-    char getGoalLetter(){
+    public char getGoalLetter(){
         return this.goalLetter;
     }
     void setType(Type type){

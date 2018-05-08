@@ -115,10 +115,22 @@ public class PathFinder {
         return false;
     }
 
+    public static ArrayList<Box> getBoxesOnPath(ArrayList<ArrayList<Cell>> level,
+                                                CoordinatesPair startingCoordinatesPair,
+                                                CoordinatesPair finishingCoordinatesPair,
+                                                boolean wObstacles, boolean aObstacles, boolean bObstacles){
+
+        /**
+         * Implement this to return boxes on path between 2 cells (use the method below: note that if final
+         * cell has a box, it still counts as "0" (as we are trying to "reach" this goal)
+         */
+        return new ArrayList<Box>();
+
+    }
 
     private static Integer[][] getSimplifiedLevelArray(ArrayList<ArrayList<Cell>> level,
                                                        CoordinatesPair startingCoordinatesPair,
-                                                CoordinatesPair finishingCoordinatesPair,
+                                                       CoordinatesPair finishingCoordinatesPair,
                                                 boolean wObstacles, boolean aObstacles, boolean bObstacles){
         ArrayList<ArrayList<Integer>> simpleLevel = new ArrayList<>();
 

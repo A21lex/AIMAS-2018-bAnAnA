@@ -1,6 +1,7 @@
 package aimas;
 
 import aimas.actions.Action;
+import aimas.actions.AtomicAction;
 import aimas.entities.Box;
 
 import java.io.IOException;
@@ -221,7 +222,7 @@ public class BestFirstSearch {
 
     // A* which calculates path depending on the action. Each action has different implementation of heuristic
     // and isAchieved methods
-    static ArrayList<Node> AStar(Node startState, Action action){
+    static ArrayList<Node> AStar(Node startState, AtomicAction action){
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
         ArrayList<Node> shortestPath = new ArrayList<>();

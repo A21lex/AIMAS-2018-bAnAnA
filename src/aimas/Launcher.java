@@ -1,9 +1,8 @@
 package aimas;
 
 import aimas.actions.Action;
-import aimas.actions.ClearPathToBox;
-import aimas.actions.GetToBoxAction;
-import aimas.actions.MoveBoxAction;
+import aimas.actions.AtomicAction;
+import aimas.actions.atomic.MoveSurelyAction;
 import aimas.entities.Box;
 
 import java.io.IOException;
@@ -87,7 +86,13 @@ public class Launcher {
 
         // Testing new action stuff
 
-        // Get a box to operate on
+        List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
+        List<Box> boxes = new ArrayList<>();
+        AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
+        ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
+
+
+        /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
         for (CoordinatesPair coordinate : boxCoords){
@@ -96,10 +101,14 @@ public class Launcher {
         List<Action> actions = new ArrayList<>();
         for (Box box : boxes){
             // do some stuff for ALL boxes in the level
+            actions.add(new ClearPathToBox(box));
+            actions.add(new GetToBoxAction(box));
+            actions.add(new MoveBoxAction(box, new CoordinatesPair(3, 10)));
 
         }
+        List<Node> path = getTotalPath(actions, start);
 
-        Box box = boxes.get(8); //take U box in list of coords
+        *//*Box box = boxes.get(8); //take U box in list of coords
 
         List<Action> actionsToPerform = new ArrayList<>();
         // Define some actions
@@ -112,26 +121,14 @@ public class Launcher {
 
         List<Node> path = new ArrayList<>();
 
-//        Node curNode = start;
-//        for (Action action : actionsToPerform){
-//            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, action);
-//            for (int i = tempPath.size() - 1; i >= 0; i--){
-//                path.add(0,tempPath.get(i)); // add to start of list
-//            }
-//            tempPath.clear();
-//            if (path.size() > 0) { // if path.size()==0, it means action had already been completed, so do nothing
-//                curNode = path.get(0); // we are at last element of the totpath
-//            }
-//            System.out.println(curNode);
-//        }
-        path = getTotalPath(actionsToPerform, start);
+        path = getTotalPath(actionsToPerform, start);*//*
         System.out.println("Printing total shortest path");
         for (int i = path.size() - 1; i >= 0; i--) {
             if (path.get(i).getAction() != null) { // if the action is null, this is a start node
                 System.out.println(path.get(i).getAction().toString());
                 //System.out.println(totalShortestPath.get(i));
             }
-        }
+        }*/
 
 
 
@@ -167,7 +164,7 @@ public class Launcher {
 
     }
 
-    static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
+    /*static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
         List<Node> path = new ArrayList<>();
         Node curNode = node;
         for (Action action : actionsToPerform){
@@ -182,7 +179,7 @@ public class Launcher {
             System.out.println(curNode);
         }
         return path;
-    }
+    }*/
 
 
 }

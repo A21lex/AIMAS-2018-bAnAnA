@@ -1,23 +1,26 @@
-package aimas.actions;
+package aimas.actions.atomic;
 
 import aimas.Cell;
 import aimas.CoordinatesPair;
+import aimas.actions.ActionType;
+import aimas.actions.AtomicAction;
 import aimas.entities.Box;
 import aimas.Node;
 
-public class MoveBoxAction extends Action {
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Atomic action DELIVER_BOX_SURELY. This is called when path betweeen box and "finish" is clear.
+ */
+public class DeliverBoxSurelyAction extends AtomicAction {
     Box box;
     CoordinatesPair finish; // move box to here
 
-    public MoveBoxAction(Box box, CoordinatesPair finish){
+    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish){
         this.box = box;
         this.finish = finish;
-        this.actionType = ActionType.MOVE_BOX;
-    }
-
-    @Override
-    public ActionType getType() {
-        return this.actionType;
+        this.actionType = ActionType.DELIVER_BOX_SURELY;
     }
 
     @Override
@@ -31,8 +34,9 @@ public class MoveBoxAction extends Action {
         return box.getCoordinates(node).equals(finish);
     }
 
+
     @Override
     public String toString() {
-        return "MoveBoxAction: moving Box " + box + " to cell " + finish;
+        return "DeliverBoxSurelyAction: moving Box " + box + " to cell " + finish;
     }
 }

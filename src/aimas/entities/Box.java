@@ -11,6 +11,10 @@ public class Box extends Entity{
     private char letter;
     private int id; // every box has a unique ID - helps distinguish between boxes of same color/letter!
 
+    public int getId() {
+        return id;
+    }
+
     // Go through all coordinates of the node and check which corresponds to THIS box
     public CoordinatesPair getCoordinates(Node node) {
         ArrayList<CoordinatesPair> boxCoordinates = node.getBoxCellCoords();
