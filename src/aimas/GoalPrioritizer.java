@@ -2,14 +2,17 @@ package aimas; /**
  * Created by Arturs Gumenuks on 08.04.2018.
  */
 
+import aimas.entities.Box;
+import aimas.entities.Entity;
+
 import java.io.IOException;
 import java.util.*;
 
 public class GoalPrioritizer {
 
-    private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
 
     private static ArrayList<Cell> goalCells = new ArrayList<>();
     private static ArrayList<Cell> boxCells = new ArrayList<>();
@@ -46,13 +49,13 @@ public class GoalPrioritizer {
         goalCellCoords = LevelReader.getGoalCellCoords();
         agentCellCoords = LevelReader.getAgentCellCoords();
 
-        for (Cell.CoordinatesPair coordinatesPair : boxCellCoords){
+        for (CoordinatesPair coordinatesPair : boxCellCoords){
             boxCells.add(getCellAt(level,coordinatesPair));
         }
-        for (Cell.CoordinatesPair coordinatesPair : goalCellCoords){
+        for (CoordinatesPair coordinatesPair : goalCellCoords){
             goalCells.add(getCellAt(level,coordinatesPair));
         }
-        for (Cell.CoordinatesPair coordinatesPair : agentCellCoords){
+        for (CoordinatesPair coordinatesPair : agentCellCoords){
             agentCells.add(getCellAt(level,coordinatesPair));
         }
         System.out.println("boxes: " + boxCells);
@@ -279,13 +282,13 @@ public class GoalPrioritizer {
 //        for (HashMap.Entry<OrdConstraint, Boolean> entry : constrInstantiations.entrySet()) {
 //            if (entry.getKey().equals(constraint) || entry.getKey().inverseOf(constraint)) return true;
 //        }
-        Cell.CoordinatesPair beforeCellCoorPair =
-                new Cell.CoordinatesPair(constraint.getBeforeCell().getI(), constraint.getBeforeCell().getJ());
+        CoordinatesPair beforeCellCoorPair =
+                new CoordinatesPair(constraint.getBeforeCell().getI(), constraint.getBeforeCell().getJ());
         //Cell beforeCell = getCellAt(level,beforeCellCoorPair);
         Cell beforeCell = new Cell(constraint.getBeforeCell().getI(), constraint.getBeforeCell().getJ());
 
-        Cell.CoordinatesPair afterCellCoorPair =
-                new Cell.CoordinatesPair(constraint.getAfterCell().getI(), constraint.getAfterCell().getJ());
+        CoordinatesPair afterCellCoorPair =
+                new CoordinatesPair(constraint.getAfterCell().getI(), constraint.getAfterCell().getJ());
        // Cell afterCell = getCellAt(level,afterCellCoorPair);
         Cell afterCell = new Cell(constraint.getAfterCell().getI(), constraint.getAfterCell().getJ());
         OrdConstraint krutchFFS = new OrdConstraint(beforeCell, afterCell);
@@ -421,7 +424,7 @@ public class GoalPrioritizer {
             level.get(curI).get(curJ).setEntity(someBox);
         }
 
-        Cell.CoordinatesPair agentCellCoordinate = LevelReader.getAgentCellCoords().get(0);
+        CoordinatesPair agentCellCoordinate = LevelReader.getAgentCellCoords().get(0);
         Cell agentCell = getCellAt(level, agentCellCoordinate);
         boolean wObstacles = true; // walls are obstacles
         boolean aObstacles = false; // agents are obstacles
@@ -440,7 +443,7 @@ public class GoalPrioritizer {
         return !pathExists;
     }
 
-    private static Cell getCellAt(ArrayList<ArrayList<Cell>> level, Cell.CoordinatesPair coordinatesPair){
+    private static Cell getCellAt(ArrayList<ArrayList<Cell>> level, CoordinatesPair coordinatesPair){
         return level.get(coordinatesPair.getX()).get(coordinatesPair.getY());
     }
 
@@ -451,7 +454,7 @@ public class GoalPrioritizer {
 
         ArrayList<ArrayList<Cell>> goalPartOrd = new ArrayList<ArrayList<Cell>>();
 
-        Cell.CoordinatesPair agentCellCoord = LevelReader.getAgentCellCoords().get(0);
+        CoordinatesPair agentCellCoord = LevelReader.getAgentCellCoords().get(0);
         Cell agentCell = getCellAt(level, agentCellCoord); // taking any agent for now, since colors are omitted
        // goalPriorities.add(new ArrayList<Cell>());
         for (int i=0; i<goalCells.size(); i++){

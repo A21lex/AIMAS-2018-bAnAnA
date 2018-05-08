@@ -1,7 +1,14 @@
 package aimas;
 
+import aimas.actions.Action;
+import aimas.actions.ClearPathToBox;
+import aimas.actions.GetToBoxAction;
+import aimas.actions.MoveBoxAction;
+import aimas.entities.Box;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -10,15 +17,14 @@ import java.util.ArrayList;
 
 /**
  * Run everything.. basically can be used for testing for now.
- * TODO fix bug: now commands are correct but nodes are wrong in the loop below
- * TODO ONLY in case we try to chain goals: otherwise works fine now... fml...
+ *
  */
 public class Launcher {
 
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("testNode.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -51,12 +57,15 @@ public class Launcher {
         ArrayList<Character> goalsToAchieve = new ArrayList<>();
           //goalsToAchieve.add('w');
 
-//        goalsToAchieve.add('b');
+        goalsToAchieve.add('w');
+        goalsToAchieve.add('u');
+//        goalsToAchieve.add('d');
 //        goalsToAchieve.add('c');
 //        goalsToAchieve.add('d');
-        goalsToAchieve.add('a');
+//        goalsToAchieve.add('a');
 
-        ArrayList<Node> totalShortestPath = new ArrayList<>(); // combine paths from A* and GP to solve level
+
+        /*ArrayList<Node> totalShortestPath = new ArrayList<>(); // combine paths from A* and GP to solve level
         Node curNode = start;
         for (Character goal : goalsToAchieve){
             ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, goal);
@@ -74,6 +83,106 @@ public class Launcher {
                 System.out.println(totalShortestPath.get(i).getAction().toString());
                 //System.out.println(totalShortestPath.get(i));
             }
+        }*/
+
+        // Testing new action stuff
+
+        // Get a box to operate on
+        List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
+        List<Box> boxes = new ArrayList<>();
+        for (CoordinatesPair coordinate : boxCoords){
+            boxes.add((Box) start.getCellAtCoords(coordinate).getEntity());
         }
+        List<Action> actions = new ArrayList<>();
+        for (Box box : boxes){
+            // do some stuff for ALL boxes in the level
+
+        }
+
+        Box box = boxes.get(8); //take U box in list of coords
+
+        List<Action> actionsToPerform = new ArrayList<>();
+        // Define some actions
+        Action clearPathToBox = new ClearPathToBox(box);
+        Action getToBoxAction = new GetToBoxAction(box);
+        Action moveBoxAction = new MoveBoxAction(box, new CoordinatesPair(3, 10));
+        actionsToPerform.add(clearPathToBox);
+        actionsToPerform.add(getToBoxAction);
+        actionsToPerform.add(moveBoxAction);
+
+        List<Node> path = new ArrayList<>();
+
+//        Node curNode = start;
+//        for (Action action : actionsToPerform){
+//            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, action);
+//            for (int i = tempPath.size() - 1; i >= 0; i--){
+//                path.add(0,tempPath.get(i)); // add to start of list
+//            }
+//            tempPath.clear();
+//            if (path.size() > 0) { // if path.size()==0, it means action had already been completed, so do nothing
+//                curNode = path.get(0); // we are at last element of the totpath
+//            }
+//            System.out.println(curNode);
+//        }
+        path = getTotalPath(actionsToPerform, start);
+        System.out.println("Printing total shortest path");
+        for (int i = path.size() - 1; i >= 0; i--) {
+            if (path.get(i).getAction() != null) { // if the action is null, this is a start node
+                System.out.println(path.get(i).getAction().toString());
+                //System.out.println(totalShortestPath.get(i));
+            }
+        }
+
+
+
+//        ArrayList<Node> stufftest = BestFirstSearch.AStar(start, clearPathToBox);
+//        for (int i = stufftest.size() - 1; i >= 0; i--) {
+//            if (stufftest.get(i).getAction() != null) { // if the action is null, this is a start node
+//                System.out.println(stufftest.get(i).getAction().toString());
+//                System.out.println(stufftest.get(i));
+//            }
+//        }
+//
+//
+//        System.out.println(getToBoxAction.getType());
+//        ArrayList<Node> testshortpathtobox = BestFirstSearch.AStar(start, getToBoxAction);
+//        for (int i = testshortpathtobox.size() - 1; i >= 0; i--) {
+//            if (testshortpathtobox.get(i).getAction() != null) { // if the action is null, this is a start node
+//                System.out.println(testshortpathtobox.get(i).getAction().toString());
+//                System.out.println(testshortpathtobox.get(i));
+//            }
+//        }
+//
+//        ArrayList<Node> last = BestFirstSearch.AStar(start, moveBoxAction);
+//        for (int i = last.size() -1; i >= 0; i--){
+//            if (last.get(i).getAction() != null){
+//                System.out.println(last.get(i).getAction().toString());
+//                System.out.println(last.get(i));
+//            }
+//        }
+
+
+
+
+
     }
+
+    static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
+        List<Node> path = new ArrayList<>();
+        Node curNode = node;
+        for (Action action : actionsToPerform){
+            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, action);
+            for (int i = tempPath.size() - 1; i >= 0; i--){
+                path.add(0,tempPath.get(i)); // add to start of list
+            }
+            tempPath.clear();
+            if (path.size() > 0) { // if path.size()==0, it means action had already been completed, so do nothing
+                curNode = path.get(0); // we are at last element of the totpath
+            }
+            System.out.println(curNode);
+        }
+        return path;
+    }
+
+
 }

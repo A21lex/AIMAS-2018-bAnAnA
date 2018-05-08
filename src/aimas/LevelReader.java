@@ -2,6 +2,11 @@ package aimas; /**
  * Created by aleksandrs on 4/4/18.
  */
 
+import aimas.entities.Agent;
+import aimas.entities.Box;
+import aimas.entities.Color;
+import aimas.entities.Entity;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,11 +14,11 @@ import java.util.ArrayList;
 
 public final class LevelReader {
 
-    private static ArrayList<Cell.CoordinatesPair> goalCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> boxCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> agentCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> spaceCellCoords = new ArrayList<>();
-    private static ArrayList<Cell.CoordinatesPair> tunnelCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> spaceCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
 
     public static void main(String[] args){
         LevelReader levelReader = new LevelReader();
@@ -63,9 +68,10 @@ public final class LevelReader {
 
     }
 
-    // read file
+    // read file - different boxes get different IDs...
     public static ArrayList<ArrayList<Cell>> getLevel(String pathToLevel) throws IOException{
         ArrayList<ArrayList<Cell>> level = new ArrayList<>(); // store level here
+        int id = 0; // for unique identification of boxes
         BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToLevel));
         try {
             String line = bufferedReader.readLine();
@@ -82,7 +88,7 @@ public final class LevelReader {
                         //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
                         //TODO: check for last row
                         if(curCol!=0 && curRow!=0 && curCol!=line.length()-1){
-                            spaceCellCoords.add(new Cell.CoordinatesPair(cell));
+                            spaceCellCoords.add(new CoordinatesPair(cell));
                         }
                     }
                     else if (c == '+'){
@@ -98,26 +104,27 @@ public final class LevelReader {
                         cell.setType(Type.SPACE);
                         //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
                         row.add(cell);
-                        agentCellCoords.add(new Cell.CoordinatesPair(cell));
-                        spaceCellCoords.add(new Cell.CoordinatesPair(cell));
+                        agentCellCoords.add(new CoordinatesPair(cell));
+                        spaceCellCoords.add(new CoordinatesPair(cell));
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
-                        Box box = new Box(Color.BLUE, c);
+                        Box box = new Box(Color.BLUE, c, id);
+                        id++; // increase id. every box will have a different one.
                         cell.setEntity(box);
                         cell.setGoalLetter('0');
                         cell.setType(Type.SPACE);
                        // Cell boxCell = new Cell(curRow, curCol, Cell.Type.Box, true, c);
                         row.add(cell);
-                        boxCellCoords.add(new Cell.CoordinatesPair(cell));
-                        spaceCellCoords.add(new Cell.CoordinatesPair(cell));
+                        boxCellCoords.add(new CoordinatesPair(cell));
+                        spaceCellCoords.add(new CoordinatesPair(cell));
                     }
                     else if ('a' <= c && c <= 'z'){
                         Cell cell = new Cell(curRow, curCol, Type.SPACE, null, c);
                         //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
                         row.add(cell);
-                        goalCellCoords.add(new Cell.CoordinatesPair(cell));
-                        spaceCellCoords.add(new Cell.CoordinatesPair(cell));
+                        goalCellCoords.add(new CoordinatesPair(cell));
+                        spaceCellCoords.add(new CoordinatesPair(cell));
                     }
                 }
                 level.add(row); // add a row to the level
@@ -126,7 +133,7 @@ public final class LevelReader {
             }
 
             //determine tunnel cells
-            for (Cell.CoordinatesPair spc: spaceCellCoords) {
+            for (CoordinatesPair spc: spaceCellCoords) {
                 // wall on top and bellow or  wall on sides
                 if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
                         (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL))) {
@@ -167,19 +174,19 @@ public final class LevelReader {
         }
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getGoalCellCoords(){
+    public static ArrayList<CoordinatesPair> getGoalCellCoords(){
         return goalCellCoords;
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getBoxCellCoords(){
+    public static ArrayList<CoordinatesPair> getBoxCellCoords(){
         return boxCellCoords;
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getAgentCellCoords(){
+    public static ArrayList<CoordinatesPair> getAgentCellCoords(){
         return agentCellCoords;
     }
 
-    public static ArrayList<Cell.CoordinatesPair> getTunnelCellCoords(){
+    public static ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
 }
