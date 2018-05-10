@@ -1,14 +1,14 @@
 package aimas.actions.expandable;
 
-import aimas.CoordinatesPair;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
 import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
-import aimas.entities.Agent;
-import aimas.entities.Box;
-import aimas.entities.Entity;
+import aimas.board.entities.Agent;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
 
 import java.util.ArrayList;
 

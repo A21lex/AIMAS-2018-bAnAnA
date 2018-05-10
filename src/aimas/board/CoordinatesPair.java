@@ -1,4 +1,4 @@
-package aimas;
+package aimas.board;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -61,7 +61,7 @@ public class CoordinatesPair {
     }
 
     // Returns neighboring cells (their coordinates) which are results of legal moves
-    ArrayList<CoordinatesPair> getChildren(Integer[][] level){
+    public ArrayList<CoordinatesPair> getChildren(Integer[][] level){
         int[][] values={{0,1},{0,-1},{1,0},{-1,0}};
         ArrayList<CoordinatesPair> children = new ArrayList<>();
         for (int i = 0; i < values.length; i++){

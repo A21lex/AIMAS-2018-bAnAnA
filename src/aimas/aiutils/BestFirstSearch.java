@@ -1,9 +1,9 @@
-package aimas;
+package aimas.aiutils;
 
-import aimas.actions.Action;
+import aimas.*;
 import aimas.actions.AtomicAction;
-import aimas.actions.atomic.MoveSurelyAction;
-import aimas.entities.Box;
+import aimas.board.CoordinatesPair;
+import aimas.board.entities.Box;
 
 import java.io.IOException;
 import java.util.*;
@@ -67,7 +67,6 @@ public class BestFirstSearch {
         HashSet<Node> visited = new HashSet<>();
         HashSet<Node> frontier = new HashSet<>();
         frontier.add(startState); // start node is the only one known initially
-        SearchMethod searchMethod = new SimpleGoalSatisfier(goalToSatisfy); // do we need this?..
         startState.fScore = heuristic(startState, goalToSatisfy);
         Node currentNode;
         while (!frontier.isEmpty()){
@@ -227,7 +226,7 @@ public class BestFirstSearch {
 
     // A* which calculates path depending on the action. Each action has different implementation of heuristic
     // and isAchieved methods
-    static ArrayList<Node> AStar(Node startState, AtomicAction action){
+    public static ArrayList<Node> AStar(Node startState, AtomicAction action){
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
         ArrayList<Node> shortestPath = new ArrayList<>();

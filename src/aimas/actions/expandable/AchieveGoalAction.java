@@ -1,14 +1,14 @@
 package aimas.actions.expandable;
 
-import aimas.Cell;
-import aimas.CoordinatesPair;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
-import aimas.entities.Box;
+import aimas.board.entities.Box;
 
 import java.util.ArrayList;
 import java.util.List;

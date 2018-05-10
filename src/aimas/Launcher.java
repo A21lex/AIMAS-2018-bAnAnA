@@ -3,10 +3,12 @@ package aimas;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
-import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.SolveLevelAction;
+import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
-import aimas.entities.Box;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
+import aimas.board.entities.Box;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAbAnAnA.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -92,8 +94,8 @@ public class Launcher {
 
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
-        AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
-        ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
+        //AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
+        //ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
 
         // Test BoxAssigner
         HashMap<Cell, Box> goalsBoxes =  BoxAssigner.assignBoxesToGoals(start);
@@ -118,6 +120,16 @@ public class Launcher {
         actionsToPerform.add(someotheraction.decompose(start).get(3));*/
 
         /* THIS IS JUST A TEST */
+        /* FOR NOW ONLY WORKS FOR LEVELS WHERE IT IS POSSIBLE
+        TO ACHIEVE GOALS WITHOUT HAVING TO CLEAR PATHS
+        AND THUS WITHOUT HAVING TO CONSIDER ORDER OF ACHIEVING GOALS
+        SAanagram
+        SAchoice
+        SAD1
+        SAsoko3_48
+        SAbAnAnA  (our SA level for now)
+
+        */
         for (Action action : actions){
             ExpandableAction expandableAction = (ExpandableAction) action;
             for (Action subAction: expandableAction.decompose(start)){

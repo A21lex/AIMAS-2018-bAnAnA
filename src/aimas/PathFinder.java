@@ -2,8 +2,11 @@ package aimas; /**
  * Created by aleksandrs on 4/3/18.
  */
 
-import aimas.entities.Agent;
-import aimas.entities.Box;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
+import aimas.board.Type;
+import aimas.board.entities.Agent;
+import aimas.board.entities.Box;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class PathFinder {
     }
 
     public static boolean pathExists(ArrayList<ArrayList<Cell>> level, Cell startingCell, Cell finishingCell,
-                       boolean wObstacles, boolean aObstacles, boolean bObstacles){
+                                     boolean wObstacles, boolean aObstacles, boolean bObstacles){
         // convert level to array of 1s and 0s depending on the defined obstacles
         Integer[][] simplifiedLevel = getSimplifiedLevelArray(level,
                 startingCell.getCoordinates(), finishingCell.getCoordinates(), wObstacles, aObstacles, bObstacles);

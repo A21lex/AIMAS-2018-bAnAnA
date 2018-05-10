@@ -1,6 +1,6 @@
-package aimas.entities;
+package aimas.board.entities;
 
-import aimas.CoordinatesPair;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 
 import java.util.ArrayList;

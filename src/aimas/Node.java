@@ -3,9 +3,12 @@ package aimas; /**
  */
 
 
-import aimas.entities.Agent;
-import aimas.entities.Box;
-import aimas.entities.Entity;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
+import aimas.board.Type;
+import aimas.board.entities.Agent;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -190,7 +193,7 @@ public class Node {
      * @param agentNumber Number of agent movements of whom we consider
      * @return List of nodes available by making any legal move by the agent
      */
-    ArrayList<Node> getNeighbourNodes(int agentNumber){
+    public ArrayList<Node> getNeighbourNodes(int agentNumber){
         ArrayList<Node> neighbourNodes = new ArrayList<>(Command.EVERY.length);
 
         // Neighbour nodes are nodes which can result from movements of the agent from whose
@@ -214,7 +217,7 @@ public class Node {
         for (Command c: Command.EVERY){
             int newAgentRow = curAgentRow + Command.dirToRowChange(c.dir1);
             int newAgentCol = curAgentCol + Command.dirToColChange(c.dir1);
-            if (c.actionType == Command.Type.Move) {
+            if (c.actionCommandType == Command.CommandType.Move) {
                 if (this.cellIsFree(newAgentRow, newAgentCol)) {
                     Node n = new Node(this); // create a child node with curr node as the parent
                     n.action = c; // action c led us to the new node
@@ -239,7 +242,7 @@ public class Node {
 
                 }
             }
-            else if (c.actionType == Command.Type.Push){
+            else if (c.actionCommandType == Command.CommandType.Push){
                 // Make sure there is a box to move
                 if (this.boxAt(newAgentRow, newAgentCol)){
                     int newBoxRow = newAgentRow + Command.dirToRowChange(c.dir2);
@@ -285,7 +288,7 @@ public class Node {
                     }
                 }
             }
-            else if (c.actionType == Command.Type.Pull){
+            else if (c.actionCommandType == Command.CommandType.Pull){
                 // Cell is free where the agent is going
                 if (this.cellIsFree(newAgentRow, newAgentCol)){
                     int boxRow = curAgentRow + Command.dirToRowChange(c.dir2);
@@ -359,7 +362,7 @@ public class Node {
     }
 
     // Check if the goal with the given character is satisfied at this node
-    boolean isSatisfied(char goalLetter){
+    public boolean isSatisfied(char goalLetter){
         ArrayList<CoordinatesPair> goalCoords = Node.getGoalCellCoords();
         ArrayList<Cell> goalCells = new ArrayList<>();
         for (CoordinatesPair coordinatesPair : goalCoords){

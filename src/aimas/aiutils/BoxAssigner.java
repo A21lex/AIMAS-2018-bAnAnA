@@ -1,10 +1,9 @@
 package aimas.aiutils;
 
-import aimas.BestFirstSearch;
-import aimas.Cell;
-import aimas.CoordinatesPair;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
-import aimas.entities.Box;
+import aimas.board.entities.Box;
 
 import java.util.ArrayList;
 import java.util.HashMap;

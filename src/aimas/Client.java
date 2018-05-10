@@ -49,18 +49,18 @@ public final class Client {
                 char c = line.charAt( curCol );
                 if(c == ' '){
                     // Add a new cell of type SPACE with nothing(NULL) on it and which is NOT a goal(thus c=0)
-                    Cell cell = new Cell(curRow, curCol, Type.SPACE, null, '0');
+                    Cell cell = new Cell(curRow, curCol, CommandType.SPACE, null, '0');
                     row.add(cell);
-                    //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
-                    //row.add(new Cell(curRow, curCol, Cell.Type.Empty, false, c));
+                    //row.add(new Cell(curRow, curCol, Cell.CommandType.Empty, false, c));
+                    //row.add(new Cell(curRow, curCol, Cell.CommandType.Empty, false, c));
                     //TODO: check for last row
                     if(curCol!=0 && curRow!=0 && curCol!=line.length()-1){
                         spaceCellCoords.add(new Cell.CoordinatesPair(cell));
                     }
                 }
                 else if (c == '+'){
-                    row.add(new Cell(curRow, curCol, Type.WALL, null, '0'));
-                    //row.add(new Cell(curRow, curCol, Cell.Type.WALL, true, c));
+                    row.add(new Cell(curRow, curCol, CommandType.WALL, null, '0'));
+                    //row.add(new Cell(curRow, curCol, Cell.CommandType.WALL, true, c));
                 }
                 else if ( '0' <= c && c <= '9' ) {
                     // Create a cell with coords only as agent will be created later and he needs a cell
@@ -69,8 +69,8 @@ public final class Client {
                     Agent agent = new Agent(agentColor, Character.getNumericValue(c));
                     cell.setEntity(agent);
                     cell.setGoalLetter('0'); // this is a non goal cell
-                    cell.setType(Type.SPACE);
-                    //Cell agentCell = new Cell(curRow, curCol, Cell.Type.Agent, true, c);
+                    cell.setType(CommandType.SPACE);
+                    //Cell agentCell = new Cell(curRow, curCol, Cell.CommandType.Agent, true, c);
                     row.add(cell);
                     agentCellCoords.add(new Cell.CoordinatesPair(cell));
                     spaceCellCoords.add(new Cell.CoordinatesPair(cell));
@@ -83,15 +83,15 @@ public final class Client {
                     Box box = new Box(boxColor, c);
                     cell.setEntity(box);
                     cell.setGoalLetter('0');
-                    cell.setType(Type.SPACE);
-                    // Cell boxCell = new Cell(curRow, curCol, Cell.Type.Box, true, c);
+                    cell.setType(CommandType.SPACE);
+                    // Cell boxCell = new Cell(curRow, curCol, Cell.CommandType.Box, true, c);
                     row.add(cell);
                     boxCellCoords.add(new Cell.CoordinatesPair(cell));
                     spaceCellCoords.add(new Cell.CoordinatesPair(cell));
                 }
                 else if ('a' <= c && c <= 'z'){
-                    Cell cell = new Cell(curRow, curCol, Type.SPACE, null, c);
-                    //Cell goalCell = new Cell(curRow, curCol, Cell.Type.Goal, false, c);
+                    Cell cell = new Cell(curRow, curCol, CommandType.SPACE, null, c);
+                    //Cell goalCell = new Cell(curRow, curCol, Cell.CommandType.Goal, false, c);
                     row.add(cell);
                     goalCellCoords.add(new Cell.CoordinatesPair(cell));
                     spaceCellCoords.add(new Cell.CoordinatesPair(cell));
@@ -104,35 +104,35 @@ public final class Client {
         //determine tunnel cells
         for (Cell.CoordinatesPair spc: spaceCellCoords) {
             // wall on top and bellow or  wall on sides
-            if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL))) {
+            if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(CommandType.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(CommandType.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(CommandType.WALL))) {
                 tunnelCellCoords.add(spc);
             }
 
             //wall on diagonals
-            if ((level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL))
-                    || (level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL))) {
+            if ((level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(CommandType.WALL) && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(CommandType.WALL))
+                    || (level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(CommandType.WALL) && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(CommandType.WALL))) {
                 tunnelCellCoords.add(spc);
             }
 
             //one wall on side and one wall in diagonal
             //TODO make hasmap to avoid duplicates; disegard corners
-            if ((level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)
-                    && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)
-                            && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL)
-                            && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL)
-                            && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL)
-                            && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL)
-                            && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)
-                            && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
-                    (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)
-                            && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL))) {
+            if ((level.get(spc.getX()).get(spc.getY() - 1).getType().equals(CommandType.WALL)
+                    && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX()).get(spc.getY() + 1).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() + 1).get(spc.getY() - 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX() - 1).get(spc.getY()).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() - 1).get(spc.getY() + 1).getType().equals(CommandType.WALL)) ||
+                    (level.get(spc.getX() + 1).get(spc.getY()).getType().equals(CommandType.WALL)
+                            && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(CommandType.WALL))) {
                 tunnelCellCoords.add(spc);
             }
         }

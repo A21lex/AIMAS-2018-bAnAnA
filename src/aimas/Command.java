@@ -10,7 +10,7 @@ public class Command {
         N, W, E, S
     };
 
-    public static enum Type {
+    public static enum CommandType {
         Move, Push, Pull
     };
 
@@ -20,14 +20,14 @@ public class Command {
         for (Dir d1 : Dir.values()) {
             for (Dir d2 : Dir.values()) {
                 if (!Command.isOpposite(d1, d2)) {
-                    cmds.add(new Command(Type.Push, d1, d2));
+                    cmds.add(new Command(CommandType.Push, d1, d2));
                 }
             }
         }
         for (Dir d1 : Dir.values()) {
             for (Dir d2 : Dir.values()) {
                 if (d1 != d2) {
-                    cmds.add(new Command(Type.Pull, d1, d2));
+                    cmds.add(new Command(CommandType.Pull, d1, d2));
                 }
             }
         }
@@ -66,27 +66,27 @@ public class Command {
         }
     }
 
-    public final Type actionType;
+    public final CommandType actionCommandType;
     public final Dir dir1;
     public final Dir dir2;
 
     public Command(Dir d) {
-        this.actionType = Type.Move;
+        this.actionCommandType = CommandType.Move;
         this.dir1 = d;
         this.dir2 = null;
     }
 
-    public Command(Type t, Dir d1, Dir d2) {
-        this.actionType = t;
+    public Command(CommandType t, Dir d1, Dir d2) {
+        this.actionCommandType = t;
         this.dir1 = d1;
         this.dir2 = d2;
     }
 
     @Override
     public String toString() {
-        if (this.actionType == Type.Move)
-            return String.format("[%s(%s)]", this.actionType.toString(), this.dir1.toString());
+        if (this.actionCommandType == CommandType.Move)
+            return String.format("[%s(%s)]", this.actionCommandType.toString(), this.dir1.toString());
         else
-            return String.format("[%s(%s,%s)]", this.actionType.toString(), this.dir1.toString(), this.dir2.toString());
+            return String.format("[%s(%s,%s)]", this.actionCommandType.toString(), this.dir1.toString(), this.dir2.toString());
     }
 }

@@ -1,14 +1,12 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
-import aimas.CoordinatesPair;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.ActionType;
 import aimas.actions.AtomicAction;
-import aimas.entities.Box;
-import aimas.entities.Entity;
-
-import java.util.List;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
 
 /**
  * Atomic action MOVE. This is called when path betweeen agent and "finish" is clear.
@@ -34,7 +32,7 @@ public class MoveSurelyAction extends AtomicAction {
         int agentCol = agentCellCoord.getY();
         int h = manhDist(agentRow, agentCol, finish.getX(), finish.getY());
         if (node.getAction() != null) {
-            if (node.getAction().actionType == Command.Type.Pull || node.getAction().actionType == Command.Type.Push) {
+            if (node.getAction().actionCommandType == Command.CommandType.Pull || node.getAction().actionCommandType == Command.CommandType.Push) {
                 h += 25; // punish the agent for moving boxes while moving from one cell to another
             }
         }

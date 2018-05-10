@@ -1,13 +1,13 @@
 package aimas.actions.expandable;
 
-import aimas.Cell;
-import aimas.CoordinatesPair;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.aiutils.BoxAssigner;
-import aimas.entities.Box;
+import aimas.board.entities.Box;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class SolveLevelAction extends ExpandableAction {
         }
 
         HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
-
+        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
         for (Cell goalCell : goalsBoxes.keySet()){
             expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell)));

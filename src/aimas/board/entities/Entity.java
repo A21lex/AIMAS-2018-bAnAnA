@@ -1,4 +1,4 @@
-package aimas.entities; /**
+package aimas.board.entities; /**
  * Created by aleksandrs on 4/10/18.
  */
 
