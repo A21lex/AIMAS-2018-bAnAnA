@@ -90,8 +90,6 @@ public class Launcher {
         List<Box> boxes = new ArrayList<>();
         AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
         ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
-
-
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
