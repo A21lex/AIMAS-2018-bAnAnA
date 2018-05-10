@@ -2,11 +2,15 @@ package aimas;
 
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
+import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.MoveSurelyAction;
+import aimas.actions.expandable.SolveLevelAction;
+import aimas.aiutils.BoxAssigner;
 import aimas.entities.Box;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -91,7 +95,32 @@ public class Launcher {
         AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
         ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
 
-
+        // Test BoxAssigner
+        HashMap<Cell, Box> goalsBoxes =  BoxAssigner.assignBoxesToGoals(start);
+        System.out.println("Boxes and goals are assigned as follows: ");
+        for (Cell cell : goalsBoxes.keySet()){
+            System.out.println("Goal cell: "+cell);
+            System.out.println("Box: " + goalsBoxes.get(cell));
+            System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
+        }
+        ExpandableAction solveLevel = new SolveLevelAction(start);
+        List<Action> actions = solveLevel.decompose(start);
+        ExpandableAction someaction = (ExpandableAction) actions.get(0);
+        List<Action> actions2 = someaction.decompose(start);
+        Action one = actions2.get(2);
+        Action two = actions2.get(3);
+        List<Action> actionsToPerform = new ArrayList<>();
+        actionsToPerform.add(one);
+        actionsToPerform.add(two);
+        List<Node> path = getTotalPath(actionsToPerform, start);
+        System.out.println("Printing total shortest path");
+        for (int i = path.size() - 1; i >= 0; i--) {
+            if (path.get(i).getAction() != null) { // if the action is null, this is a start node
+                System.out.println(path.get(i).getAction().toString());
+                //System.out.println(totalShortestPath.get(i));
+            }
+        }
+        boolean test = true;
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
@@ -164,11 +193,12 @@ public class Launcher {
 
     }
 
-    /*static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
+    static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
         List<Node> path = new ArrayList<>();
         Node curNode = node;
         for (Action action : actionsToPerform){
-            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, action);
+            AtomicAction atomicAction = (AtomicAction) action; // is there a better way than casting all the time?
+            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, atomicAction);
             for (int i = tempPath.size() - 1; i >= 0; i--){
                 path.add(0,tempPath.get(i)); // add to start of list
             }
@@ -179,7 +209,7 @@ public class Launcher {
             System.out.println(curNode);
         }
         return path;
-    }*/
+    }
 
 
 }

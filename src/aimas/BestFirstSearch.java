@@ -2,6 +2,7 @@ package aimas;
 
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
+import aimas.actions.atomic.MoveSurelyAction;
 import aimas.entities.Box;
 
 import java.io.IOException;
@@ -153,17 +154,21 @@ public class BestFirstSearch {
         // Now we have coords of agent, box and goal we try to satisfy. Let's roll.
         int fromBoxToGoal = manhDist(boxRow, boxCol, goalRow, goalCol);
         int fromAgentToBox = manhDist(agentRow, agentCol, boxRow, boxCol);
+        int h = fromBoxToGoal + fromAgentToBox;
 
+        if (fromAgentToBox > 1){
+            h += 10; // punish agent from going away from the box
+        }
         // int fromAgentToGoal = manhDist(agentRow, agentCol, goalRow, goalCol);
 //        System.out.println("Agent to box: " + fromAgentToBox);
 //        System.out.println("Box to goal: " + fromBoxToGoal);
 //        System.out.println();
 
-        return fromBoxToGoal + fromAgentToBox;
+        return h; //fromBoxToGoal + fromAgentToBox;
     }
 
     // From Warm-Up assignment
-    private static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
+    public static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
         int diffI = Math.abs(i1 - i2);
         int diffJ = Math.abs(j1 - j2);
         return diffI + diffJ;
@@ -251,6 +256,9 @@ public class BestFirstSearch {
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }
+//                if (action instanceof MoveSurelyAction && neighbour.getBoxBeingMoved() != null){
+//                    continue; // this is an idea to completely shutdown attempts to move a box while "moving surely"
+//                }
                 if (!frontier.contains(neighbour)){ // Discover a new node
                     frontier.add(neighbour);
                 }

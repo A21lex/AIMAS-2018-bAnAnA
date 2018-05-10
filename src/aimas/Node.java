@@ -73,6 +73,11 @@ public class Node {
     private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
 
+    public Box getBoxBeingMoved() {
+        return boxBeingMoved;
+    }
+
+    private Box boxBeingMoved; // if this node is a result of a Push/Pull action, keep track of which box was moved
     public static int nodeCount; // total amount of nodes generated
 
     public int gScore; // for A*
@@ -91,6 +96,9 @@ public class Node {
     }
     public void setParent(Node parent){
         this.parent = parent;
+    }
+    public Node getParent(){
+        return this.parent;
     }
     public ArrayList<Agent> getAgents(){
         ArrayList<Agent> agents = new ArrayList<>();
@@ -252,6 +260,7 @@ public class Node {
                         // Box moves to its new location
                         Box curBox = (Box) this.getLevel().get(newAgentRow).get(newAgentCol).getEntity();
                         updatedLevel.get(newBoxRow).get(newBoxCol).setEntity(curBox);
+                        n.boxBeingMoved = curBox; // keep track of box being moved
                         //curBox.setCoordinates(new CoordinatesPair(newBoxRow, newBoxCol));
                         // (no need to remove it from previous location as it is done when agent is moved)
                         n.setLevel(updatedLevel); // set new level to new node
@@ -296,6 +305,7 @@ public class Node {
                         //curBox.setCoordinates(new CoordinatesPair(curAgentRow, curAgentCol));
                         updatedLevel.get(boxRow).get(boxCol).setEntity(null);
                         updatedLevel.get(curAgentRow).get(curAgentCol).setEntity(curBox);
+                        n.boxBeingMoved = curBox; // keep track of box being moved
                         // Agent moves to his new location
                         // (no need to remove him from the previous location as it is done when the box is moved)
                         updatedLevel.get(newAgentRow).get(newAgentCol).setEntity(curAgent);

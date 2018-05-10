@@ -6,6 +6,7 @@ import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
+import aimas.aiutils.BoxAssigner;
 import aimas.entities.Box;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class SolveLevelAction extends ExpandableAction {
     public boolean isAchieved(Node node) {
         for (CoordinatesPair coordinate : Node.getGoalCellCoords()){
             Cell cellAtCoordinate = node.getCellAtCoords(coordinate);
+            if (cellAtCoordinate.getEntity() == null){
+                return false;
+            }
             Box boxAtCoordinate = (Box) cellAtCoordinate.getEntity();
             if (!(boxAtCoordinate.getLetter() == Character.toUpperCase(cellAtCoordinate.getGoalLetter()))){
                 return false;
@@ -36,20 +40,17 @@ public class SolveLevelAction extends ExpandableAction {
 
     @Override
     public List<Action> decompose(Node node) {
-        List<CoordinatesPair> goalCoords = Node.getGoalCellCoords();
-        List<Cell> goalCells = new ArrayList<>();
-        for (CoordinatesPair goalCoord : goalCoords){
-            goalCells.add(node.getCellAtCoords(goalCoord));
+
+        if (isAchieved(node)) {
+            return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
-        /* SOMEHOW GET THE BOXES WITH WHICH TO SATISFY EACH GOAL - maybe in a map? */
-        List<Box> boxes;
-        HashMap<Cell, Box> cellsBoxes = new HashMap<>();
+
+        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
 
         List<Action> expandedActions = new ArrayList<>();
-        for (Cell goalCell : cellsBoxes.keySet()){
-            expandedActions.add(new AchieveGoalAction(goalCell, cellsBoxes.get(goalCell)));
+        for (Cell goalCell : goalsBoxes.keySet()){
+            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell)));
         }
-
         return expandedActions;
     }
 }

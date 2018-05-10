@@ -32,6 +32,10 @@ public class ClearPathAction extends ExpandableAction {
 
     @Override
     public ArrayList<Action> decompose(Node node){
+        if (isAchieved(node)){
+            return new ArrayList<>(); // if is already achieved, zero actions are required..
+        }
+
         // List of boxes on path from start to  finish
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Artur will implement this<<<<<<<
         ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node.getLevel(), start, finish,

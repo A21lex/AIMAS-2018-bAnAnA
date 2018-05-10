@@ -27,11 +27,22 @@ public class AchieveGoalAction extends ExpandableAction {
 
     @Override
     public boolean isAchieved(Node node) {
+        if (goalCell.getEntity() == null){
+            return false;
+        }
+        if (goalCell.getEntity() instanceof Box) {
+            Box boxOnCell = (Box) goalCell.getEntity();
+            return goalCell.getGoalLetter() == Character.toLowerCase(boxOnCell.getLetter());
+        }
         return false;
     }
 
     @Override
     public List<Action> decompose(Node node) {
+        if (isAchieved(node)){
+            return new ArrayList<>(); // if is already achieved, zero actions are required..
+        }
+
         //Clear box - clear goal - gotoBox - deliverBox
 
         CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now

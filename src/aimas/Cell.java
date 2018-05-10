@@ -40,10 +40,10 @@ public class Cell {
         this.goalLetter = goalLetter;
     }
 
-    int getI() {
+    public int getI() {
         return i;
     }
-    int getJ() {
+    public int getJ() {
         return j;
     }
     Type getType(){

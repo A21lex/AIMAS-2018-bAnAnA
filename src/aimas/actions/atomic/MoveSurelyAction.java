@@ -28,7 +28,7 @@ public class MoveSurelyAction extends AtomicAction {
         int h = manhDist(agentRow, agentCol, finish.getX(), finish.getY());
         if (node.getAction() != null) {
             if (node.getAction().actionType == Command.Type.Pull || node.getAction().actionType == Command.Type.Push) {
-                h += 10; // punish the agent for moving boxes while moving from one cell to another
+                h += 100; // punish the agent for moving boxes while moving from one cell to another
             }
         }
         return h;
@@ -36,7 +36,10 @@ public class MoveSurelyAction extends AtomicAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        return heuristic(node) == 0;
+        CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
+        int agentRow = agentCellCoord.getX();
+        int agentCol = agentCellCoord.getY();
+        return manhDist(agentRow, agentCol, finish.getX(), finish.getY()) == 0;
     }
 
     @Override

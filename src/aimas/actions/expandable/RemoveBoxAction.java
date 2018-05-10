@@ -37,6 +37,10 @@ public class RemoveBoxAction extends ExpandableAction {
 
     @Override
     public List<Action> decompose(Node node) {
+        if (isAchieved(node)){
+            return new ArrayList<>(); // if is already achieved, zero actions are required..
+        }
+
         // ClearBox - ClearCell - GotoBox - DeliverBox
 
         Action clearBox = new ClearPathAction(start, box.getCoordinates(node));

@@ -2,26 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="079c9cba-7f41-4d84-b8f5-32df0457d60d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/AtomicAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/levels/test_levels/SAmicromouseBoxAtStart.lvl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/levels/test_levels/SAsoko3_48.lvl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aimas/aiutils/BoxAssigner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aimas/BestFirstSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/BestFirstSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aimas/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aimas/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/PathFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/PathFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/AchieveGoalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/ClearPathToBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/ClearPathToGoalAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/GetBoxToGoalAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/GetToBoxAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/actions/MoveBoxAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aimas/entities/Box.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/entities/Box.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" afterDir="false" />
     </list>
     <ignored path="AIMAS_Programming_Project_2018.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,41 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Action.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/aimas/actions/Action.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ActionType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/aimas/actions/ActionType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AtomicAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/aimas/actions/AtomicAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="90" column="16" lean-forward="true" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
+            <state relative-caret-position="146">
+              <caret line="103" column="48" selection-start-line="103" selection-start-column="48" selection-end-line="103" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,29 +51,39 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MoveSurelyAction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SAanagram.lvl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/levels/test_levels/SAanagram.lvl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MoveSurelyAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+            <state relative-caret-position="199">
+              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1207#1208#0" expanded="true" />
-                <element signature="e#1250#1251#0" expanded="true" />
-                <element signature="e#1296#1297#0" expanded="true" />
-                <element signature="e#1363#1364#0" expanded="true" />
+                <element signature="e#1704#1705#0" expanded="true" />
+                <element signature="e#1771#1772#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClearPathAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java">
+      <file leaf-file-name="BestFirstSearch.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="35" column="67" selection-start-line="35" selection-start-column="67" selection-end-line="35" selection-end-column="67" />
+            <state relative-caret-position="334">
+              <caret line="256" column="29" lean-forward="true" selection-start-line="256" selection-start-column="29" selection-end-line="256" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#main#0;class#BestFirstSearch#0" />
+                <element signature="e#10052#10053#0" expanded="true" />
+                <element signature="e#10099#10100#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,8 +92,20 @@
       <file leaf-file-name="SolveLevelAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="47" column="57" lean-forward="true" selection-start-line="47" selection-start-column="57" selection-end-line="47" selection-end-column="57" />
+            <state relative-caret-position="120">
+              <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClearPathAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,10 +116,47 @@
       <file leaf-file-name="DeliverBoxSurelyAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state relative-caret-position="251">
+              <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1331#1332#0" expanded="true" />
+                <element signature="e#1393#1394#0" expanded="true" />
+                <element signature="e#1440#1441#0" expanded="true" />
+                <element signature="e#1529#1530#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RemoveBoxAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="319">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+              <folding>
+                <element signature="e#2905#2906#0" expanded="true" />
+                <element signature="e#2941#2942#0" expanded="true" />
+                <element signature="e#3644#3645#0" expanded="true" />
+                <element signature="e#3678#3679#0" expanded="true" />
+                <element signature="e#4510#4511#0" expanded="true" />
+                <element signature="e#4538#4539#0" expanded="true" />
+                <element signature="e#4792#4793#0" expanded="true" />
+                <element signature="e#4828#4829#0" expanded="true" />
+                <element signature="e#5367#5368#0" expanded="true" />
+                <element signature="e#5419#5420#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -142,12 +165,10 @@
       <file leaf-file-name="AchieveGoalAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="46" column="31" lean-forward="true" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
+            <state relative-caret-position="65">
+              <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#750#751#0" expanded="true" />
-                <element signature="e#778#779#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -169,6 +190,9 @@
       <find>pathFinder</find>
       <find>satisfied</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/res/levels/test_levels</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -181,10 +205,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/dk/dtu/aimas/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/dtu.aimas/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Command.java" />
         <option value="$PROJECT_DIR$/src/aimas/Command.java" />
         <option value="$PROJECT_DIR$/src/aimas/Heuristic.java" />
         <option value="$PROJECT_DIR$/src/aimas/SearchMethod.java" />
@@ -200,7 +220,6 @@
         <option value="$PROJECT_DIR$/src/aimas/actions/ClearPathToGoalAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/CoordinatesPair.java" />
         <option value="$PROJECT_DIR$/res/levels/test_levels/SAanagram.lvl" />
-        <option value="$PROJECT_DIR$/src/aimas/Node.java" />
         <option value="$PROJECT_DIR$/src/aimas/LevelReader.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/ClearPathToBox.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/GetToBoxAction.java" />
@@ -215,7 +234,6 @@
         <option value="$PROJECT_DIR$/src/aimas/actions/MoveAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/ClearPathAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/entities/Box.java" />
-        <option value="$PROJECT_DIR$/src/aimas/Cell.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/AchieveGoalAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/SolveLevelAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/PathFinder.java" />
@@ -224,13 +242,19 @@
         <option value="$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/expandable/MoveAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/expandable/DeliverBoxAction.java" />
-        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" />
-        <option value="$PROJECT_DIR$/src/aimas/BestFirstSearch.java" />
-        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" />
-        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" />
-        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/ActionType.java" />
+        <option value="$PROJECT_DIR$/res/levels/test_levels/SAmicromouseBoxAtStart.lvl" />
+        <option value="$PROJECT_DIR$/src/aimas/Cell.java" />
+        <option value="$PROJECT_DIR$/src/aimas/aiutils/BoxAssigner.java" />
+        <option value="$PROJECT_DIR$/res/levels/test_levels/SAsoko3_48.lvl" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/Node.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" />
+        <option value="$PROJECT_DIR$/src/aimas/BestFirstSearch.java" />
         <option value="$PROJECT_DIR$/src/aimas/Launcher.java" />
       </list>
     </option>
@@ -310,6 +334,13 @@
               <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="aimas" type="462c0819:PsiDirectoryNode" />
+              <item name="aiutils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AIMAS_Programming_Project_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AIMAS_Programming_Project_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="aimas" type="462c0819:PsiDirectoryNode" />
               <item name="entities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -323,8 +354,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -716,7 +747,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525768706548</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Atomic and expandable actions added">
+      <created>1525808639510</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1525808639510</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -730,6 +768,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32972136" />
@@ -739,18 +778,18 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.38533542" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4804992" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32917318" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32972136" />
       <window_info id="Capture Tool" order="2" />
       <window_info anchor="right" id="Designer" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30454546" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32917318" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.35413417" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6224649" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="6" side_tool="true" weight="0.32954547" />
@@ -763,28 +802,28 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Coverage" order="7" side_tool="true" weight="0.32954547" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.38533542" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32917318" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32972136" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32917318" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Designer" order="6" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32917318" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.35413417" />
       <window_info id="Palette&#9;" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32972136" />
+      <window_info anchor="right" id="Coverage" order="7" side_tool="true" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32917318" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Capture Tool" order="4" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32917318" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32972136" />
       <window_info anchor="right" id="Maven Projects" order="8" />
       <window_info id="Favorites" order="5" side_tool="true" />
     </layout-to-restore>
@@ -834,42 +873,16 @@
     <MESSAGE value="Minor things added (some comments and removed some old stuff)" />
     <MESSAGE value="A*: path finding and chaining fixed." />
     <MESSAGE value="structure change" />
-    <option name="LAST_COMMIT_MESSAGE" value="structure change" />
+    <MESSAGE value="Atomic and expandable actions added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Atomic and expandable actions added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="190" />
+      <option name="time" value="204" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="currentNode.getAction()" language="JAVA" />
-        <watch expression="Node.nodeCount" language="JAVA" />
-        <watch expression="c" language="JAVA" />
-        <watch expression="this.action" language="JAVA" />
-        <watch expression="tempPath.get(50)" />
-        <watch expression="tempPath.get(tempPath.size()-1)" language="JAVA" />
-        <watch expression="curNode" language="JAVA" />
-        <watch expression="heuristic(currentNode)" language="JAVA" />
-        <watch expression="neighbour.gScore" language="JAVA" />
-        <watch expression="action.heuristic(neighbour)" language="JAVA" />
-        <watch expression="box.equals(this.box)" language="JAVA" />
-        <watch expression="manhDist(box.getCoordinates(currentNode).getX(), box.getCoordinates(currentNode).getY(), agentRow, agentCol)" language="JAVA" />
-        <watch expression="box.getCoordinates(currentNode).getY()" language="JAVA" />
-        <watch expression="agentCoords" language="JAVA" />
-        <watch expression="box.getCoordinates()" language="JAVA" />
-        <watch expression="PathFinder.pathExists(node.getLevel(), agentCoords, box.getCoordinates(),true, true, true)" language="JAVA" />
-        <watch expression="boxCellCoords" language="JAVA" />
-        <watch expression="this.getLevel().get(newAgentRow).get(newAgentCol)" language="JAVA" />
-        <watch expression="start" language="JAVA" />
-        <watch expression="node.getBoxCellCoords()" language="JAVA" />
-        <watch expression="boxCoordinates" language="JAVA" />
-        <watch expression="node.getCellAtCoords(boxCoordinates).getEntity()" language="JAVA" />
-        <watch expression="node.getCellAtCoords(new CoordinatesPair(1,10)).getEntity()" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -877,6 +890,11 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>currentNode.getBoxBeingMoved()!=null</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>curBox.letter=='U'</expression-string>
         <language-id>JAVA</language-id>
@@ -922,13 +940,20 @@
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>goal.equals('c')</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>((AchieveGoalAction) actions.get(0)).decompose(start)</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>aimas.actions.expandable.AchieveGoalAction</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>((AchieveGoalAction) actions.get(0)).decompose()</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>aimas.actions.expandable.AchieveGoalAction</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>node.getCellAtCoords(new CoordinatesPair(1,10)).getEntity()</expression-string>
         <language-id>JAVA</language-id>
@@ -969,40 +994,23 @@
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
       <expression>
-        <expression-string>PathFinder.pathExists(node.getLevel(), agentCoords, box.getCoordinates(),true, true, true)</expression-string>
+        <expression-string>((AchieveGoalAction) actions.get(0)).decompose(start).get(0)</expression-string>
         <language-id>JAVA</language-id>
+        <custom-info>aimas.actions.expandable.AchieveGoalAction</custom-info>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>PathFinder.pathExists(node.getLevel(), agentCoords, box.getCoordinates(),                 true, true, true);</expression-string>
+        <expression-string>((HashMap.Node)goalsBoxes.entrySet().toArray()[40]).getValue()</expression-string>
         <language-id>JAVA</language-id>
+        <custom-info>java.util.HashMap.Node</custom-info>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="383" column="10" selection-start-line="383" selection-start-column="10" selection-end-line="383" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Collections.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="420" column="23" selection-start-line="420" selection-start-column="23" selection-end-line="420" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/AbstractList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="511" column="19" selection-start-line="511" selection-start-column="19" selection-end-line="511" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/PriorityQueue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
@@ -1042,10 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1185">
           <caret line="191" column="1" selection-start-line="191" selection-start-column="1" selection-end-line="191" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1524939311499" expanded="false" signature="1033:7676" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1129,13 +1133,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="68" column="22" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
@@ -1147,12 +1144,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="e#574#575#0" expanded="true" />
-            <element signature="e#598#599#0" expanded="true" />
-            <element signature="e#621#622#0" expanded="true" />
-            <element signature="e#645#646#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1174,13 +1165,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/levels/test_levels/SAanagram.lvl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/SearchMethod.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="709">
@@ -1195,50 +1179,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/GetToBoxAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1891#1892#0" expanded="true" />
-            <element signature="e#1950#1951#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/GetBoxToGoalAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ClearPathToGoalAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ClearPathToBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="23" column="37" lean-forward="true" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#997#998#0" expanded="true" />
-            <element signature="e#1069#1070#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/GetToBoxAction.java" />
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/GetBoxToGoalAction.java" />
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ClearPathToGoalAction.java" />
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ClearPathToBox.java" />
     <entry file="file://$PROJECT_DIR$/src/aimas/entities/Box.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1251,21 +1195,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="350" column="75" lean-forward="true" selection-start-line="350" selection-start-column="75" selection-end-line="350" selection-end-column="75" />
-          <folding>
-            <element signature="e#4510#4511#0" expanded="true" />
-            <element signature="e#4538#4539#0" expanded="true" />
-            <element signature="e#4792#4793#0" expanded="true" />
-            <element signature="e#4828#4829#0" expanded="true" />
-            <element signature="e#5367#5368#0" expanded="true" />
-            <element signature="e#5419#5420#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -1273,65 +1202,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
-          <folding>
-            <element signature="e#1456#1457#0" expanded="true" />
-            <element signature="e#1490#1491#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="224" column="66" lean-forward="true" selection-start-line="224" selection-start-column="66" selection-end-line="224" selection-end-column="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#main#0;class#BestFirstSearch#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/MoveAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="33" lean-forward="true" selection-start-column="33" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#991#992#0" expanded="true" />
-            <element signature="e#1018#1019#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/DeliverBoxAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#737#738#0" expanded="true" />
-            <element signature="e#764#765#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/MoveAction.java" />
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/DeliverBoxAction.java" />
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/Action.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="105">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1349,56 +1224,96 @@
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/ActionType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/levels/test_levels/SAmicromouseBoxAtStart.lvl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+          <folding>
+            <element signature="e#1456#1457#0" expanded="true" />
+            <element signature="e#1490#1491#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/aiutils/BoxAssigner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/levels/test_levels/SAsoko3_48.lvl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="31" lean-forward="true" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
+        <state relative-caret-position="65">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#750#751#0" expanded="true" />
-            <element signature="e#778#779#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="781">
+          <caret line="68" column="22" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="47" column="57" lean-forward="true" selection-start-line="47" selection-start-column="57" selection-end-line="47" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="90" column="16" lean-forward="true" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="35" column="67" selection-start-line="35" selection-start-column="67" selection-end-line="35" selection-end-column="67" />
+        <state relative-caret-position="120">
+          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1407,24 +1322,75 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        <state relative-caret-position="251">
+          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1331#1332#0" expanded="true" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1440#1441#0" expanded="true" />
+            <element signature="e#1529#1530#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+          <folding>
+            <element signature="e#2905#2906#0" expanded="true" />
+            <element signature="e#2941#2942#0" expanded="true" />
+            <element signature="e#3644#3645#0" expanded="true" />
+            <element signature="e#3678#3679#0" expanded="true" />
+            <element signature="e#4510#4511#0" expanded="true" />
+            <element signature="e#4538#4539#0" expanded="true" />
+            <element signature="e#4792#4793#0" expanded="true" />
+            <element signature="e#4828#4829#0" expanded="true" />
+            <element signature="e#5367#5368#0" expanded="true" />
+            <element signature="e#5419#5420#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+        <state relative-caret-position="199">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1207#1208#0" expanded="true" />
-            <element signature="e#1250#1251#0" expanded="true" />
-            <element signature="e#1296#1297#0" expanded="true" />
-            <element signature="e#1363#1364#0" expanded="true" />
+            <element signature="e#1704#1705#0" expanded="true" />
+            <element signature="e#1771#1772#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/BestFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="256" column="29" lean-forward="true" selection-start-line="256" selection-start-column="29" selection-end-line="256" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#BestFirstSearch#0" />
+            <element signature="e#10052#10053#0" expanded="true" />
+            <element signature="e#10099#10100#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/levels/test_levels/SAanagram.lvl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="103" column="48" selection-start-line="103" selection-start-column="48" selection-end-line="103" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
