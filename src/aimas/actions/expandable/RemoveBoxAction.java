@@ -43,9 +43,9 @@ public class RemoveBoxAction extends ExpandableAction {
 
         // ClearBox - ClearCell - GotoBox - DeliverBox
 
-        Action clearBox = new ClearPathAction(start, box.getCoordinates(node));
+        Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish);
+        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node);
         Action gotoBox = new MoveSurelyAction(box.getCoordinates(node));
         Action deliverBox = new DeliverBoxSurelyAction(box, finish);
         List<Action> expandedActions = new ArrayList<>();

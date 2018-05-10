@@ -48,7 +48,7 @@ public class BoxAssigner {
             if (relevantBoxes.size() == 1){
                 // there is only one box corresponding to this goal, easy-peasy
                 goalsBoxes.put(goalCell, relevantBoxes.get(0));
-                allBoxes.remove(relevantBoxes.get(0)); // this box is now occupied, remove from box list (???????)
+                allBoxes.remove(relevantBoxes.get(0)); // this box is now occupied, remove from box list
                 continue;
             }
             Box winnerBox = relevantBoxes.get(0); // take some relevant box
@@ -68,6 +68,8 @@ public class BoxAssigner {
                 }
             }
             goalsBoxes.put(goalCell, winnerBox);
+            allBoxes.remove(winnerBox); // this box is now occupied, remove from box list
+
         }
 
         return goalsBoxes;

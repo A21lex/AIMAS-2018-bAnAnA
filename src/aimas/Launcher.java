@@ -110,8 +110,35 @@ public class Launcher {
         Action one = actions2.get(2);
         Action two = actions2.get(3);
         List<Action> actionsToPerform = new ArrayList<>();
-        actionsToPerform.add(one);
+       /* actionsToPerform.add(one);
         actionsToPerform.add(two);
+
+        ExpandableAction someotheraction = (ExpandableAction) actions.get(1);
+        actionsToPerform.add(someotheraction.decompose(start).get(2));
+        actionsToPerform.add(someotheraction.decompose(start).get(3));*/
+
+        /* THIS IS JUST A TEST */
+        for (Action action : actions){
+            ExpandableAction expandableAction = (ExpandableAction) action;
+            for (Action subAction: expandableAction.decompose(start)){
+                ExpandableAction expandableSubaction;
+                if (subAction instanceof ExpandableAction) {
+                    expandableSubaction = (ExpandableAction) subAction;
+                    try {
+                        actionsToPerform.add(expandableSubaction.decompose(start).get(2));
+                        actionsToPerform.add(expandableSubaction.decompose(start).get(3));
+                    }
+                    catch (IndexOutOfBoundsException ex){
+                        // not as many actions, it's fine, continue
+                        continue;
+                    }
+                }
+                else { // is not expandable
+                    actionsToPerform.add(subAction);
+                }
+            }
+        }
+
         List<Node> path = getTotalPath(actionsToPerform, start);
         System.out.println("Printing total shortest path");
         for (int i = path.size() - 1; i >= 0; i--) {
@@ -120,6 +147,7 @@ public class Launcher {
                 //System.out.println(totalShortestPath.get(i));
             }
         }
+
         boolean test = true;
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();

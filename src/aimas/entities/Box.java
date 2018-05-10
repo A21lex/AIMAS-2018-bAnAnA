@@ -4,6 +4,7 @@ import aimas.CoordinatesPair;
 import aimas.Node;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Box extends Entity{
     //public static final Box NO_BOX = new Box(Color.BLUE, '0');
@@ -52,6 +53,11 @@ public class Box extends Entity{
             return color.equals(b.color) && (letter == b.letter) && (id == b.id);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, letter, id);
     }
 
     @Override

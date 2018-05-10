@@ -46,8 +46,8 @@ public class AchieveGoalAction extends ExpandableAction {
         //Clear box - clear goal - gotoBox - deliverBox
 
         CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node));
-        Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates());
+        Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node), node);
+        Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates(), node);
         Action gotobox = new MoveSurelyAction(box.getCoordinates(node));
         Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates());
         List<Action> expandedActions = new ArrayList<>();
