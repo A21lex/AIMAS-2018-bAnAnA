@@ -38,6 +38,7 @@ public class RemoveBoxAction extends ExpandableAction {
     @Override
     public List<Action> decompose(Node node) {
         if (isAchieved(node)){
+            System.err.println("RemoveBoxAction is already achieved for box " + box);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
 

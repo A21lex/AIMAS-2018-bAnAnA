@@ -2,6 +2,7 @@ package aimas.aiutils;
 
 import aimas.*;
 import aimas.actions.AtomicAction;
+import aimas.actions.atomic.MoveSurelyAction;
 import aimas.board.CoordinatesPair;
 import aimas.board.entities.Box;
 
@@ -57,8 +58,8 @@ public class BestFirstSearch {
      */
     static ArrayList<Node> AStar(Node startState, char goalToSatisfy){
         if (!startState.isInLevel(goalToSatisfy)){
-            System.out.println("The goal " + goalToSatisfy + " does not exist in the level.");
-            System.out.println("A* quitting.");
+            System.err.println("The goal " + goalToSatisfy + " does not exist in the level.");
+            System.err.println("A* quitting.");
             return new ArrayList<>();
         }
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
@@ -74,9 +75,9 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (currentNode.isSatisfied(goalToSatisfy)){
-                System.out.println("satisfied h yeah");
+                System.err.println("satisfied h yeah");
                 shortestPath = reconstructPath(currentNode);
                 return shortestPath;
             }
@@ -189,7 +190,7 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (currentNode.equals(finishState)){
                 System.out.println("satisfied h yeah");
                 shortestPath = reconstructPath(currentNode);
@@ -240,10 +241,10 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (action.isAchieved(currentNode)){
                 //  System.out.println("satisfied h yeah");
-                System.out.println(action.toString() + " is satisfied.");
+                System.err.println(action.toString() + " is satisfied.");
                 shortestPath = reconstructPath(currentNode);
                 return shortestPath;
             }

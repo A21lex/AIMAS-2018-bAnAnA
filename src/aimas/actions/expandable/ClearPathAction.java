@@ -74,6 +74,7 @@ public class ClearPathAction extends ExpandableAction {
     @Override
     public ArrayList<Action> decompose(Node node){
         if (isAchieved(node)){
+            System.err.println("ClearPathAction is already achieved for " + start + " to " + finish);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
 

@@ -17,7 +17,6 @@ public class AchieveGoalAction extends ExpandableAction {
     Cell goalCell; // this is what we want to achieve
     Box box; // .. with this box
 
-    // something like: ClearPathToBox -> GetToBox -> MoveBox -> ClearPathToGoal -> GetBoxToGoal
 
     public AchieveGoalAction(Cell goalCell, Box box){
         this.goalCell = goalCell;

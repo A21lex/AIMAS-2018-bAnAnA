@@ -455,7 +455,7 @@ public class Node {
         StringBuilder stringBuilder = new StringBuilder();
         for (ArrayList<Cell> row: level){
             for (Cell cell: row){
-                //System.out.print(cell + " ");
+                //System.err.print(cell + " ");
                 if (cell.getEntity() != null){
                     stringBuilder.append(cell.getEntity()).append(" ");
                 }
@@ -467,7 +467,7 @@ public class Node {
                 }
                 //stringBuilder.append(cell.getType()).append(" ");
             }
-            //System.out.println();
+            //System.err.println();
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();

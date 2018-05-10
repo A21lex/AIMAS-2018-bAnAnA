@@ -24,7 +24,8 @@ public class DeliverBoxSurelyAction extends AtomicAction {
     public int heuristic(Node node) {
         int punishmentForMovingOtherBoxes = 0;
         if (node.getAction() != null) {
-            if (node.getAction().actionCommandType == Command.CommandType.Push || node.getAction().actionCommandType == Command.CommandType.Pull) {
+            if (node.getAction().actionCommandType == Command.CommandType.Push ||
+                    node.getAction().actionCommandType == Command.CommandType.Pull) {
                 if (!node.getBoxBeingMoved().equals(box)) {
                     punishmentForMovingOtherBoxes += 20;
                 }

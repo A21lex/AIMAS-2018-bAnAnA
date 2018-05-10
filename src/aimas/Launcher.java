@@ -97,7 +97,7 @@ public class Launcher {
         //AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
         //ArrayList<Node> fdf = BestFirstSearch.AStar(start, gettobox);
 
-        // Test BoxAssigner
+        // testing BoxAssigner
         HashMap<Cell, Box> goalsBoxes =  BoxAssigner.assignBoxesToGoals(start);
         System.out.println("Boxes and goals are assigned as follows: ");
         for (Cell cell : goalsBoxes.keySet()){
@@ -105,13 +105,11 @@ public class Launcher {
             System.out.println("Box: " + goalsBoxes.get(cell));
             System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
         }
-        ExpandableAction solveLevel = new SolveLevelAction(start);
-        List<Action> actions = solveLevel.decompose(start);
-        ExpandableAction someaction = (ExpandableAction) actions.get(0);
-        List<Action> actions2 = someaction.decompose(start);
-        Action one = actions2.get(2);
-        Action two = actions2.get(3);
-        List<Action> actionsToPerform = new ArrayList<>();
+
+        //ExpandableAction someaction = (ExpandableAction) actions.get(0);
+        //List<Action> actions2 = someaction.decompose(start);
+        //Action one = actions2.get(2);
+        //Action two = actions2.get(3);
        /* actionsToPerform.add(one);
         actionsToPerform.add(two);
 
@@ -119,8 +117,8 @@ public class Launcher {
         actionsToPerform.add(someotheraction.decompose(start).get(2));
         actionsToPerform.add(someotheraction.decompose(start).get(3));*/
 
-        /* THIS IS JUST A TEST */
-        /* FOR NOW ONLY WORKS FOR LEVELS WHERE IT IS POSSIBLE
+        /* THIS IS JUST A TEST
+         FOR NOW ONLY WORKS FOR LEVELS WHERE IT IS POSSIBLE
         TO ACHIEVE GOALS WITHOUT HAVING TO CLEAR PATHS
         AND THUS WITHOUT HAVING TO CONSIDER ORDER OF ACHIEVING GOALS
         SAanagram
@@ -129,7 +127,15 @@ public class Launcher {
         SAsoko3_48
         SAbAnAnA  (our SA level for now)
 
+        Possibly add BDI in this loop... reconsideration when goal achieved for example
+        Need to avoid agent being stuck in the corner/dead-end, else this also does not work of course
+
         */
+
+        ExpandableAction solveLevel = new SolveLevelAction(start);
+        List<Action> actions = solveLevel.decompose(start);
+        List<Action> actionsToPerform = new ArrayList<>();
+
         for (Action action : actions){
             ExpandableAction expandableAction = (ExpandableAction) action;
             for (Action subAction: expandableAction.decompose(start)){
@@ -137,10 +143,14 @@ public class Launcher {
                 if (subAction instanceof ExpandableAction) {
                     expandableSubaction = (ExpandableAction) subAction;
                     try {
+                        actionsToPerform.add(expandableSubaction.decompose(start).get(0));
+                        actionsToPerform.add(expandableSubaction.decompose(start).get(1));
+
                         actionsToPerform.add(expandableSubaction.decompose(start).get(2));
                         actionsToPerform.add(expandableSubaction.decompose(start).get(3));
                     }
                     catch (IndexOutOfBoundsException ex){
+                        // likely we are at a node which is already achieved
                         // not as many actions, it's fine, continue
                         continue;
                     }
@@ -159,7 +169,8 @@ public class Launcher {
                 //System.out.println(totalShortestPath.get(i));
             }
         }
-
+        // Check last node of solution on whether it is achieved
+        System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
         boolean test = true;
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
