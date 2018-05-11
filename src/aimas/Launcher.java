@@ -135,7 +135,6 @@ public class Launcher {
         ExpandableAction solveLevel = new SolveLevelAction(start);
         List<Action> actions = solveLevel.decompose(start);
         List<Action> actionsToPerform = new ArrayList<>();
-
         for (Action action : actions){
             ExpandableAction expandableAction = (ExpandableAction) action;
             for (Action subAction: expandableAction.decompose(start)){

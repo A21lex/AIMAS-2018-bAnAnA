@@ -8,6 +8,7 @@ import aimas.board.CoordinatesPair;
 import aimas.board.Type;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
+import aimas.board.entities.Color;
 import aimas.board.entities.Entity;
 
 import java.util.ArrayList;
@@ -204,6 +205,7 @@ public class Node {
         int curAgentCol = 0;
         CoordinatesPair curAgentCellCoords = null;
         Agent curAgent = null;
+        Color curAgentColor = null;
         ArrayList<CoordinatesPair> agentCellCoords = this.getAgentCellCoords();
         for (CoordinatesPair thisCellCoords: agentCellCoords){
             curAgent = (Agent) getCellAtCoords(thisCellCoords).getEntity();
@@ -211,6 +213,7 @@ public class Node {
                 curAgentRow = thisCellCoords.getX();
                 curAgentCol = thisCellCoords.getY();
                 curAgentCellCoords = thisCellCoords;
+                curAgentColor = curAgent.getColor();
                 break; // found our agent
             }
         }
@@ -251,6 +254,11 @@ public class Node {
                     CoordinatesPair curBoxCellCoords = new CoordinatesPair(curBoxCell);
                     // And that new cell of the box is free
                     if (this.cellIsFree(newBoxRow, newBoxCol)){
+                        // And check whether colors of box and agent match
+                        Box curBox = (Box) this.getLevel().get(newAgentRow).get(newAgentCol).getEntity();
+                        if (!(curBox.getColor() == curAgentColor)){
+                            continue; // if colors do not match, go for next action
+                        }
                         Node n = new Node(this);
                         n.action = c;
                         // Update level
@@ -261,7 +269,6 @@ public class Node {
                         updatedLevel.get(curAgentRow).get(curAgentCol).setEntity(null);
                         updatedLevel.get(newAgentRow).get(newAgentCol).setEntity(curAgent);
                         // Box moves to its new location
-                        Box curBox = (Box) this.getLevel().get(newAgentRow).get(newAgentCol).getEntity();
                         updatedLevel.get(newBoxRow).get(newBoxCol).setEntity(curBox);
                         n.boxBeingMoved = curBox; // keep track of box being moved
                         //curBox.setCoordinates(new CoordinatesPair(newBoxRow, newBoxCol));
@@ -295,6 +302,11 @@ public class Node {
                     int boxCol = curAgentCol + Command.dirToColChange(c.dir2);
                     // and there is a box in dir2 of the agent
                     if (this.boxAt(boxRow, boxCol)){
+                        // And check whether color of box and agent match
+                        Box curBox = (Box) this.getLevel().get(boxRow).get(boxCol).getEntity();
+                        if (!(curBox.getColor() == curAgentColor)){
+                            continue; // if colors do not match, go for next action
+                        }
                         Cell curBoxCell = this.getLevel().get(boxRow).get(boxCol);
                         CoordinatesPair curBoxCellCoords = new CoordinatesPair(curBoxCell);
                         Node n = new Node(this);
@@ -304,7 +316,6 @@ public class Node {
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
                         ArrayList<ArrayList<Cell>> updatedLevel = copyLevel(this.getLevel());
                         // Box moves to its new location (which is current agent location in this case)
-                        Box curBox = (Box) this.getLevel().get(boxRow).get(boxCol).getEntity();
                         //curBox.setCoordinates(new CoordinatesPair(curAgentRow, curAgentCol));
                         updatedLevel.get(boxRow).get(boxCol).setEntity(null);
                         updatedLevel.get(curAgentRow).get(curAgentCol).setEntity(curBox);

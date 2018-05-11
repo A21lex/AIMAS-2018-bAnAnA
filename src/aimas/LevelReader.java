@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class LevelReader {
 
@@ -78,6 +79,19 @@ public final class LevelReader {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToLevel));
         try {
             String line = bufferedReader.readLine();
+            // Read lines specifying colors
+            HashMap<Character, Color> objectColors = new HashMap<>();
+            String colorString;
+            while ( line.matches( "^[a-z]+:\\s*[0-9A-Z](,\\s*[0-9A-Z])*\\s*$" ) ) {
+                line = line.replaceAll( "\\s", "" );
+                colorString = line.split( ":" )[0];
+
+                for ( String coloredObject : line.split( ":" )[1].split( "," ) ) {
+                    objectColors.put(coloredObject.charAt(0), Color.valueOf(colorString.toUpperCase()));
+                }
+                line = bufferedReader.readLine();
+            }
+            final Color DEFAULT_COLOR = Color.BLUE; // dabu dee dabu dai
             int curRow = 0; // keep track of rows
             while (line != null){
                 ArrayList<Cell> row = new ArrayList<>();
@@ -101,7 +115,8 @@ public final class LevelReader {
                     else if ('0' <= c && c <= '9'){
                         // Create a cell with coords only as agent will be created later and he needs a cell
                         Cell cell = new Cell(curRow, curCol);
-                        Agent agent = new Agent(Color.BLUE, Character.getNumericValue(c));
+                        Agent agent = new Agent(objectColors.getOrDefault(c, DEFAULT_COLOR),
+                                Character.getNumericValue(c));
                         cell.setEntity(agent);
                         cell.setGoalLetter('0'); // this is a non goal cell
                         cell.setType(Type.SPACE);
@@ -112,7 +127,7 @@ public final class LevelReader {
                     }
                     else if ('A' <= c && c <= 'Z'){
                         Cell cell = new Cell(curRow, curCol);
-                        Box box = new Box(Color.BLUE, c, id);
+                        Box box = new Box(objectColors.getOrDefault(c, DEFAULT_COLOR), c, id);
                         id++; // increase id. every box will have a different one.
                         cell.setEntity(box);
                         cell.setGoalLetter('0');
