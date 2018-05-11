@@ -1,6 +1,7 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
+import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
 import aimas.actions.ActionType;
 import aimas.actions.AtomicAction;
@@ -14,9 +15,10 @@ public class DeliverBoxSurelyAction extends AtomicAction {
     Box box;
     CoordinatesPair finish; // move box to here
 
-    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish){
+    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish, Action parent){
         this.box = box;
         this.finish = finish;
+        this.parent = parent;
         this.actionType = ActionType.DELIVER_BOX_SURELY;
     }
 

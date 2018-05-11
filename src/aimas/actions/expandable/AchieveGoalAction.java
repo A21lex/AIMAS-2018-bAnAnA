@@ -18,9 +18,18 @@ public class AchieveGoalAction extends ExpandableAction {
     Box box; // .. with this box
 
 
-    public AchieveGoalAction(Cell goalCell, Box box){
+
+    public AchieveGoalAction(Cell goalCell, Box box, Action parent){
         this.goalCell = goalCell;
         this.box = box;
+        this.parent = parent;
+
+        ArrayList<ActionType> decomposedTo = new ArrayList<>();
+        decomposedTo.add(ActionType.CLEAR_PATH);
+        decomposedTo.add(ActionType.CLEAR_PATH);
+        decomposedTo.add(ActionType.MOVE_SURELY);
+        decomposedTo.add(ActionType.DELIVER_BOX_SURELY);
+        this.canBeDecomposedTo = decomposedTo;
         this.actionType = ActionType.ACHIEVE_GOAL;
     }
 
@@ -45,10 +54,10 @@ public class AchieveGoalAction extends ExpandableAction {
         //Clear box - clear goal - gotoBox - deliverBox
 
         CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node), node);
-        Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates(), node);
-        Action gotobox = new MoveSurelyAction(box.getCoordinates(node));
-        Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates());
+        Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node), node, this);
+        Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates(), node, this);
+        Action gotobox = new MoveSurelyAction(box.getCoordinates(node), this);
+        Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates(), this);
         List<Action> expandedActions = new ArrayList<>();
         expandedActions.add(clearBox);
         expandedActions.add(clearGoal);

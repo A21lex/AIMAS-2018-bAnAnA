@@ -1,6 +1,7 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
+import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.ActionType;
@@ -13,11 +14,16 @@ import aimas.board.entities.Entity;
  */
 public class MoveSurelyAction extends AtomicAction {
 
+    public CoordinatesPair getFinish() {
+        return finish;
+    }
+
     CoordinatesPair finish;
     //Entity potentialEntity; // if we "move surely" to a box, this helps to move to one cell earlier than the box itself
 
-    public MoveSurelyAction(CoordinatesPair finish){
+    public MoveSurelyAction(CoordinatesPair finish, Action parent){
         this.finish = finish;
+        this.parent = parent;
         this.actionType = ActionType.MOVE_SURELY;
 
 //        if (node.getCellAtCoords(finish).getEntity() != null) {

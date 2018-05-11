@@ -23,10 +23,16 @@ public class ClearPathAction extends ExpandableAction {
     Entity first; // potential entity at start (box/agent)
     Entity second; // potential entity at finish (box/agent)
 
-    public ClearPathAction(CoordinatesPair start, CoordinatesPair finish, Node node){
+    public ClearPathAction(CoordinatesPair start, CoordinatesPair finish, Node node, Action parent){
         this.start = start;
         this.finish = finish;
         this.node = node;
+        this.parent = parent;
+
+        ArrayList<ActionType> decomposedTo = new ArrayList<>();
+        decomposedTo.add(ActionType.REMOVE_BOX);
+        this.canBeDecomposedTo = decomposedTo;
+
         this.actionType = ActionType.CLEAR_PATH;
 
         // Get potential entities (agent/box) at start and finish cells
@@ -85,7 +91,7 @@ public class ClearPathAction extends ExpandableAction {
 
         ArrayList<Action> expandedActions = new ArrayList<>();
         for (Box box : boxes){
-            expandedActions.add(new RemoveBoxAction(box, start, finish));
+            expandedActions.add(new RemoveBoxAction(box, start, finish, this));
         }
         // for every box in list of boxed: add remove(box) to expandedActions
         // will return corresponding actions or empty list if there are no boxes on path (although

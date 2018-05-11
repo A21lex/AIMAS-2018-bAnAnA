@@ -19,6 +19,11 @@ public class SolveLevelAction extends ExpandableAction {
 
     public SolveLevelAction(Node node){
         this.node = node;
+
+        ArrayList<ActionType> decomposedTo = new ArrayList<>();
+        decomposedTo.add(ActionType.ACHIEVE_GOAL);
+        this.canBeDecomposedTo = decomposedTo;
+        this.parent = null; // top level node, so parent is null
         this.actionType = ActionType.SOLVE_LEVEL;
     }
 
@@ -49,7 +54,7 @@ public class SolveLevelAction extends ExpandableAction {
         /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
         for (Cell goalCell : goalsBoxes.keySet()){
-            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell)));
+            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
         }
         return expandedActions;
     }

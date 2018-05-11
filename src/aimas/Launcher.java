@@ -3,6 +3,7 @@ package aimas;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
+import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
@@ -29,7 +30,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAbAnAnA.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -90,8 +91,15 @@ public class Launcher {
             }
         }*/
 
-        // Testing new action stuff
-
+//        // Testing new action stuff
+//        Action movesomewhere = new MoveSurelyAction(new CoordinatesPair(2,1), null);
+//        AtomicAction atomic = (AtomicAction) movesomewhere;
+//        ArrayList<Node> pathh = BestFirstSearch.AStar(start,atomic);
+//        for (int i = pathh.size() - 1; i > 0; i--){
+//            System.out.println(pathh.get(i).getAction().toString());
+//        }
+//
+//        int a = 777;
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
         //AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
@@ -165,7 +173,7 @@ public class Launcher {
         for (int i = path.size() - 1; i >= 0; i--) {
             if (path.get(i).getAction() != null) { // if the action is null, this is a start node
                 System.out.println(path.get(i).getAction().toString());
-                //System.out.println(totalShortestPath.get(i));
+                //System.out.println(path.get(i));
             }
         }
         // Check last node of solution on whether it is achieved

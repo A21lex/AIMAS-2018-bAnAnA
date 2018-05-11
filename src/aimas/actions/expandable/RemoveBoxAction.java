@@ -19,10 +19,18 @@ public class RemoveBoxAction extends ExpandableAction {
     CoordinatesPair start; // unblock path from here
     CoordinatesPair finish; // to here
 
-    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish){
+    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Action parent){
         this.box = box;
         this.start = start;
         this.finish = finish;
+        this.parent = parent;
+
+        ArrayList<ActionType> decomposedTo = new ArrayList<>();
+        decomposedTo.add(ActionType.CLEAR_PATH);
+        decomposedTo.add(ActionType.CLEAR_PATH);
+        decomposedTo.add(ActionType.MOVE_SURELY);
+        decomposedTo.add(ActionType.DELIVER_BOX_SURELY);
+        this.canBeDecomposedTo = decomposedTo;
         this.actionType = ActionType.REMOVE_BOX;
     }
 
@@ -44,11 +52,11 @@ public class RemoveBoxAction extends ExpandableAction {
 
         // ClearBox - ClearCell - GotoBox - DeliverBox
 
-        Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node);
+        Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node);
-        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node));
-        Action deliverBox = new DeliverBoxSurelyAction(box, finish);
+        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node, this);
+        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), this);
+        Action deliverBox = new DeliverBoxSurelyAction(box, finish, this);
         List<Action> expandedActions = new ArrayList<>();
         expandedActions.add(clearBox);
         expandedActions.add(clearCell);
