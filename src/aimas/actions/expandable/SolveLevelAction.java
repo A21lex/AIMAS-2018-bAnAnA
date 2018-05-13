@@ -24,7 +24,9 @@ public class SolveLevelAction extends ExpandableAction {
         decomposedTo.add(ActionType.ACHIEVE_GOAL);
         this.canBeDecomposedTo = decomposedTo;
         this.parent = null; // top level node, so parent is null
+        this.childrenActions = new ArrayList<>();
         this.actionType = ActionType.SOLVE_LEVEL;
+        this.numberAsChild = -1; // emergency case
     }
 
     // Check if all the goal cells have on them a box of corresponding type; if not, return false
@@ -53,9 +55,19 @@ public class SolveLevelAction extends ExpandableAction {
         HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
         /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
+        int i = 0;
         for (Cell goalCell : goalsBoxes.keySet()){
             expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
+            expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+            i++;
         }
+
+        childrenActions = expandedActions;
+
         return expandedActions;
+    }
+    @Override
+    public String toString() {
+        return "SolveLevelAction: solving level";
     }
 }

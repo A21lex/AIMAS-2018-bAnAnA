@@ -11,4 +11,5 @@ public abstract class ExpandableAction extends Action {
     public List<ActionType> canBeDecomposedTo() {
         return canBeDecomposedTo;
     }
+
 }

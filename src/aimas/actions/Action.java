@@ -10,6 +10,8 @@ import java.util.List;
 public abstract class Action {
     protected ActionType actionType;
     protected Action parent; // each action's parent is the action which generated that action;
+    protected int numberAsChild;
+    protected List<Action> childrenActions;
     // null if it itself is the parent
     public ActionType getType(){
         return actionType;
@@ -29,5 +31,18 @@ public abstract class Action {
         int diffI = Math.abs(i1 - i2);
         int diffJ = Math.abs(j1 - j2);
         return diffI + diffJ;
+    }
+    public List<Action> getChildrenActions(){
+        return childrenActions;
+    }
+    public int getNumOfChildren() { return childrenActions.size(); }
+    public int getNumberAsChild() { return numberAsChild; }
+    public void setNumberAsChild(int numberAsChild) { this.numberAsChild = numberAsChild; }
+    public boolean hasMoreChildren(int curChildIndex){
+        if (getNumOfChildren() - curChildIndex > 1) return true;
+        return false;
+    }
+    public Action getChildOfNumber (int number){
+        return childrenActions.get(number);
     }
 }

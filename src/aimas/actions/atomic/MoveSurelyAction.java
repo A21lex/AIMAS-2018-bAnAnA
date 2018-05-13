@@ -9,6 +9,8 @@ import aimas.actions.AtomicAction;
 import aimas.board.entities.Box;
 import aimas.board.entities.Entity;
 
+import java.util.ArrayList;
+
 /**
  * Atomic action MOVE. This is called when path betweeen agent and "finish" is clear.
  */
@@ -25,6 +27,7 @@ public class MoveSurelyAction extends AtomicAction {
         this.finish = finish;
         this.parent = parent;
         this.actionType = ActionType.MOVE_SURELY;
+        this.childrenActions = new ArrayList<>();
 
 //        if (node.getCellAtCoords(finish).getEntity() != null) {
 //            this.potentialEntity = node.getCellAtCoords(finish).getEntity();

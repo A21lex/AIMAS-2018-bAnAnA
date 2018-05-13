@@ -8,6 +8,9 @@ import aimas.actions.AtomicAction;
 import aimas.board.entities.Box;
 import aimas.Node;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Atomic action DELIVER_BOX_SURELY. This is called when path betweeen box and "finish" is clear.
  */
@@ -20,6 +23,7 @@ public class DeliverBoxSurelyAction extends AtomicAction {
         this.finish = finish;
         this.parent = parent;
         this.actionType = ActionType.DELIVER_BOX_SURELY;
+        this.childrenActions = new ArrayList<>();
     }
 
     @Override

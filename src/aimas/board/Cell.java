@@ -138,6 +138,10 @@ public class Cell {
         return i + ":" + j;
     }
 
+    public String toStringPrime(){
+        return goalLetter +":" + i + ":" + j;
+    }
+
     // Copy constructor.. have to deal with this to copy state-space representations
     // consisting of our magnificent array lists...
     public Cell(Cell original){

@@ -4,12 +4,14 @@ import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.MoveSurelyAction;
+import aimas.actions.expandable.AchieveGoalAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.board.entities.Box;
+import aimas.board.entities.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
+            //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -140,7 +143,7 @@ public class Launcher {
 
         */
 
-        ExpandableAction solveLevel = new SolveLevelAction(start);
+      /* sentinel  ExpandableAction solveLevel = new SolveLevelAction(start);
         List<Action> actions = solveLevel.decompose(start);
         List<Action> actionsToPerform = new ArrayList<>();
         for (Action action : actions){
@@ -178,7 +181,33 @@ public class Launcher {
         }
         // Check last node of solution on whether it is achieved
         System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
-        boolean test = true;
+        boolean test = true; sentinel */
+
+        // some testing from Arturs's side;
+       // ExpandableAction solveLevelTest = new SolveLevelAction(start);
+        //buildTree(solveLevelTest,start);
+       // printTree(solveLevelTest);
+        System.out.println(PathFinder.pathExists(start.getLevel(), new CoordinatesPair(1, 3), new CoordinatesPair(3, 5), true,
+                false, true));
+        for (CoordinatesPair coordPar : PathFinder.getFoundPath()){
+            System.out.println(coordPar);
+        }
+
+
+        SolveLevelAction solveLevel1 = new SolveLevelAction(start);
+       // MoveSurelyAction msAction = new MoveSurelyAction(new CoordinatesPair(3,4), new SolveLevelAction(start));
+        System.out.println(solveLevel1.getChildrenActions().size());
+        buildTree(solveLevel1, start);
+        printTree(solveLevel1);
+
+       // System.out.println(findLeftMostDesc(solveLevel1.getChildrenActions().get(1)));
+        //System.out.println("***");
+       // System.out.println(findNextHTNnode(solveLevel1.getChildrenActions().get(0).getChildrenActions().get(3)));
+        System.out.println(PathFinder.getBoxesOnPath(start, new CoordinatesPair(1, 3),
+                new CoordinatesPair(5, 1), true, false, false).size());
+
+        //******************************************************************************
+
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
@@ -245,10 +274,6 @@ public class Launcher {
 //            }
 //        }
 
-
-
-
-
     }
 
     static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
@@ -268,6 +293,131 @@ public class Launcher {
         }
         return path;
     }
+
+
+    // HTN tree related functions
+    static void buildTree(Action action, Node node){
+        if (action instanceof  ExpandableAction) {
+            ((ExpandableAction) action).decompose(node);
+        }
+        for (Action childAct: action.getChildrenActions()){
+            buildTree(childAct, node);
+        }
+    }
+
+    // pre-order traversal of HTN tree
+    static void printTree(Action action){
+        System.out.println(action.toString());
+        for (Action childAct: action.getChildrenActions()){
+            printTree(childAct);
+        }
+    }
+
+    static Action findLeftMostDesc(Action action){
+        Action tempAction = action;
+        while (!tempAction.getChildrenActions().isEmpty()){
+            tempAction = tempAction.getChildrenActions().get(0);
+        }
+        return tempAction;
+    }
+
+    static Action findNextHTNnode(Action action){ // find successor
+        Action tempChild = action;
+        Action tempParent = tempChild.getParent();
+        /*if (parent.hasMoreChildren(action.getNumberAsChild()))
+            return parent.getChildOfNumber(action.getNumberAsChild()+1);
+        else */
+        Action tempNode;
+        while (!tempParent.hasMoreChildren(tempChild.getNumberAsChild())){
+            if (tempParent.getParent() == null) return action;
+            tempNode = tempParent;
+            tempChild = tempParent;
+            tempParent = tempNode.getParent();
+        }
+        //return findLeftMostDesc(tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1));
+        return tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1);
+    }
+
+    // state machine (move to separate class)
+    static void HTNBDIFSM(Node node, Action htnroot) {
+        Action curAction = htnroot;
+        Node curNode = node;
+        int curState = 1;
+        boolean finished = false;
+        while(!finished) {
+            switch (curState) {
+                case 1:
+                    if (curAction.isAchieved(curNode)) {
+                        curState = 2;
+                    }
+                    else if (curAction instanceof ExpandableAction) {
+                        curState = 3;
+                    }
+                    else if (curAction instanceof AtomicAction) {
+                        curState = 5;
+                    }
+                    break;
+
+                case 2:
+                    Action successor = findNextHTNnode(curAction);
+                    if (successor.equals(curAction)) finished = true;
+                    else {
+                        curAction = successor;
+                        curState = 1;
+                    }
+                    break;
+
+                case 3:
+                    ((ExpandableAction)curAction).decompose(curNode);
+                    Action firstChild = curAction.getChildOfNumber(0);
+                    if (firstChild instanceof ExpandableAction) {
+                        curAction = firstChild;
+                        curState = 1;
+                    }
+                    else if (firstChild instanceof AtomicAction){
+                        curState = 4;
+                    }
+                    break;
+
+                case 4:
+
+                    break;
+
+                case 5:
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                case 8:
+                    break;
+
+                case 9:
+                    break;
+
+                case 10:
+                    break;
+
+                case 11:
+                    break;
+
+                case 12:
+                    break;
+
+                case 13:
+                    break;
+
+                case 14:
+                    break;
+            }
+        }
+
+
+    }
+
 
 
 }
