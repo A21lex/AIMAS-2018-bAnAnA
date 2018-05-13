@@ -132,12 +132,14 @@ public class PathFinder {
     private static List<CoordinatesPair> constructPath(CoordinatesPair reachedState,
                                                 Map<CoordinatesPair, CoordinatesPair> cameFrom){
         List<CoordinatesPair> path = new ArrayList<>();
+        CoordinatesPair finalCoordinate = reachedState; // keep to add to the list in the end
         while (cameFrom.get(reachedState) != null){ // until we are the start coordinate
             CoordinatesPair prevCoordinate = cameFrom.get(reachedState);
             path.add(prevCoordinate);
             reachedState = prevCoordinate;
         }
         Collections.reverse(path);
+        path.add(finalCoordinate); // add final coordinate
 
         return path;
     }
