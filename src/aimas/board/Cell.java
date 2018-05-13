@@ -1,16 +1,11 @@
-package aimas;
+package aimas.board;
 
-import aimas.entities.Agent;
-import aimas.entities.Box;
-import aimas.entities.Entity;
+import aimas.board.entities.Agent;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-// use to denote type of cell - empty vs wall
-enum Type{
-    WALL, SPACE
-}
 
 public class Cell {
     private int i, j; // coordinates of the cell
@@ -27,12 +22,12 @@ public class Cell {
     }
 
     // Simple constructor essentially only for coordinates
-    Cell(int i, int j){
+    public Cell(int i, int j){
         this.i = i;
         this.j = j;
     }
     // Full constructor for all the info contained in the cell
-    Cell(int i, int j, Type type, Entity entity, char goalLetter){
+    public Cell(int i, int j, Type type, Entity entity, char goalLetter){
         this.i = i;
         this.j = j;
         this.type = type;
@@ -40,13 +35,13 @@ public class Cell {
         this.goalLetter = goalLetter;
     }
 
-    int getI() {
+    public int getI() {
         return i;
     }
-    int getJ() {
+    public int getJ() {
         return j;
     }
-    Type getType(){
+    public Type getType(){
         return this.type;
     }
     public Entity getEntity() {
@@ -55,13 +50,13 @@ public class Cell {
     public char getGoalLetter(){
         return this.goalLetter;
     }
-    void setType(Type type){
+    public void setType(Type type){
         this.type = type;
     }
-    void setEntity(Entity entity){
+    public void setEntity(Entity entity){
         this.entity = entity;
     }
-    void setGoalLetter(char goalLetter){
+    public void setGoalLetter(char goalLetter){
         this.goalLetter = goalLetter;
     }
 

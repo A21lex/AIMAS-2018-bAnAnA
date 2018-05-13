@@ -1,8 +1,10 @@
-package aimas;
+package aimas.aiutils;
 
-import aimas.actions.Action;
+import aimas.*;
 import aimas.actions.AtomicAction;
-import aimas.entities.Box;
+import aimas.actions.atomic.MoveSurelyAction;
+import aimas.board.CoordinatesPair;
+import aimas.board.entities.Box;
 
 import java.io.IOException;
 import java.util.*;
@@ -56,8 +58,8 @@ public class BestFirstSearch {
      */
     static ArrayList<Node> AStar(Node startState, char goalToSatisfy){
         if (!startState.isInLevel(goalToSatisfy)){
-            System.out.println("The goal " + goalToSatisfy + " does not exist in the level.");
-            System.out.println("A* quitting.");
+            System.err.println("The goal " + goalToSatisfy + " does not exist in the level.");
+            System.err.println("A* quitting.");
             return new ArrayList<>();
         }
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
@@ -66,7 +68,6 @@ public class BestFirstSearch {
         HashSet<Node> visited = new HashSet<>();
         HashSet<Node> frontier = new HashSet<>();
         frontier.add(startState); // start node is the only one known initially
-        SearchMethod searchMethod = new SimpleGoalSatisfier(goalToSatisfy); // do we need this?..
         startState.fScore = heuristic(startState, goalToSatisfy);
         Node currentNode;
         while (!frontier.isEmpty()){
@@ -74,9 +75,9 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (currentNode.isSatisfied(goalToSatisfy)){
-                System.out.println("satisfied h yeah");
+                System.err.println("satisfied h yeah");
                 shortestPath = reconstructPath(currentNode);
                 return shortestPath;
             }
@@ -153,17 +154,21 @@ public class BestFirstSearch {
         // Now we have coords of agent, box and goal we try to satisfy. Let's roll.
         int fromBoxToGoal = manhDist(boxRow, boxCol, goalRow, goalCol);
         int fromAgentToBox = manhDist(agentRow, agentCol, boxRow, boxCol);
+        int h = fromBoxToGoal + fromAgentToBox;
 
+        if (fromAgentToBox > 1){
+            h += 10; // punish agent from going away from the box
+        }
         // int fromAgentToGoal = manhDist(agentRow, agentCol, goalRow, goalCol);
 //        System.out.println("Agent to box: " + fromAgentToBox);
 //        System.out.println("Box to goal: " + fromBoxToGoal);
 //        System.out.println();
 
-        return fromBoxToGoal + fromAgentToBox;
+        return h; //fromBoxToGoal + fromAgentToBox;
     }
 
     // From Warm-Up assignment
-    private static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
+    public static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
         int diffI = Math.abs(i1 - i2);
         int diffJ = Math.abs(j1 - j2);
         return diffI + diffJ;
@@ -185,7 +190,7 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (currentNode.equals(finishState)){
                 System.out.println("satisfied h yeah");
                 shortestPath = reconstructPath(currentNode);
@@ -222,7 +227,7 @@ public class BestFirstSearch {
 
     // A* which calculates path depending on the action. Each action has different implementation of heuristic
     // and isAchieved methods
-    static ArrayList<Node> AStar(Node startState, AtomicAction action){
+    public static ArrayList<Node> AStar(Node startState, AtomicAction action){
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
         ArrayList<Node> shortestPath = new ArrayList<>();
@@ -236,10 +241,10 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.out.println(Node.nodeCount); // debug
+            System.err.println(Node.nodeCount); // debug
             if (action.isAchieved(currentNode)){
                 //  System.out.println("satisfied h yeah");
-                System.out.println(action.toString() + " is satisfied.");
+                System.err.println(action.toString() + " is satisfied.");
                 shortestPath = reconstructPath(currentNode);
                 return shortestPath;
             }
@@ -251,6 +256,9 @@ public class BestFirstSearch {
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }
+//                if (action instanceof MoveSurelyAction && neighbour.getBoxBeingMoved() != null){
+//                    continue; // this is an idea to completely shutdown attempts to move a box while "moving surely"
+//                }
                 if (!frontier.contains(neighbour)){ // Discover a new node
                     frontier.add(neighbour);
                 }

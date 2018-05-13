@@ -2,8 +2,11 @@ package aimas; /**
  * Created by Arturs Gumenuks on 08.04.2018.
  */
 
-import aimas.entities.Box;
-import aimas.entities.Entity;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
+import aimas.board.Type;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
 
 import java.io.IOException;
 import java.util.*;

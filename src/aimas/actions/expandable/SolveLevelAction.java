@@ -1,12 +1,13 @@
 package aimas.actions.expandable;
 
-import aimas.Cell;
-import aimas.CoordinatesPair;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
-import aimas.entities.Box;
+import aimas.aiutils.BoxAssigner;
+import aimas.board.entities.Box;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,11 @@ public class SolveLevelAction extends ExpandableAction {
 
     public SolveLevelAction(Node node){
         this.node = node;
+
+        ArrayList<ActionType> decomposedTo = new ArrayList<>();
+        decomposedTo.add(ActionType.ACHIEVE_GOAL);
+        this.canBeDecomposedTo = decomposedTo;
+        this.parent = null; // top level node, so parent is null
         this.actionType = ActionType.SOLVE_LEVEL;
     }
 
@@ -26,6 +32,9 @@ public class SolveLevelAction extends ExpandableAction {
     public boolean isAchieved(Node node) {
         for (CoordinatesPair coordinate : Node.getGoalCellCoords()){
             Cell cellAtCoordinate = node.getCellAtCoords(coordinate);
+            if (cellAtCoordinate.getEntity() == null){
+                return false;
+            }
             Box boxAtCoordinate = (Box) cellAtCoordinate.getEntity();
             if (!(boxAtCoordinate.getLetter() == Character.toUpperCase(cellAtCoordinate.getGoalLetter()))){
                 return false;
@@ -36,20 +45,17 @@ public class SolveLevelAction extends ExpandableAction {
 
     @Override
     public List<Action> decompose(Node node) {
-        List<CoordinatesPair> goalCoords = Node.getGoalCellCoords();
-        List<Cell> goalCells = new ArrayList<>();
-        for (CoordinatesPair goalCoord : goalCoords){
-            goalCells.add(node.getCellAtCoords(goalCoord));
-        }
-        /* SOMEHOW GET THE BOXES WITH WHICH TO SATISFY EACH GOAL - maybe in a map? */
-        List<Box> boxes;
-        HashMap<Cell, Box> cellsBoxes = new HashMap<>();
 
+        if (isAchieved(node)) {
+            return new ArrayList<>(); // if is already achieved, zero actions are required..
+        }
+
+        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
+        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
-        for (Cell goalCell : cellsBoxes.keySet()){
-            expandedActions.add(new AchieveGoalAction(goalCell, cellsBoxes.get(goalCell)));
+        for (Cell goalCell : goalsBoxes.keySet()){
+            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
         }
-
         return expandedActions;
     }
 }

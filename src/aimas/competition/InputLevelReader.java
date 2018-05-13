@@ -1,7 +1,7 @@
-package aimas; /**
- * Created by aleksandrs on 4/4/18.
- */
+package aimas.competition;
 
+import aimas.LevelReader;
+import aimas.PathFinder;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.board.Type;
@@ -16,67 +16,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class LevelReader {
-
+/**
+ * Inspired by LevelReader, but for standard input
+ */
+public class InputLevelReader {
     private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> spaceCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
 
-    public static void main(String[] args){
-        LevelReader levelReader = new LevelReader();
-        String pathToLevel = "testNode.lvl"; // << Set path to level file here
-        boolean wObstacles = true; // walls are obstacles
-        boolean aObstacles = true; // agents are obstacles
-        boolean bObstacles = true; // boxes are obstacles
-        Cell startingCell = new Cell(1,1); // << Set starting cell
-        Cell finishingCell = new Cell(1,17); // << Set finishing cell
-
-        ArrayList<ArrayList<Cell>> level = null;
-        try {
-            level = levelReader.getLevel(pathToLevel);
-        } catch (IOException e) {
-            System.out.println("Probably incorrect path");
-        }
-        System.out.println("Printing level");
-        for (ArrayList<Cell> row: level){
-            for (Cell cell: row){
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
-        for (ArrayList<Cell> row: level){
-            for (Cell cell: row){
-                Entity entity = cell.getEntity();
-                if (entity instanceof Box){
-                    Box box = (Box) entity;
-                    System.out.println(box);
-                }
-                if (entity instanceof Agent){
-                    Agent agent = (Agent) entity;
-                    System.out.println(agent);
-                }
-                System.out.print(cell.getEntity() + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("boxes: " + boxCellCoords);
-        System.out.println("goals " + goalCellCoords);
-
-        PathFinder pathFinder = new PathFinder();
-        boolean pathExists = pathFinder.pathExists(level, startingCell, finishingCell,
-                wObstacles, aObstacles, bObstacles);
-        System.out.println("path exists = " + pathExists);
-
-    }
-
-    // read file - different boxes get different IDs...
-    public static ArrayList<ArrayList<Cell>> getLevel(String pathToLevel) throws IOException{
+    // read level - different boxes get different IDs...
+    public static ArrayList<ArrayList<Cell>> getLevel(BufferedReader bufferedReader) throws IOException{
         ArrayList<ArrayList<Cell>> level = new ArrayList<>(); // store level here
         int id = 0; // for unique identification of boxes
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToLevel));
         try {
             String line = bufferedReader.readLine();
             // Read lines specifying colors
@@ -91,9 +44,9 @@ public final class LevelReader {
                 }
                 line = bufferedReader.readLine();
             }
-            final Color DEFAULT_COLOR = Color.BLUE; // dabu dee dabu dai
+            final Color DEFAULT_COLOR = Color.BLUE;
             int curRow = 0; // keep track of rows
-            while (line != null){
+            while (!line.equals("")){
                 ArrayList<Cell> row = new ArrayList<>();
                 for (int curCol = 0; curCol < line.length(); curCol++){
                     char c = line.charAt(curCol);
@@ -132,7 +85,7 @@ public final class LevelReader {
                         cell.setEntity(box);
                         cell.setGoalLetter('0');
                         cell.setType(Type.SPACE);
-                       // Cell boxCell = new Cell(curRow, curCol, Cell.CommandType.Box, true, c);
+                        // Cell boxCell = new Cell(curRow, curCol, Cell.CommandType.Box, true, c);
                         row.add(cell);
                         boxCellCoords.add(new CoordinatesPair(cell));
                         spaceCellCoords.add(new CoordinatesPair(cell));

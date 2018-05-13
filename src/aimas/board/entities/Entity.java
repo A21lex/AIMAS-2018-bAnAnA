@@ -1,4 +1,4 @@
-package aimas.entities; /**
+package aimas.board.entities; /**
  * Created by aleksandrs on 4/10/18.
  */
 
@@ -16,7 +16,7 @@ public class Entity {
 //    void setCurrentCell(Cell currentCell){
 //        this.currentCell = currentCell;
 //    }
-    Color getColor(){
+public Color getColor(){
         return this.color;
     }
     void setColor(Color color){
