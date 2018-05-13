@@ -27,6 +27,7 @@ public class RemoveBoxAction extends ExpandableAction {
         this.finish = finish;
         this.agent = agent;
         this.parent = parent;
+        this.childrenActions = new ArrayList<>();
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.CLEAR_PATH);
@@ -42,7 +43,7 @@ public class RemoveBoxAction extends ExpandableAction {
         /**
          * Artur will implement this
          */
-        return !PathFinder.getBoxesOnPath(node.getLevel(), start, finish,
+        return !PathFinder.getBoxesOnPath(node, start, finish,
                 true, true, true).contains(box);
     }
 
@@ -61,10 +62,25 @@ public class RemoveBoxAction extends ExpandableAction {
         Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), agent,this);
         Action deliverBox = new DeliverBoxSurelyAction(box, finish, agent, this);
         List<Action> expandedActions = new ArrayList<>();
+
+        // manually (not to traverse the tree for this purpose specifically)
+        clearBox.setNumberAsChild(0);
+        clearCell.setNumberAsChild(1);
+        gotoBox.setNumberAsChild(2);
+        deliverBox.setNumberAsChild(3);
+
         expandedActions.add(clearBox);
         expandedActions.add(clearCell);
         expandedActions.add(gotoBox);
         expandedActions.add(deliverBox);
+
+        //childrenActions = expandedActions;
+
         return expandedActions;
+    }
+
+    @Override
+    public String toString() {
+        return "RemoveBoxAction: removing Box " + box + " from cell " + start + " to cell " + finish;
     }
 }

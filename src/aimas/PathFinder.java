@@ -7,6 +7,7 @@ import aimas.board.CoordinatesPair;
 import aimas.board.Type;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 import java.util.*;
 
@@ -41,9 +42,9 @@ public class PathFinder {
                 startingCell.getCoordinates(), finishingCell.getCoordinates(), wObstacles, aObstacles, bObstacles);
         for(int i = 0; i < simplifiedLevel.length; i++){
             for (int j = 0; j < simplifiedLevel[i].length; j++){
-             //   System.out.print(simplifiedLevel[i][j]);
+                //   System.out.print(simplifiedLevel[i][j]);
             }
-        //    System.out.println();
+            //    System.out.println();
         }
         // commence BFS
         //HashSet<Cell> visited = new HashSet<>();
@@ -64,7 +65,7 @@ public class PathFinder {
             //Cell subtreeRoot = frontier.pollFirst(); // get first element of the queue
             CoordinatesPair subtreeRoot = frontier.pollFirst();
             if (subtreeRoot.equals(finishingCoordinatesPair)){
-            //if (subtreeRoot.equals(finishingCell)){ // reached the goal!
+                //if (subtreeRoot.equals(finishingCell)){ // reached the goal!
                 foundPath = constructPath(subtreeRoot, cameFrom); // get how we reached the goal
                 return true;
             }
@@ -130,7 +131,7 @@ public class PathFinder {
     }
 
     private static List<CoordinatesPair> constructPath(CoordinatesPair reachedState,
-                                                Map<CoordinatesPair, CoordinatesPair> cameFrom){
+                                                       Map<CoordinatesPair, CoordinatesPair> cameFrom){
         List<CoordinatesPair> path = new ArrayList<>();
         CoordinatesPair finalCoordinate = reachedState; // keep to add to the list in the end
         while (cameFrom.get(reachedState) != null){ // until we are the start coordinate
@@ -144,7 +145,7 @@ public class PathFinder {
         return path;
     }
 
-    public static ArrayList<Box> getBoxesOnPath(ArrayList<ArrayList<Cell>> level,
+    public static ArrayList<Box> getBoxesOnPath(Node node,
                                                 CoordinatesPair startingCoordinatesPair,
                                                 CoordinatesPair finishingCoordinatesPair,
                                                 boolean wObstacles, boolean aObstacles, boolean bObstacles){
@@ -153,14 +154,26 @@ public class PathFinder {
          * Implement this to return boxes on path between 2 cells (use the method below: note that if final
          * cell has a box, it still counts as "0" (as we are trying to "reach" this goal)
          */
-        return new ArrayList<Box>();
+        ArrayList<Box> boxesOnPath = new ArrayList<>();
+
+        ArrayList<ArrayList<Cell>> level = node.getLevel();
+        System.out.println("debug " + pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
+                wObstacles, aObstacles, bObstacles));
+        List<CoordinatesPair> foundPathLoc = getFoundPath();
+       // System.out.println("debug " + foundPathLoc.size());
+        for (CoordinatesPair coordPair : foundPathLoc){
+            if (node.getCellAtCoords(coordPair).getEntity() instanceof Box){
+                boxesOnPath.add((Box)node.getCellAtCoords(coordPair).getEntity());
+            }
+        }
+        return boxesOnPath;
 
     }
 
     private static Integer[][] getSimplifiedLevelArray(ArrayList<ArrayList<Cell>> level,
                                                        CoordinatesPair startingCoordinatesPair,
                                                        CoordinatesPair finishingCoordinatesPair,
-                                                boolean wObstacles, boolean aObstacles, boolean bObstacles){
+                                                       boolean wObstacles, boolean aObstacles, boolean bObstacles){
         ArrayList<ArrayList<Integer>> simpleLevel = new ArrayList<>();
 
         for (ArrayList<Cell> row: level){
@@ -169,7 +182,7 @@ public class PathFinder {
                 int num; // 0 for free, 1 for occupied. Finish cell is also 0. (to reach boxes)
                 if ((cell.getType()== Type.WALL && wObstacles) ||
                         (cell.getType()==Type.SPACE && cell.getEntity() instanceof Box && bObstacles
-                        && !cell.getCoordinates().equals(finishingCoordinatesPair)) ||
+                                && !cell.getCoordinates().equals(finishingCoordinatesPair)) ||
                         (cell.getType()== Type.SPACE && cell.getEntity() instanceof Agent && aObstacles)){
                     num = 1;
                 }
@@ -191,5 +204,3 @@ public class PathFinder {
     }
 
 }
-
-

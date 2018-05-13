@@ -29,6 +29,7 @@ public class AchieveGoalAction extends ExpandableAction {
         this.box = box;
         this.agent = agent;
         this.parent = parent;
+        this.childrenActions = new ArrayList<>();
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.CLEAR_PATH);
@@ -65,10 +66,24 @@ public class AchieveGoalAction extends ExpandableAction {
         Action gotobox = new MoveSurelyAction(box.getCoordinates(node), agent, this);
         Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates(), agent, this);
         List<Action> expandedActions = new ArrayList<>();
+
+        // manually (not to traverse the tree for this purpose specifically)
+        clearBox.setNumberAsChild(0);
+        clearGoal.setNumberAsChild(1);
+        gotobox.setNumberAsChild(2);
+        deliverbox.setNumberAsChild(3);
+
         expandedActions.add(clearBox);
         expandedActions.add(clearGoal);
         expandedActions.add(gotobox);
         expandedActions.add(deliverbox);
+
+        childrenActions = expandedActions;
+
         return expandedActions;
+    }
+    @Override
+    public String toString() {
+        return "AchieveGoalAction: achieving goal " + goalCell.toStringPrime() + " with box " + box;
     }
 }
