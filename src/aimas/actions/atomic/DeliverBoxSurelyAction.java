@@ -5,6 +5,7 @@ import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
 import aimas.actions.ActionType;
 import aimas.actions.AtomicAction;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 import aimas.Node;
 
@@ -15,9 +16,10 @@ public class DeliverBoxSurelyAction extends AtomicAction {
     Box box;
     CoordinatesPair finish; // move box to here
 
-    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish, Action parent){
+    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish, Agent agent, Action parent){
         this.box = box;
         this.finish = finish;
+        this.agent = agent;
         this.parent = parent;
         this.actionType = ActionType.DELIVER_BOX_SURELY;
     }

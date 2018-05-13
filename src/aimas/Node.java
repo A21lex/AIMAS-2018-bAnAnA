@@ -68,11 +68,11 @@ public class Node {
 
     private Node parent;
     private ArrayList<ArrayList<Cell>> level;
-    private Command action; // command which let to this node
+    public Command action; // command which let to this node
     // Each node has its own copy of the following data structures as they change for every state
     // (at least the agent)
-    private ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
-    private ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
+    public ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
+    public ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
     // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
     private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
@@ -81,7 +81,14 @@ public class Node {
         return boxBeingMoved;
     }
 
-    private Box boxBeingMoved; // if this node is a result of a Push/Pull action, keep track of which box was moved
+    public Box boxBeingMoved; // if this node is a result of a Push/Pull action, keep track of which box was moved
+
+    private int agentNumber; // keep track of who is working with this node
+
+    public int getAgentNumber() {
+        return agentNumber;
+    }
+
     public static int nodeCount; // total amount of nodes generated
 
     public int gScore; // for A*
@@ -224,7 +231,7 @@ public class Node {
                 if (this.cellIsFree(newAgentRow, newAgentCol)) {
                     Node n = new Node(this); // create a child node with curr node as the parent
                     n.action = c; // action c led us to the new node
-
+                    n.agentNumber = agentNumber;
                     ArrayList<ArrayList<Cell>> updatedLevel = copyLevel(this.getLevel());
 
                     updatedLevel.get(curAgentRow).get(curAgentCol).setEntity(null);
@@ -261,6 +268,7 @@ public class Node {
                         }
                         Node n = new Node(this);
                         n.action = c;
+                        n.agentNumber = agentNumber;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
@@ -311,6 +319,7 @@ public class Node {
                         CoordinatesPair curBoxCellCoords = new CoordinatesPair(curBoxCell);
                         Node n = new Node(this);
                         n.action = c;
+                        n.agentNumber = agentNumber;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
@@ -353,7 +362,7 @@ public class Node {
     }
     private static final Random RND = new Random(2);
 
-    private boolean cellIsFree(int row, int col){
+    public boolean cellIsFree(int row, int col){
         if (this.getLevel().get(row).get(col).getType().equals(Type.WALL)
                 || this.getLevel().get(row).get(col).getEntity() != null){
             return false;
@@ -361,7 +370,7 @@ public class Node {
         return true;
     }
 
-    private boolean boxAt(int row, int col){
+    public boolean boxAt(int row, int col){
         if (this.getLevel().get(row).get(col).getEntity() instanceof Box){
             return true;
         }
@@ -406,7 +415,7 @@ public class Node {
      * @param oldLevel Old ArrayList<ArrayList<Cell>> representing a level
      * @return New level just like the old one
      */
-    private static ArrayList<ArrayList<Cell>> copyLevel(ArrayList<ArrayList<Cell>> oldLevel){
+    public static ArrayList<ArrayList<Cell>> copyLevel(ArrayList<ArrayList<Cell>> oldLevel){
         ArrayList<ArrayList<Cell>> newLevel = new ArrayList<>();
         for (ArrayList<Cell> arrayList : oldLevel){
             ArrayList<Cell> newRow = new ArrayList<>();

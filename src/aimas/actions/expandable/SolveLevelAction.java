@@ -1,5 +1,7 @@
 package aimas.actions.expandable;
 
+import aimas.aiutils.Task;
+import aimas.aiutils.TaskDistrubitor;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -7,11 +9,14 @@ import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.aiutils.BoxAssigner;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static aimas.aiutils.TaskDistrubitor.assignTasksToAgents;
 
 public class SolveLevelAction extends ExpandableAction {
     //potentially store boxes and cells to satisfy with these
@@ -49,13 +54,19 @@ public class SolveLevelAction extends ExpandableAction {
         if (isAchieved(node)) {
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
-
-        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
-        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
-        for (Cell goalCell : goalsBoxes.keySet()){
-            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
+        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
+        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node,goalsBoxes);
+        for (Agent agent : agentTasks.keySet()){
+            // for every agent, create goals corresponding to what he can do
+            for (Task task : agentTasks.get(agent)){
+                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
+            }
         }
+        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
+//        for (Cell goalCell : goalsBoxes.keySet()){
+//            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
+//        }
         return expandedActions;
     }
 }

@@ -83,6 +83,12 @@ public class ClearPathAction extends ExpandableAction {
             System.err.println("ClearPathAction is already achieved for " + start + " to " + finish);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
+        Agent agent = node.getAgents().get(0); // any agent
+        if (first != null){
+            if (first instanceof Agent){
+                agent = (Agent) first;
+            }
+        } // made that agent be the one we are clearing path from if any
 
         // List of boxes on path from start to  finish
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Artur will implement this<<<<<<<
@@ -91,7 +97,7 @@ public class ClearPathAction extends ExpandableAction {
 
         ArrayList<Action> expandedActions = new ArrayList<>();
         for (Box box : boxes){
-            expandedActions.add(new RemoveBoxAction(box, start, finish, this));
+            expandedActions.add(new RemoveBoxAction(box, start, finish, agent, this));
         }
         // for every box in list of boxed: add remove(box) to expandedActions
         // will return corresponding actions or empty list if there are no boxes on path (although

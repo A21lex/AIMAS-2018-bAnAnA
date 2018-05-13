@@ -7,14 +7,14 @@ import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
+import aimas.aiutils.World;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -30,7 +30,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/MAbAnAnA.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -45,6 +45,11 @@ public class Launcher {
         //test tunnels
         System.out.println("tunnels:");
         System.out.println(start.getTunnelCellCoords());
+
+        // Test pathfinder with path detection
+        boolean testieeeee = PathFinder.pathExists(start.getLevel(), new CoordinatesPair(4,8),
+                new CoordinatesPair(4,10), true, true, true);
+
 
         /*double startTime = System.nanoTime();
         ArrayList<Node> shortestPath = BestFirstSearch.AStar(start, 'd');
@@ -113,7 +118,7 @@ public class Launcher {
             System.out.println("Box: " + goalsBoxes.get(cell));
             System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
         }
-
+        boolean stophere = true;
         //ExpandableAction someaction = (ExpandableAction) actions.get(0);
         //List<Action> actions2 = someaction.decompose(start);
         //Action one = actions2.get(2);
@@ -140,6 +145,8 @@ public class Launcher {
 
         */
 
+        World world = new World(start);
+
         ExpandableAction solveLevel = new SolveLevelAction(start);
         List<Action> actions = solveLevel.decompose(start);
         List<Action> actionsToPerform = new ArrayList<>();
@@ -152,7 +159,6 @@ public class Launcher {
                     try {
                         actionsToPerform.add(expandableSubaction.decompose(start).get(0));
                         actionsToPerform.add(expandableSubaction.decompose(start).get(1));
-
                         actionsToPerform.add(expandableSubaction.decompose(start).get(2));
                         actionsToPerform.add(expandableSubaction.decompose(start).get(3));
                     }
@@ -169,16 +175,90 @@ public class Launcher {
         }
 
         List<Node> path = getTotalPath(actionsToPerform, start);
-        System.out.println("Printing total shortest path");
+        System.err.println("Printing total shortest path");
         for (int i = path.size() - 1; i >= 0; i--) {
             if (path.get(i).getAction() != null) { // if the action is null, this is a start node
-                System.out.println(path.get(i).getAction().toString());
+                System.err.println(path.get(i).getAgentNumber()); // who did this action
+                System.err.println(path.get(i).getAction().toString()); // what did he do
                 //System.out.println(path.get(i));
             }
         }
         // Check last node of solution on whether it is achieved
-        System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
+        System.err.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
         boolean test = true;
+
+        // Record which agent did which move
+        int maxMovesByAnyAgent = 0;
+        List<Agent> agents = world.getState().getAgents();
+        Map<Agent, List<Command>> agentsActions = new TreeMap<>(new Comparator<Agent>() {
+            @Override
+            public int compare(Agent agentOne, Agent agentTwo) {
+                return agentOne.getNumber() - agentTwo.getNumber();
+            }
+        }); // who does what, using treemap to sort by keys
+        for (Agent agent : agents){
+            int movesCounter = 0;
+            List<Command> commandList = new ArrayList<>();
+            for (int i = path.size() - 1; i >= 0; i--){
+                if (path.get(i).getAction() != null){
+                    if (path.get(i).getAgentNumber() == agent.getNumber()){
+                        commandList.add(path.get(i).getAction());
+                        movesCounter++;
+                    }
+                }
+            }
+            if (maxMovesByAnyAgent < movesCounter){
+                maxMovesByAnyAgent = movesCounter;
+            }
+            agentsActions.put(agent, commandList);
+        }
+
+        boolean testie = true;
+
+        // Perform actions on the world performed by all the agents acting in it
+        List<String> Solution = new ArrayList<>();
+
+        // Go through ALL actions of all agents like so: AG1 move, AG2 move, ..., AGn move; Ag1 move2, Ag2 move2
+        for (int i = 0; i < maxMovesByAnyAgent; i++){
+            StringBuilder compositeCommand = new StringBuilder();
+            compositeCommand.append("[");
+            String regex = "\\[|\\]"; // to get rid of square brackets for separate moves
+            for (Agent agent : agentsActions.keySet()){
+                if (i >= agentsActions.get(agent).size()){
+                    compositeCommand.append("NoOp");
+                    compositeCommand.append(",");
+                    continue; // there is no more moves to make for this agent, continue
+                }
+                Command command = agentsActions.get(agent).get(i); // executing this for now
+                if (world.isAValidMove(agent.getNumber(), command)){
+                    world.makeAMove(agent.getNumber(), command);
+                    String commandWithoutSquareBrackets = command.toString().replaceAll(regex, "");
+                    compositeCommand.append(commandWithoutSquareBrackets);
+                    compositeCommand.append(",");
+                }
+                else{
+                    System.err.println("Wrong move detected");
+                    // Conflict resolution here please
+                }
+            }
+            if (compositeCommand.length() > 0){
+                compositeCommand.setLength(compositeCommand.length()-1); // remove last comma
+            }
+            compositeCommand.append("]");
+            Solution.add(compositeCommand.toString());
+            compositeCommand.setLength(0); // clear sb
+        }
+
+        boolean grandfinale = true;
+        System.err.println("Printing overall result");
+        for (String command : Solution){
+            System.out.println(command);
+        }
+        System.err.println(solveLevel.isAchieved(world.getState()) ? "Level solved" : "Level not solved");
+
+
+
+
         /*// Get a box to operate on
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();

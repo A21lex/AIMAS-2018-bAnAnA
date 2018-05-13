@@ -8,6 +8,7 @@ import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
@@ -18,11 +19,13 @@ public class RemoveBoxAction extends ExpandableAction {
     Box box;
     CoordinatesPair start; // unblock path from here
     CoordinatesPair finish; // to here
+    Agent agent; // by this agent
 
-    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Action parent){
+    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Agent agent, Action parent){
         this.box = box;
         this.start = start;
         this.finish = finish;
+        this.agent = agent;
         this.parent = parent;
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
@@ -55,8 +58,8 @@ public class RemoveBoxAction extends ExpandableAction {
         Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
         Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node, this);
-        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), this);
-        Action deliverBox = new DeliverBoxSurelyAction(box, finish, this);
+        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), agent,this);
+        Action deliverBox = new DeliverBoxSurelyAction(box, finish, agent, this);
         List<Action> expandedActions = new ArrayList<>();
         expandedActions.add(clearBox);
         expandedActions.add(clearCell);
