@@ -1,8 +1,12 @@
 package aimas.aiutils;
 
+import aimas.Node;
 import aimas.board.Cell;
 import aimas.board.entities.Box;
 
+/**
+ * Represents a task (combination of box and goal) assigned to an agent to satisfy
+ */
 public class Task{
 
 
@@ -28,5 +32,9 @@ public class Task{
 
     public void setGoal(Cell goal) {
         this.goal = goal;
+    }
+
+    public boolean isAchieved(Node node){
+        return goal.getCoordinates() == box.getCoordinates(node);
     }
 }

@@ -101,11 +101,11 @@ public class ClearPathAction extends ExpandableAction {
                 true, false, false); // ingoring other agents on the path for now
 
         ArrayList<Action> expandedActions = new ArrayList<>();
-        int i = 0; // nmber of action as a child of current action
+        int i = 0; // number of action as a child of current action
         for (Box box : boxes){
             //expandedActions.add(new RemoveBoxAction(box, start, finish, agent, this));
             CoordinatesPair parkingCell = finish;// Alina's magic function
-            expandedActions.add(new RemoveBoxAction(box, start, parkingCell , this));
+            expandedActions.add(new RemoveBoxAction(box, start, parkingCell , agent,this));
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }

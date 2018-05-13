@@ -16,9 +16,7 @@ import aimas.board.entities.Box;
 import aimas.board.entities.Color;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -34,7 +32,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/MAbAnAnA.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAbAnAnA.lvl"));
             //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
         }
         catch (IOException e){
@@ -162,10 +160,15 @@ public class Launcher {
                 if (subAction instanceof ExpandableAction) {
                     expandableSubaction = (ExpandableAction) subAction;
                     try {
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(0));
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(1));
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(2));
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(3));
+                        for (int i = 0; i < 3; i++){
+                            if (expandableSubaction.decompose(start).get(i) instanceof AtomicAction){
+                                actionsToPerform.add(expandableSubaction.decompose(start).get(i));
+                            }
+                        }
+//                        actionsToPerform.add(expandableSubaction.decompose(start).get(0));
+//                        actionsToPerform.add(expandableSubaction.decompose(start).get(1));
+//                        actionsToPerform.add(expandableSubaction.decompose(start).get(2));
+//                        actionsToPerform.add(expandableSubaction.decompose(start).get(3));
                     }
                     catch (IndexOutOfBoundsException ex){
                         // likely we are at a node which is already achieved
@@ -264,13 +267,13 @@ public class Launcher {
         // The above works for now; the below is in testing phase
 
         System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
-        boolean test = true; //sentinel */
+        boolean testttt = true; //sentinel */
 
         // some testing from Arturs's side;
        // ExpandableAction solveLevelTest = new SolveLevelAction(start);
         //buildTree(solveLevelTest,start);
        // printTree(solveLevelTest);
-        System.out.println(PathFinder.pathExists(start.getLevel(), new CoordinatesPair(1, 3), new CoordinatesPair(3, 5), true,
+        /*System.out.println(PathFinder.pathExists(start.getLevel(), new CoordinatesPair(1, 3), new CoordinatesPair(3, 5), true,
                 false, true));
         for (CoordinatesPair coordPar : PathFinder.getFoundPath()){
             System.out.println(coordPar);
@@ -287,7 +290,7 @@ public class Launcher {
         //System.out.println("***");
        // System.out.println(findNextHTNnode(solveLevel1.getChildrenActions().get(0).getChildrenActions().get(3)));
         System.out.println(PathFinder.getBoxesOnPath(start, new CoordinatesPair(1, 3),
-                new CoordinatesPair(5, 1), true, false, false).size());
+                new CoordinatesPair(5, 1), true, false, false).size());*/
 
         //******************************************************************************
 
