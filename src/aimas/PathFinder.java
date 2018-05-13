@@ -8,9 +8,7 @@ import aimas.board.Type;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class PathFinder {
     // based on simple representation like below;
@@ -21,6 +19,11 @@ public class PathFinder {
 //            {1, 1, 0, 0, 0, 1},
 //            {1, 1, 0, 1, 0}
 //    };
+
+    private static List<CoordinatesPair> foundPath = new ArrayList<>();
+    public static List<CoordinatesPair> getFoundPath(){
+        return foundPath;
+    }
 
     public static void main(String[] args) {
 //        System.out.println();
@@ -45,12 +48,14 @@ public class PathFinder {
         // commence BFS
         //HashSet<Cell> visited = new HashSet<>();
         //ArrayDeque<Cell> frontier = new ArrayDeque<>();
+        Map<CoordinatesPair, CoordinatesPair> cameFrom = new HashMap<>(); // record path through coordinates
         HashSet<CoordinatesPair> visited = new HashSet<>();
         ArrayDeque<CoordinatesPair> frontier = new ArrayDeque<>();
         CoordinatesPair startingCoordinatesPair = new CoordinatesPair(startingCell);
         CoordinatesPair finishingCoordinatesPair = new CoordinatesPair(finishingCell);
         //frontier.addLast(startingCell); // startingCell is a root here
         frontier.addLast(startingCoordinatesPair);
+        cameFrom.put(startingCoordinatesPair, null); // root came from nowhere (as it is the starting coordinate)
         //System.out.println("Starting cell: " + startingCell.toString());
         //System.out.println("Finishing cell: " + finishingCell.toString());
         //System.out.println("Starting cell: " + startingCoordinatesPair.toString());
@@ -60,6 +65,7 @@ public class PathFinder {
             CoordinatesPair subtreeRoot = frontier.pollFirst();
             if (subtreeRoot.equals(finishingCoordinatesPair)){
             //if (subtreeRoot.equals(finishingCell)){ // reached the goal!
+                foundPath = constructPath(subtreeRoot, cameFrom); // get how we reached the goal
                 return true;
             }
             for (CoordinatesPair child: subtreeRoot.getChildren(simplifiedLevel)){
@@ -67,6 +73,7 @@ public class PathFinder {
                     continue;
                 }
                 if (!frontier.contains(child)){
+                    cameFrom.put(child, subtreeRoot); // record reaching the child
                     frontier.addLast(child);
                 }
             }
@@ -90,10 +97,12 @@ public class PathFinder {
         // commence BFS
         //HashSet<Cell> visited = new HashSet<>();
         //ArrayDeque<Cell> frontier = new ArrayDeque<>();
+        Map<CoordinatesPair, CoordinatesPair> cameFrom = new HashMap<>(); // record path through coordinates
         HashSet<CoordinatesPair> visited = new HashSet<>();
         ArrayDeque<CoordinatesPair> frontier = new ArrayDeque<>();
         //frontier.addLast(startingCell); // startingCell is a root here
         frontier.addLast(startingCoordinatesPair);
+        cameFrom.put(startingCoordinatesPair, null); // root came from nowhere (as it is the starting coordinate)
         //System.out.println("Starting cell: " + startingCell.toString());
         //System.out.println("Finishing cell: " + finishingCell.toString());
         //System.out.println("Starting cell: " + startingCoordinatesPair.toString());
@@ -103,6 +112,7 @@ public class PathFinder {
             CoordinatesPair subtreeRoot = frontier.pollFirst();
             if (subtreeRoot.equals(finishingCoordinatesPair)){
                 //if (subtreeRoot.equals(finishingCell)){ // reached the goal!
+                foundPath = constructPath(subtreeRoot, cameFrom); // get how we reached the goal
                 return true;
             }
             for (CoordinatesPair child: subtreeRoot.getChildren(simplifiedLevel)){
@@ -110,12 +120,26 @@ public class PathFinder {
                     continue;
                 }
                 if (!frontier.contains(child)){
+                    cameFrom.put(child, subtreeRoot); // record reaching the child
                     frontier.addLast(child);
                 }
             }
             visited.add(subtreeRoot);
         }
         return false;
+    }
+
+    private static List<CoordinatesPair> constructPath(CoordinatesPair reachedState,
+                                                Map<CoordinatesPair, CoordinatesPair> cameFrom){
+        List<CoordinatesPair> path = new ArrayList<>();
+        while (cameFrom.get(reachedState) != null){ // until we are the start coordinate
+            CoordinatesPair prevCoordinate = cameFrom.get(reachedState);
+            path.add(prevCoordinate);
+            reachedState = prevCoordinate;
+        }
+        Collections.reverse(path);
+
+        return path;
     }
 
     public static ArrayList<Box> getBoxesOnPath(ArrayList<ArrayList<Cell>> level,
