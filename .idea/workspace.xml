@@ -2,49 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d41a3dc1-b093-420d-996e-3dd16f86ef97" name="Default" comment="Merge branch 'master' of https://github.com/A21lex/AIMAS-2018-bAnAnA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/aimas/Launcher.java&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/aiutils/BoxAssigner.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/competition/Client.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/competition/InputLevelReader.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAbispebjergHospital.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAchallenge.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAmultiagentSort.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MApacman.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAsimple1.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAsimple2.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAsimple3.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAsimple4.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAsimple5.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/MAthomasAppartment.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/SAbAnAnA.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/SAmicromouseBoxAtStart.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/levels/test_levels/SAsoko3_48.lvl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/aiutils/TaskDistrubitor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/board/Type.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/aiutils/ValidityChecker.java" />
-      <change type="DELETED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\Client.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\SearchMethod.java" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\BestFirstSearch.java" afterPath="$PROJECT_DIR$/src/aimas/aiutils/BestFirstSearch.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\Cell.java" afterPath="$PROJECT_DIR$/src/aimas/board/Cell.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\CoordinatesPair.java" afterPath="$PROJECT_DIR$/src/aimas/board/CoordinatesPair.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\entities\Agent.java" afterPath="$PROJECT_DIR$/src/aimas/board/entities/Agent.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\entities\Box.java" afterPath="$PROJECT_DIR$/src/aimas/board/entities/Box.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\entities\Color.java" afterPath="$PROJECT_DIR$/src/aimas/board/entities/Color.java" />
-      <change type="MOVED" beforePath="C:\Users\Администратор\Desktop\Учеба, снова\IdeaJ projects\AIMAS-2018-bAnAnA\src\aimas\entities\Entity.java" afterPath="$PROJECT_DIR$/src/aimas/board/entities/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/Action.java" afterPath="$PROJECT_DIR$/src/aimas/actions/Action.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/Command.java" afterPath="$PROJECT_DIR$/src/aimas/Command.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/ExpandableAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/GoalPrioritizer.java" afterPath="$PROJECT_DIR$/src/aimas/GoalPrioritizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/Launcher.java" afterPath="$PROJECT_DIR$/src/aimas/Launcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/LevelReader.java" afterPath="$PROJECT_DIR$/src/aimas/LevelReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aimas/aiutils/World.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/Node.java" afterPath="$PROJECT_DIR$/src/aimas/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/PathFinder.java" afterPath="$PROJECT_DIR$/src/aimas/PathFinder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" afterPath="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="0d618ce6-85d8-4e06-bc1f-5e5974e70608" name="Failed commit: Default" comment="Merge branch 'master' of https://github.com/A21lex/AIMAS-2018-bAnAnA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/aimas/Launcher.java&#10;&#10;Artur round of changes 1: getting ready for FSM" />
@@ -71,11 +31,21 @@
       <file leaf-file-name="Launcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="20" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="20" />
+            <state vertical-scroll-proportion="-11.0">
+              <caret line="347" column="31" selection-start-line="347" selection-start-column="31" selection-end-line="347" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="World.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/aimas/aiutils/World.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="172" column="63" selection-start-line="172" selection-start-column="63" selection-end-line="172" selection-end-column="63" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="70" column="19" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="19" />
+              <caret line="70" column="18" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -110,22 +80,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PathFinder.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PathFinder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5275862">
-              <caret line="153" column="15" selection-start-line="153" selection-start-column="15" selection-end-line="153" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CoordinatesPair.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/aimas/board/CoordinatesPair.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-              <folding />
+              <caret line="161" column="60" selection-start-line="161" selection-start-column="60" selection-end-line="161" selection-end-column="60" />
+              <folding>
+                <element signature="e#693#694#0" expanded="true" />
+                <element signature="e#725#726#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,10 +108,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="41" column="64" selection-start-line="37" selection-start-column="4" selection-end-line="41" selection-end-column="64" />
-              <folding>
-                <element signature="e#1452#1453#0" expanded="true" />
-                <element signature="e#1502#1503#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -163,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RemoveBoxAction.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RemoveBoxAction.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.4641638">
+              <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -250,10 +210,10 @@
         <option value="$PROJECT_DIR$/src/aimas/actions/expandable/AchieveGoalAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/expandable/SolveLevelAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/Action.java" />
-        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/actions/expandable/ClearPathAction.java" />
         <option value="$PROJECT_DIR$/src/aimas/Launcher.java" />
         <option value="$PROJECT_DIR$/src/aimas/PathFinder.java" />
+        <option value="$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java" />
       </list>
     </option>
   </component>
@@ -472,8 +432,8 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -827,10 +787,12 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47203946" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -838,15 +800,13 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47203946" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1059,14 +1019,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/DeliverBoxSurelyAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/actions/atomic/MoveSurelyAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1108,10 +1060,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding>
-            <element signature="e#1452#1453#0" expanded="true" />
-            <element signature="e#1502#1503#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1200,10 +1149,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding>
-            <element signature="e#1452#1453#0" expanded="true" />
-            <element signature="e#1502#1503#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1246,7 +1192,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="e#693#694#0" expanded="true" />
+            <element signature="e#725#726#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1382,7 +1331,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1390,7 +1338,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1409,7 +1356,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1417,7 +1363,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1456,18 +1401,8 @@
     <entry file="file://$PROJECT_DIR$/src/aimas/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="70" column="19" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="19" />
+          <caret line="70" column="18" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="18" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1479,32 +1414,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aimas/actions/Action.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="64" selection-start-line="37" selection-start-column="4" selection-end-line="41" selection-end-column="64" />
-          <folding>
-            <element signature="e#1452#1453#0" expanded="true" />
-            <element signature="e#1502#1503#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/Launcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="20" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="20" />
+        <state vertical-scroll-proportion="-11.0">
+          <caret line="347" column="31" selection-start-line="347" selection-start-column="31" selection-end-line="347" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/aiutils/World.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="172" column="63" selection-start-line="172" selection-start-column="63" selection-end-line="172" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/aimas/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5275862">
-          <caret line="153" column="15" selection-start-line="153" selection-start-column="15" selection-end-line="153" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="161" column="60" selection-start-line="161" selection-start-column="60" selection-end-line="161" selection-end-column="60" />
+          <folding>
+            <element signature="e#693#694#0" expanded="true" />
+            <element signature="e#725#726#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/Action.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="64" selection-start-line="37" selection-start-column="4" selection-end-line="41" selection-end-column="64" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aimas/actions/expandable/RemoveBoxAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4641638">
+          <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
