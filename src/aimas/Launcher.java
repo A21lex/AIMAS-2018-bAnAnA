@@ -32,7 +32,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAbAnAnA.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/testAstar.lvl"));
             //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
         }
         catch (IOException e){
@@ -44,10 +44,19 @@ public class Launcher {
         start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
         start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
         start.setTunnelCellCoords(Node.copyList(LevelReader.getTunnelCellCoords()));
+        start.setSpaceCells(Node.copyList(LevelReader.getSpaceCellCoords()));
 
-        //test tunnels
-        System.out.println("tunnels:");
-        System.out.println(start.getTunnelCellCoords());
+        //testing..
+        MapParser parser = new MapParser(start.getLevel());
+        parser.parseMap(start.getSpaceCelllCoords(), start.getLevel());
+
+        Set<Map.Entry<CoordinatesPair,Double>> hashSet=parser.getCellWeights().entrySet();
+        for(Map.Entry entry:hashSet ) {
+
+            System.out.println("Key="+entry.getKey()+", Value="+entry.getValue());
+        }
+
+        System.out.println("HashMap size="+ hashSet.size());
 
         // Test pathfinder with path detection
         boolean testieeeee = PathFinder.pathExists(start.getLevel(), new CoordinatesPair(4,8),
@@ -122,6 +131,8 @@ public class Launcher {
             System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
         }
 
+
+
         //ExpandableAction someaction = (ExpandableAction) actions.get(0);
         //List<Action> actions2 = someaction.decompose(start);
         //Action one = actions2.get(2);
@@ -148,7 +159,7 @@ public class Launcher {
 
         */
 
-        World world = new World(start);
+        /*World world = new World(start);
 
         ExpandableAction solveLevel = new SolveLevelAction(start);
         List<Action> actions = solveLevel.decompose(start);
