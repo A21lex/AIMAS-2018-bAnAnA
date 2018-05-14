@@ -5,18 +5,23 @@ import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.AchieveGoalAction;
+import aimas.actions.expandable.RemoveBoxAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
+import aimas.aiutils.World;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 import aimas.board.entities.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 
 /**
@@ -32,8 +37,8 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAanagram.lvl"));
             start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
+            //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -44,6 +49,9 @@ public class Launcher {
         start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
         start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
         start.setTunnelCellCoords(Node.copyList(LevelReader.getTunnelCellCoords()));
+
+        World world =  new World(start);
+
 
         //test tunnels
         System.out.println("tunnels:");
@@ -197,14 +205,20 @@ public class Launcher {
         SolveLevelAction solveLevel1 = new SolveLevelAction(start);
        // MoveSurelyAction msAction = new MoveSurelyAction(new CoordinatesPair(3,4), new SolveLevelAction(start));
         System.out.println(solveLevel1.getChildrenActions().size());
-        buildTree(solveLevel1, start);
-        printTree(solveLevel1);
+       // buildTree(solveLevel1, start);
+        //printTree(solveLevel1);
 
        // System.out.println(findLeftMostDesc(solveLevel1.getChildrenActions().get(1)));
         //System.out.println("***");
        // System.out.println(findNextHTNnode(solveLevel1.getChildrenActions().get(0).getChildrenActions().get(3)));
         System.out.println(PathFinder.getBoxesOnPath(start, new CoordinatesPair(1, 3),
-                new CoordinatesPair(5, 1), true, false, false).size());
+                new CoordinatesPair(5, 1), true, false, false, new ArrayList<Box>()).size());
+
+        HTNBDIFSM(world.getState().getAgents().get(0), solveLevel1, world);
+        //System.out.println("kk "+LevelReader.findParkingCell(start, new CoordinatesPair(3,5)));
+
+        // System.out.println("last " + PathFinder.getBoxesOnPath(start, new CoordinatesPair(5,4), new CoordinatesPair(3,2),
+        //true, false, false).size());
 
         //******************************************************************************
 
@@ -297,6 +311,7 @@ public class Launcher {
 
     // HTN tree related functions
     static void buildTree(Action action, Node node){
+        System.out.println("action: " + action);
         if (action instanceof  ExpandableAction) {
             ((ExpandableAction) action).decompose(node);
         }
@@ -307,7 +322,8 @@ public class Launcher {
 
     // pre-order traversal of HTN tree
     static void printTree(Action action){
-        System.out.println(action.toString());
+        if (action  instanceof SolveLevelAction) System.out.println(action.toString());
+        else System.out.println(action.toString() + "  **** " + action.getParent().toString());
         for (Action childAct: action.getChildrenActions()){
             printTree(childAct);
         }
@@ -339,28 +355,71 @@ public class Launcher {
     }
 
     // state machine (move to separate class)
-    static void HTNBDIFSM(Node node, Action htnroot) {
+    static void HTNBDIFSM(Agent agent, Action htnroot, World world) {
         Action curAction = htnroot;
-        Node curNode = node;
+        Node curNode = world.getState();
         int curState = 1;
+        int prevState = -2;
         boolean finished = false;
+        Action curAchieveGoalAction = htnroot; // will 100% be overwritten
+        ArrayList<Command> allCommands = new ArrayList<>();
+        System.out.println();
         while(!finished) {
+            System.out.println(curState + " " + curAction + "***" + curAction.getParent());
             switch (curState) {
                 case 1:
+                    if (curAction instanceof AchieveGoalAction) curAchieveGoalAction = curAction;
                     if (curAction.isAchieved(curNode)) {
                         curState = 2;
                     }
                     else if (curAction instanceof ExpandableAction) {
+                        if (curAction instanceof RemoveBoxAction){
+                            Box box = ((RemoveBoxAction)curAction).box;
+                            Cell cell = curNode.getCellAtCoords(box.getCoordinates(curNode));
+                            if (cell.isGoal()
+                                && cell.getGoalLetter() == Character.toLowerCase(box.getLetter())){
+                                AchieveGoalAction achieveAgain = new AchieveGoalAction(cell, box, curAchieveGoalAction.getParent());
+                                curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain, curAchieveGoalAction.getNumberAsChild() + 1);
+                                curAchieveGoalAction.getParent().getChildrenActions().
+                                        get(curAchieveGoalAction.getNumberAsChild()+1).
+                                        setNumberAsChild(curAchieveGoalAction.getNumberAsChild()+1);
+                                for (int i = curAchieveGoalAction.getNumberAsChild()+2;
+                                     i<curAchieveGoalAction.getParent().getChildrenActions().size(); i++){
+                                    curAchieveGoalAction.getParent().getChildOfNumber(i).
+                                           // setNumberAsChild(curAchieveGoalAction.getParent().getChildOfNumber(i).getNumberAsChild()+1);
+                                           setNumberAsChild(i);
+                                }
+                              //  System.out.println("whole tree");
+                               // printTree(curAchieveGoalAction.getParent());
+                                for (Action act : curAchieveGoalAction.getParent().getChildrenActions()){
+                                 //   System.out.println(act + " *** " + act.getNumberAsChild());
+                                }
+                            }
+                        }
                         curState = 3;
                     }
                     else if (curAction instanceof AtomicAction) {
-                        curState = 5;
+                        curState = 4;
                     }
                     break;
 
                 case 2:
                     Action successor = findNextHTNnode(curAction);
-                    if (successor.equals(curAction)) finished = true;
+                    if (successor.equals(curAction)) {
+                       /* System.out.println("cur action before finish " + curAction);
+                        System.out.println(curNode);
+                        System.out.println(curAction.isAchieved(curNode));
+
+                        ArrayList<ArrayList<Cell>> level = curNode.getLevel();
+                        System.out.println(curNode.getCellAtCoords(new CoordinatesPair(11,8)));
+                        for(int i=0; i<level.size(); i++){
+                            for (int j=0; j<level.get(i).size(); j++) {
+                                //System.out.println(level.get(i).get(j).getCoordinates()+" "+level.get(i).get(j).getEntity());
+                            }
+                        } */
+
+                        finished = true;
+                    }
                     else {
                         curAction = successor;
                         curState = 1;
@@ -369,48 +428,88 @@ public class Launcher {
 
                 case 3:
                     ((ExpandableAction)curAction).decompose(curNode);
-                    Action firstChild = curAction.getChildOfNumber(0);
-                    if (firstChild instanceof ExpandableAction) {
-                        curAction = firstChild;
-                        curState = 1;
-                    }
-                    else if (firstChild instanceof AtomicAction){
-                        curState = 4;
-                    }
-                    break;
+                   try {
+                       Action firstChild = curAction.getChildOfNumber(0);
+
+                       if (firstChild instanceof ExpandableAction) {
+                           curAction = firstChild;
+                           curState = 1;
+                       } else if (firstChild instanceof AtomicAction) {
+                           curAction = firstChild;
+                           curState = 4;
+                       }
+                       break;
+                   }
+                   catch(IndexOutOfBoundsException e){
+                       System.out.println(curNode);
+                       System.out.println("Faling action: " + curAction);
+                   }
 
                 case 4:
+                    ArrayList<Node> pathOfNodes = BestFirstSearch.AStar(curNode,(AtomicAction) curAction);
+                    Collections.reverse(pathOfNodes);
+                    //ArrayList<Command> commands = new ArrayList<>();
+                    boolean atomicActionDone = false;
+                    //System.out.println(curAction);
+                    //System.out.println("size: " + pathOfNodes.size());
+                    for (Node pathNode : pathOfNodes){
+                       // System.out.println(pathNode);
+                        if(world.isAValidMove(agent.getNumber(),pathNode.getAction())){
+                            allCommands.add(pathNode.getAction());
+                            world.makeAMove(agent.getNumber(), pathNode.getAction());
+                           // System.out.println(world.getState());
+                        }
+                        else {
+                          //  System.out.println("problem: " +pathNode.getAction().toString());
+                            curState = 4;
+                            break;
+                        }
+                        curNode = world.getState();
+                      //  System.out.println(curNode);
+                        atomicActionDone = true;
+                    }
 
+                    if (atomicActionDone) {
+
+                        if (curAchieveGoalAction.isAchieved(world.getState())){
+                            curAction = findNextHTNnode(curAchieveGoalAction);
+                            curState = 1;
+                         }
+                        else {
+                            curState = 5;
+                        }
+                    }
                     break;
 
                 case 5:
+                    if (curAction.isAchieved(curNode)) {
+                        curState = 6;
+                    }
+                    else {
+                        curAction = curAction.getParent();
+                        curState = 1;
+                    }
                     break;
 
                 case 6:
+                    if (curAction.getParent().isAchieved(curNode)){
+                        curAction = curAction.getParent();
+                        curState = 1;
+                    }
+                    else {
+                        curState = 7;
+                    }
                     break;
 
                 case 7:
-                    break;
-
-                case 8:
-                    break;
-
-                case 9:
-                    break;
-
-                case 10:
-                    break;
-
-                case 11:
-                    break;
-
-                case 12:
-                    break;
-
-                case 13:
-                    break;
-
-                case 14:
+                    if (curAction.getParent().hasMoreChildren(curAction.getNumberAsChild())) {
+                        curAction = curAction.getParent().getChildOfNumber(curAction.getNumberAsChild()+1);
+                        curState = 1;
+                    }
+                    else {
+                        curAction = curAction.getParent(); // repeating
+                        curState = 1;
+                    }
                     break;
             }
         }

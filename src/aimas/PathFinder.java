@@ -148,7 +148,8 @@ public class PathFinder {
     public static ArrayList<Box> getBoxesOnPath(Node node,
                                                 CoordinatesPair startingCoordinatesPair,
                                                 CoordinatesPair finishingCoordinatesPair,
-                                                boolean wObstacles, boolean aObstacles, boolean bObstacles){
+                                                boolean wObstacles, boolean aObstacles, boolean bObstacles,
+                                                ArrayList<Box> exceptionBoxes){
 
         /**
          * Implement this to return boxes on path between 2 cells (use the method below: note that if final
@@ -157,12 +158,20 @@ public class PathFinder {
         ArrayList<Box> boxesOnPath = new ArrayList<>();
 
         ArrayList<ArrayList<Cell>> level = node.getLevel();
-        System.out.println("debug " + pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
-                wObstacles, aObstacles, bObstacles));
+        //System.out.println("debug " + pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
+        //        wObstacles, aObstacles, bObstacles));
+        pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
+                wObstacles, aObstacles, bObstacles);
         List<CoordinatesPair> foundPathLoc = getFoundPath();
+        //System.out.println("Pray it is not reversed");
+        //for (CoordinatesPair cp : foundPathLoc){
+      //      System.out.println(cp);
+        //}
+       // foundPathLoc.remove(0);
        // System.out.println("debug " + foundPathLoc.size());
         for (CoordinatesPair coordPair : foundPathLoc){
-            if (node.getCellAtCoords(coordPair).getEntity() instanceof Box){
+            if (node.getCellAtCoords(coordPair).getEntity() instanceof Box &&
+                    !exceptionBoxes.contains(node.getCellAtCoords(coordPair).getEntity())){
                 boxesOnPath.add((Box)node.getCellAtCoords(coordPair).getEntity());
             }
         }

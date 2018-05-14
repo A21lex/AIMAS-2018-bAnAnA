@@ -36,12 +36,24 @@ public class AchieveGoalAction extends ExpandableAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        if (goalCell.getEntity() == null){
+        /*if (goalCell.getEntity() == null){
             return false;
         }
         if (goalCell.getEntity() instanceof Box) {
+            System.out.println(goalCell);
             Box boxOnCell = (Box) goalCell.getEntity();
             return goalCell.getGoalLetter() == Character.toLowerCase(boxOnCell.getLetter());
+        }
+        return false;
+        */
+        Cell newGoalCell = node.getCellAtCoords(goalCell.getCoordinates());
+        if (newGoalCell.getEntity() == null){
+            return false;
+        }
+        if (newGoalCell.getEntity() instanceof Box) {
+            //System.out.println(goalCell);
+            Box boxOnCell = (Box) newGoalCell.getEntity();
+            return newGoalCell.getGoalLetter() == Character.toLowerCase(boxOnCell.getLetter());
         }
         return false;
     }

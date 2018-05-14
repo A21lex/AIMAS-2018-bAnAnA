@@ -61,7 +61,67 @@ public class SolveLevelAction extends ExpandableAction {
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }
+        //dbca - test
 
+        //bacdfegh
+        /*for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='b'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='a'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='c'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='d'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='f'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='e'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='g'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='h'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        } */
+        //expandedActions.add(new AchieveGoalAction())
         childrenActions = expandedActions;
 
         return expandedActions;

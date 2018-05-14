@@ -133,10 +133,10 @@ public class Cell {
         return Objects.hash(i,j,type,entity,goalLetter);
     }
 
-    @Override
-    public String toString() {
-        return i + ":" + j;
-    }
+ //   @Override
+  //  public String toString() {
+ //       return i + ":" + j;
+  //  }
 
     public String toStringPrime(){
         return goalLetter +":" + i + ":" + j;

@@ -2,6 +2,7 @@ package aimas.actions;
 
 import aimas.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,5 +45,8 @@ public abstract class Action {
     }
     public Action getChildOfNumber (int number){
         return childrenActions.get(number);
+    }
+    public void setChildOfNumber(Action childAction, int number){
+        childrenActions.add(number, childAction);
     }
 }

@@ -23,12 +23,20 @@ public class ClearPathAction extends ExpandableAction {
     Entity first; // potential entity at start (box/agent)
     Entity second; // potential entity at finish (box/agent)
 
+    //writing quickly now
+    public CoordinatesPair fromHere;
+    public CoordinatesPair toThere;
+    public ArrayList<Box> exceptionBoxes;
+
     public ClearPathAction(CoordinatesPair start, CoordinatesPair finish, Node node, Action parent){
         this.start = start;
         this.finish = finish;
         this.node = node;
         this.parent = parent;
         this.childrenActions = new ArrayList<>();
+        this.exceptionBoxes = new ArrayList<>();
+        //boolean referToFirstEntity = false;
+        //boolean referToSecondEntity = false;
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.REMOVE_BOX);
@@ -40,16 +48,20 @@ public class ClearPathAction extends ExpandableAction {
 
         if (node.getCellAtCoords(this.start).getEntity() != null){
             first = node.getCellAtCoords(this.start).getEntity();
+            if (first instanceof Box ) exceptionBoxes.add((Box) first);
         }
         if (node.getCellAtCoords(this.finish).getEntity() != null){
             second = node.getCellAtCoords(this.finish).getEntity();
+            if (second instanceof Box ) exceptionBoxes.add((Box) second);
         }
+
+
 
     }
 
     @Override
     public boolean isAchieved(Node node) {
-        CoordinatesPair fromHere = start;
+      /*  CoordinatesPair fromHere = start;
         CoordinatesPair toThere = finish;
 
         if (first != null){
@@ -71,13 +83,33 @@ public class ClearPathAction extends ExpandableAction {
                 Agent agent = (Agent) second;
                 toThere = agent.getCoordinates(node);
             }
-        }
+        }  */
+
+        fromHere = updateCoordinates(first, node, start);
+        toThere = updateCoordinates(second,node,finish);
+        //System.out.println("* "+fromHere);
+       // System.out.println("* "+toThere);
+
         // If path exists from current position of entity to current position of another entity
         // or cell in case there are no entities, return true
        // return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
         //        true, true, true);
         return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, true);
+    }
+
+    public CoordinatesPair updateCoordinates(Entity entity, Node node, CoordinatesPair initalCoordPair){
+        if (entity != null){
+            if (entity instanceof Box){
+                Box box = (Box) entity;
+                return box.getCoordinates(node);
+            }
+            else if (entity instanceof Agent){
+                Agent agent = (Agent) entity;
+                return agent.getCoordinates(node);
+            }
+        }
+        return initalCoordPair;
     }
 
     @Override
@@ -87,21 +119,25 @@ public class ClearPathAction extends ExpandableAction {
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
 
+       // System.out.println("never getting here");
+
         // List of boxes on path from start to  finish
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Artur will implement this<<<<<<<
         //ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node.getLevel(), start, finish,
          //       true, true, true);
         ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node, start, finish,
-                true, false, false); // ingoring other agents on the path for now
+                true, false, false, exceptionBoxes); // ingoring other agents on the path for now
+
 
         ArrayList<Action> expandedActions = new ArrayList<>();
         int i = 0; // nmber of action as a child of current action
         for (Box box : boxes){
-            CoordinatesPair parkingCell = finish;// Alina's magic function
+            CoordinatesPair parkingCell = finish;// Alina's magic function (not here actually)
             expandedActions.add(new RemoveBoxAction(box, start, parkingCell , this));
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }
+        System.out.println(boxes.size());
         // for every box in list of boxed: add remove(box) to expandedActions
         // will return corresponding actions or empty list if there are no boxes on path (although
         // in this case this method shouldn't be called at all)
