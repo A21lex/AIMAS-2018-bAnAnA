@@ -1,5 +1,6 @@
 package aimas.actions.expandable;
 
+import aimas.LevelReader;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
@@ -56,7 +57,7 @@ public class RemoveBoxAction extends ExpandableAction {
                 true, false, true, ((ClearPathAction) parent).exceptionBoxes).size());
 
         return !PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
-                true, false, true, ((ClearPathAction) parent).exceptionBoxes).contains(box);
+                true, false, false, ((ClearPathAction) parent).exceptionBoxes).contains(box);
 
        // if ((PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
        //                true, false, false).contains(box))

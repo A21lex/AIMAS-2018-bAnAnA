@@ -230,7 +230,8 @@ public class BestFirstSearch {
     public static ArrayList<Node> AStar(Node startState, AtomicAction action){
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
-        int agentNumber = action.getAgent().getNumber(); // this is the agent number executing this action!
+        //int agentNumber = action.getAgent().getNumber(); // this is the agent number executing this action!
+        int agentNumber = 0;
         ArrayList<Node> shortestPath = new ArrayList<>();
         HashSet<Node> visited = new HashSet<>();
         HashSet<Node> frontier = new HashSet<>();

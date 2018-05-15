@@ -1,5 +1,7 @@
 package aimas.actions.expandable;
 
+import aimas.aiutils.Task;
+import aimas.aiutils.TaskDistrubitor;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -7,6 +9,7 @@ import aimas.actions.Action;
 import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.aiutils.BoxAssigner;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
@@ -53,12 +56,12 @@ public class SolveLevelAction extends ExpandableAction {
         }
         List<Action> expandedActions = new ArrayList<>();
         HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
-        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node,goalsBoxes);
+        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node, goalsBoxes);
         int i = 0;
         for (Agent agent : agentTasks.keySet()){
             // for every agent, create goals corresponding to what he can do
             for (Task task : agentTasks.get(agent)){
-                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
+                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(),/* agent,*/ this));
                 expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
                 i++;
             }

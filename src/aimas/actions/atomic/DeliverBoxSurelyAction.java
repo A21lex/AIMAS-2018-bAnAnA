@@ -19,7 +19,7 @@ public class DeliverBoxSurelyAction extends AtomicAction {
     Box box;
     CoordinatesPair finish; // move box to here
 
-    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish, Agent agent, Action parent){
+    public DeliverBoxSurelyAction(Box box, CoordinatesPair finish/*, Agent agent*/, Action parent){
         this.box = box;
         this.finish = finish;
         this.agent = agent;

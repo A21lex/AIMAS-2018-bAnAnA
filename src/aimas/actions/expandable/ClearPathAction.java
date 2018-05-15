@@ -55,6 +55,9 @@ public class ClearPathAction extends ExpandableAction {
             if (second instanceof Box ) exceptionBoxes.add((Box) second);
         }
 
+        fromHere = updateCoordinates(first, node, start);
+        toThere = updateCoordinates(second,node,finish);
+
     }
 
     @Override
@@ -145,6 +148,6 @@ public class ClearPathAction extends ExpandableAction {
     }
     @Override
     public String toString() {
-        return "ClearPathAction: clearing path from cell " + start + " to cell " + finish;
+        return "ClearPathAction: clearing path from cell " + fromHere + " to cell " + toThere;
     }
 }

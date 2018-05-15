@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public final class LevelReader {
 
@@ -151,7 +152,7 @@ public final class LevelReader {
             }
 
             //determine tunnel cells
-            for (CoordinatesPair spc: spaceCellCoords) {
+            /*for (CoordinatesPair spc: spaceCellCoords) {
                 // wall on top and bellow or  wall on sides
                 if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
                         (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL))) {
@@ -184,7 +185,7 @@ public final class LevelReader {
                                 && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL))) {
                     tunnelCellCoords.add(spc);
                 }
-            }
+            } */
             return level;
         }
         finally {
@@ -210,6 +211,7 @@ public final class LevelReader {
     public static ArrayList<CoordinatesPair> getSpaceCellCoords(){
         return spaceCellCoords;
     }
+
     public static CoordinatesPair findParkingCell(Node node, CoordinatesPair initialCell){
         ArrayList<ArrayList<Cell>> level = node.getLevel();
         ArrayList<CoordinatesPair> toChooseBetween = new ArrayList<>();
@@ -217,7 +219,8 @@ public final class LevelReader {
         for (int i=0; i<level.size(); i++){
             for (int j = 0; j<level.get(i).size();j++){
                 if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(), true, false, true) &&
-                        !level.get(i).get(j).isGoal())
+                        !level.get(i).get(j).isGoal() &&
+                        !(level.get(i).get(j).getEntity() instanceof Box))
                     toChooseBetween.add(level.get(i).get(j).getCoordinates());
             }
         }
