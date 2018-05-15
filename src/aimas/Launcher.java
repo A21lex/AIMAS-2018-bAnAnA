@@ -37,6 +37,7 @@ public class Launcher {
              //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtowersOfSaigon04.lvl"));
             start.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP17/SAHiveMind.lvl"));
             //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
+            // git smith
         }
         catch (IOException e){
             System.out.println("########");
