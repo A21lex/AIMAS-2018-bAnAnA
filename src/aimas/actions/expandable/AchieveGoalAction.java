@@ -8,6 +8,7 @@ import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
@@ -16,12 +17,17 @@ import java.util.List;
 public class AchieveGoalAction extends ExpandableAction {
     Cell goalCell; // this is what we want to achieve
     Box box; // .. with this box
+    Agent agent; // .. by this agent
+
+    public Agent getAgent() {
+        return agent;
+    }
 
 
-
-    public AchieveGoalAction(Cell goalCell, Box box, Action parent){
+    public AchieveGoalAction(Cell goalCell, Box box, Agent agent, Action parent){
         this.goalCell = goalCell;
         this.box = box;
+        this.agent = agent;
         this.parent = parent;
         this.childrenActions = new ArrayList<>();
 
@@ -65,12 +71,12 @@ public class AchieveGoalAction extends ExpandableAction {
         }
 
         //Clear box - clear goal - gotoBox - deliverBox
-
-        CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
+        CoordinatesPair agentCellCoord = agent.getCoordinates(node);
+        //CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
         Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node), node, this);
         Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates(), node, this);
-        Action gotobox = new MoveSurelyAction(box.getCoordinates(node), this);
-        Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates(), this);
+        Action gotobox = new MoveSurelyAction(box.getCoordinates(node), agent, this);
+        Action deliverbox = new DeliverBoxSurelyAction(box, goalCell.getCoordinates(), agent, this);
         List<Action> expandedActions = new ArrayList<>();
 
         // manually (not to traverse the tree for this purpose specifically)

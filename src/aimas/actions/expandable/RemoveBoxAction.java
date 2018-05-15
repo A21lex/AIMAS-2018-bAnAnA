@@ -1,6 +1,5 @@
 package aimas.actions.expandable;
 
-import aimas.LevelReader;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
@@ -76,9 +75,7 @@ public class RemoveBoxAction extends ExpandableAction {
 
        /* Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node, this);
-        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), this);
-        Action deliverBox = new DeliverBoxSurelyAction(box, finish, this);
+       
         List<Action> expandedActions = new ArrayList<>(); */
 
         CoordinatesPair parkingCellCoords = LevelReader.findParkingCell(node, box.getCoordinates(node));

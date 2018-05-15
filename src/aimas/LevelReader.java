@@ -15,7 +15,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public final class LevelReader {
 
@@ -208,7 +207,9 @@ public final class LevelReader {
     public static ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
-
+    public static ArrayList<CoordinatesPair> getSpaceCellCoords(){
+        return spaceCellCoords;
+    }
     public static CoordinatesPair findParkingCell(Node node, CoordinatesPair initialCell){
         ArrayList<ArrayList<Cell>> level = node.getLevel();
         ArrayList<CoordinatesPair> toChooseBetween = new ArrayList<>();

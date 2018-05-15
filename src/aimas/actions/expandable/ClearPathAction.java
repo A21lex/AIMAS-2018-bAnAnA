@@ -55,8 +55,6 @@ public class ClearPathAction extends ExpandableAction {
             if (second instanceof Box ) exceptionBoxes.add((Box) second);
         }
 
-
-
     }
 
     @Override
@@ -127,7 +125,6 @@ public class ClearPathAction extends ExpandableAction {
          //       true, true, true);
         ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node, start, finish,
                 true, false, false, exceptionBoxes); // ingoring other agents on the path for now
-
 
         ArrayList<Action> expandedActions = new ArrayList<>();
         int i = 0; // nmber of action as a child of current action

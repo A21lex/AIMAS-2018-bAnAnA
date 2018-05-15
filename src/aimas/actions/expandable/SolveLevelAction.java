@@ -51,17 +51,20 @@ public class SolveLevelAction extends ExpandableAction {
         if (isAchieved(node)) {
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
-
-        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
-        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
         List<Action> expandedActions = new ArrayList<>();
+        HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
+        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node,goalsBoxes);
         int i = 0;
-        for (Cell goalCell : goalsBoxes.keySet()){
-            expandedActions.add(new AchieveGoalAction(goalCell, goalsBoxes.get(goalCell), this));
-            expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
-            i++;
+        for (Agent agent : agentTasks.keySet()){
+            // for every agent, create goals corresponding to what he can do
+            for (Task task : agentTasks.get(agent)){
+                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
         }
         //dbca - test
+        /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
 
         //bacdfegh
         /*for (Cell cell : goalsBoxes.keySet()){

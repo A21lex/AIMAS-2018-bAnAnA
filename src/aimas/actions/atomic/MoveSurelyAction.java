@@ -6,6 +6,7 @@ import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.actions.ActionType;
 import aimas.actions.AtomicAction;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 import aimas.board.entities.Entity;
 
@@ -23,8 +24,9 @@ public class MoveSurelyAction extends AtomicAction {
     CoordinatesPair finish;
     //Entity potentialEntity; // if we "move surely" to a box, this helps to move to one cell earlier than the box itself
 
-    public MoveSurelyAction(CoordinatesPair finish, Action parent){
+    public MoveSurelyAction(CoordinatesPair finish, Agent agent, Action parent){
         this.finish = finish;
+        this.agent = agent;
         this.parent = parent;
         this.actionType = ActionType.MOVE_SURELY;
         this.childrenActions = new ArrayList<>();
@@ -50,7 +52,8 @@ public class MoveSurelyAction extends AtomicAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
+//        CoordinatesPair agentCellCoord = node.getAgentCellCoords().get(0); // just take the only agent for now
+        CoordinatesPair agentCellCoord = agent.getCoordinates(node);
         int agentRow = agentCellCoord.getX();
         int agentCol = agentCellCoord.getY();
         Entity potentialEntity = null;
