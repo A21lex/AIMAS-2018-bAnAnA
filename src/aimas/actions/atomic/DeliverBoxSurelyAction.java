@@ -17,6 +17,11 @@ import java.util.List;
  */
 public class DeliverBoxSurelyAction extends AtomicAction {
     Box box;
+
+    public CoordinatesPair getFinish() {
+        return finish;
+    }
+
     CoordinatesPair finish; // move box to here
 
     public DeliverBoxSurelyAction(Box box, CoordinatesPair finish, Agent agent, Action parent){
@@ -26,6 +31,10 @@ public class DeliverBoxSurelyAction extends AtomicAction {
         this.parent = parent;
         this.actionType = ActionType.DELIVER_BOX_SURELY;
         this.childrenActions = new ArrayList<>();
+    }
+
+    public Box getBox() {
+        return box;
     }
 
     @Override
@@ -39,6 +48,10 @@ public class DeliverBoxSurelyAction extends AtomicAction {
                 }
             }
         }
+//        if (manhDist(agent.getCoordinates(node).getX(), agent.getCoordinates(node).getY(),
+//                box.getCoordinates(node).getX(), box.getCoordinates(node).getY()) > 1){
+//            punishmentForMovingOtherBoxes += 20;
+//        }
         return manhDist(box.getCoordinates(node).getX(), box.getCoordinates(node).getY(),
                 finish.getX(), finish.getY()) + punishmentForMovingOtherBoxes;
     }

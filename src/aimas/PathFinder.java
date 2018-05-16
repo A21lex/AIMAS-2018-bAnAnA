@@ -179,11 +179,14 @@ public class PathFinder {
         for (ArrayList<Cell> row: level){
             ArrayList<Integer> simpleRow = new ArrayList<>();
             for (Cell cell: row){
-                int num; // 0 for free, 1 for occupied. Finish cell is also 0. (to reach boxes)
+                int num; // 0 for free, 1 for occupied. Start and Finish cell is also 0. (to reach boxes)
+                // finally, if it is our own agent, also make it 0
                 if ((cell.getType()== Type.WALL && wObstacles) ||
                         (cell.getType()==Type.SPACE && cell.getEntity() instanceof Box && bObstacles
-                                && !cell.getCoordinates().equals(finishingCoordinatesPair)) ||
-                        (cell.getType()== Type.SPACE && cell.getEntity() instanceof Agent && aObstacles)){
+                                && !cell.getCoordinates().equals(finishingCoordinatesPair)
+                        && !cell.getCoordinates().equals(startingCoordinatesPair)) ||
+                        (cell.getType()== Type.SPACE && cell.getEntity() instanceof Agent && aObstacles
+                                && !(((Agent)cell.getEntity()).getNumber()==0))){ //todo change 0 to agentnumber!!!!!!!!
                     num = 1;
                 }
                 else {

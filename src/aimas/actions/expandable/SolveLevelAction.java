@@ -42,8 +42,13 @@ public class SolveLevelAction extends ExpandableAction {
             if (cellAtCoordinate.getEntity() == null){
                 return false;
             }
-            Box boxAtCoordinate = (Box) cellAtCoordinate.getEntity();
-            if (!(boxAtCoordinate.getLetter() == Character.toUpperCase(cellAtCoordinate.getGoalLetter()))){
+            if (cellAtCoordinate.getEntity() instanceof Box) {
+                Box boxAtCoordinate = (Box) cellAtCoordinate.getEntity();
+                if (!(boxAtCoordinate.getLetter() == Character.toUpperCase(cellAtCoordinate.getGoalLetter()))) {
+                    return false;
+                }
+            }
+            else {
                 return false;
             }
         }

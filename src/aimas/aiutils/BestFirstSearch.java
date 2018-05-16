@@ -1,9 +1,12 @@
 package aimas.aiutils;
 
 import aimas.*;
+import aimas.Command.CommandType;
 import aimas.actions.AtomicAction;
+import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
 import aimas.board.CoordinatesPair;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.io.IOException;
@@ -276,6 +279,226 @@ public class BestFirstSearch {
         }
         return shortestPath;
     }
+
+
+   /* // Method called from A* when stuck. Might give a faster response if we're lucky.
+    // Worst case scenario we will get same node we fed it with :)
+    private static Node helpMeBfs(Node node, AtomicAction action){
+            ArrayList<Node> potentialFastPath = bfsGetPath(node, action, true);
+            if (potentialFastPath.size() > 0) {
+                node = potentialFastPath.get(potentialFastPath.size() - 1); // if there is some path, get last node
+                // and proceed as usual
+            }
+            else {
+                potentialFastPath = bfsGetPath(node, action, false);
+                if (potentialFastPath.size() > 0){
+                    node = potentialFastPath.get(potentialFastPath.size() - 1);
+                }
+            }
+            return node;
+    }*/
+
+    /*// A* which calculates path depending on the action. Each action has different implementation of heuristic
+    // and isAchieved methods. This A* defaults to BFS search if desired (to avoid current problems of unsolvability
+    // of some big (in size and wall amount) levels
+    public static ArrayList<Node> AStarEnhanced(Node startState, AtomicAction action){
+        startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
+        startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
+        int agentNumber = action.getAgent().getNumber(); // this is the agent number executing this action!
+        ArrayList<Node> shortestPath = new ArrayList<>();
+        HashSet<Node> visited = new HashSet<>();
+        HashSet<Node> frontier = new HashSet<>();
+        frontier.add(startState); // start node is the only one known initially
+        startState.fScore = action.heuristic(startState);
+        Node currentNode;
+        long startTime = System.nanoTime();
+        boolean attemptToGetHelp = true;
+        while (!frontier.isEmpty()){
+            currentNode = getLowestFNode(frontier);
+            long timeSpentInLoop = System.nanoTime() - startTime;
+            long timeSpentSeconds = timeSpentInLoop/1000000000;
+            if (attemptToGetHelp && timeSpentSeconds > 10){
+               currentNode = helpMeBfs(currentNode, action); // try bfs once
+                System.out.println("Tried bfs");
+                System.out.println("New node:");
+                System.out.println(currentNode);
+                attemptToGetHelp = false; // only do this once please
+            }
+            //System.out.println("Going here: ");
+            //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
+            //System.out.println(currentNode);
+            System.err.println(Node.nodeCount); // debug
+            if (action.isAchieved(currentNode)){
+                //  System.out.println("satisfied h yeah");
+                System.err.println(action.toString() + " is satisfied.");
+                shortestPath = reconstructPath(currentNode);
+                return shortestPath;
+            }
+            frontier.remove(currentNode);
+            visited.add(currentNode);
+//          ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
+            for (Node neighbour : currentNode.getNeighbourNodes(agentNumber)){
+                if (visited.contains(neighbour)){ // Ignore nodes already evaluated
+                    continue;
+                }
+                if (!frontier.contains(neighbour)){ // Discover a new node
+                    frontier.add(neighbour);
+                }
+                // Distance from start to a neighbour
+                int tentativeG = currentNode.gScore + 1; // neighbour is always 1 node away
+                if (tentativeG >= neighbour.gScore){
+                    continue;
+                }
+                neighbour.setParent(currentNode); // better path
+                neighbour.gScore = tentativeG;
+                neighbour.fScore = neighbour.gScore + action.heuristic(neighbour);
+            }
+
+        }
+        return shortestPath;
+    }
+
+    public static ArrayList<Node> bfsGetPath(Node currentNode, AtomicAction action, boolean tryPushing) {
+        int countCoordinatesOnPath = 0;
+        List<CoordinatesPair> pathFoundByBfs = new ArrayList<>();
+        if (action.isAchieved(currentNode)) {
+            System.err.println("achieved");
+            return new ArrayList<Node>();
+        }
+        if (action instanceof MoveSurelyAction) {
+            if (PathFinder.pathExists(currentNode.getLevel(), action.getAgent().getCoordinates(currentNode),
+                    ((MoveSurelyAction) action).getFinish(), true, true, true)) {
+                pathFoundByBfs = PathFinder.getFoundPath();
+            }
+        } else if (action instanceof DeliverBoxSurelyAction) {
+            if (tryPushing){
+                if (PathFinder.pathExists(currentNode.getLevel(),
+                        ((DeliverBoxSurelyAction) action).getBox().getCoordinates(currentNode),
+                        ((DeliverBoxSurelyAction) action).getFinish(), true, true, true)) {
+                    pathFoundByBfs = PathFinder.getFoundPath();
+                }
+            }
+            else {
+                if (PathFinder.pathExists(currentNode.getLevel(),
+                        action.getAgent().getCoordinates(currentNode), // we take agent coords and will use that instead of box..
+                        ((DeliverBoxSurelyAction) action).getFinish(), true, true, true)) {
+                    pathFoundByBfs = PathFinder.getFoundPath();
+                }
+            }
+            if (pathFoundByBfs.size() == 0){
+                // no path found
+                return new ArrayList<Node>();
+            }
+            countCoordinatesOnPath = 0;
+            // if we are in bfshelpmode, we now have list of steps to take. We use them to get neighbors we need.
+        }
+        ArrayList<Node> solution = new ArrayList<>();
+        while (!action.isAchieved(currentNode)){
+            int faultyneighbourcount = 0;
+            for (Node neighbour : currentNode.getNeighbourNodes(0)){
+
+                if (nodeIsGood(neighbour, action, pathFoundByBfs, countCoordinatesOnPath)){
+                    neighbour.setParent(currentNode); // remember where we came from!
+                    currentNode = neighbour;
+                    countCoordinatesOnPath++; // advance along the path
+                    System.out.println(currentNode);
+                    solution.add(currentNode);
+                    break; // found good node, no need to check other neighbours! (this is not a* and path is predefined)
+                }
+                else{
+                    System.err.println("node is no good");
+                    System.err.println(currentNode);
+                    int neighbornum = currentNode.getNeighbourNodes(0).size();
+                    if (faultyneighbourcount==(neighbornum-1)){
+                        return solution; // we cannot find any neighbors satisfying bfs's path. Go back to A*
+                        // this is usually when agent is pulling box - we use agent->goal path and then default to A*
+                    }
+                    faultyneighbourcount++;
+                }
+            }
+        }
+        return solution;
+
+    }
+
+
+    // Used by A*Enhanced. Basically uses path found by PathFinder class and moves box or agent along it
+    private static boolean isBfsApproved(Node node,
+                                         AtomicAction atomicAction, CoordinatesPair nextPathCoordinate,
+            List<CoordinatesPair> pathByBfs
+            *//*, int agentNumber*//*){
+        Agent agent = atomicAction.getAgent();
+        CoordinatesPair agentCoord = agent.getCoordinates(node);
+        //agentNumber = agent.getNumber();
+        AtomicAction actionToAchieve;
+        Box box;
+        CoordinatesPair boxCoord = null;
+        boolean isMoveSurely = false;
+        if (atomicAction instanceof MoveSurelyAction){
+            actionToAchieve = (MoveSurelyAction) atomicAction;
+            isMoveSurely = true;
+        }
+        else{
+            actionToAchieve = (DeliverBoxSurelyAction) atomicAction;
+            box = ((DeliverBoxSurelyAction) actionToAchieve).getBox();
+            boxCoord = box.getCoordinates(node);
+            isMoveSurely = false;
+        }
+
+        if (isMoveSurely) {
+            if (node.getAction().actionCommandType == CommandType.Move){
+                // We are moving, not pushing/pulling
+                if (agentCoord.equals(nextPathCoordinate)){
+                    return true; // very simple, if agent is moving along the path, return true
+                    // A*Enhanced will advance this node, not others
+                }
+            }
+        }
+        // regarding the below.. it is implied that agent/box are close to each other if action is push/pull
+        else{
+            if ((node.getAction().actionCommandType == CommandType.Push) ||
+                    node.getAction().actionCommandType == CommandType.Pull){
+                if ((boxCoord.equals(nextPathCoordinate) && pathByBfs.contains(agentCoord)) ||
+                        (agentCoord.equals(nextPathCoordinate) && pathByBfs.contains(boxCoord)) ||
+                        (nextPathCoordinate.equals(pathByBfs.get(0)) &&
+                                (boxCoord.equals(nextPathCoordinate) ||
+                                agentCoord.equals(nextPathCoordinate))) ){
+                    // if box is on the next coord and agent is next to box within path ("push along the path")
+                    // or if agent is on the next coord and box is next to agent within path ("pull along the path")
+                    // or if the next coord is the first coord and either box ("push") or agent ("pull") is standing on it
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    // Given current node, action and pathFoundByBfs and coordinate to use, check if node is fine to expand
+    private static boolean nodeIsGood(Node node, AtomicAction atomicAction, List<CoordinatesPair> pathFoundByBfs,
+                                      int coordinateCounter){
+        if (pathFoundByBfs.size() == 0){
+            return false;
+        }
+        if (atomicAction instanceof MoveSurelyAction){
+            MoveSurelyAction moveSurelyAction = (MoveSurelyAction) atomicAction;
+                if (!isBfsApproved(node, moveSurelyAction, pathFoundByBfs.get(coordinateCounter),
+                        pathFoundByBfs)){
+                    return false; // this node is not on path given by bfs, ditch it
+            }
+        }
+        else{
+            DeliverBoxSurelyAction deliverBoxSurelyAction = (DeliverBoxSurelyAction) atomicAction;
+            try {
+                if (!isBfsApproved(node, deliverBoxSurelyAction, pathFoundByBfs.get(coordinateCounter),
+                        pathFoundByBfs)) {
+                    return false; // this node is not on path given by bfs, ditch it
+                }
+            }
+            catch (IndexOutOfBoundsException ex){
+                return false;
+            }
+        }
+            return true;
+    }*/
 
 
 }

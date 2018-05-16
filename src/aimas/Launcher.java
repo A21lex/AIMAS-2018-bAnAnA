@@ -3,6 +3,7 @@ package aimas;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
+import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.AchieveGoalAction;
 import aimas.actions.expandable.SolveLevelAction;
@@ -32,7 +33,7 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/testAstar.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAbAnAnA.lvl"));
             //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
         }
         catch (IOException e){
@@ -48,7 +49,7 @@ public class Launcher {
 
         //testing..
         MapParser parser = new MapParser(start.getLevel());
-        parser.parseMap(start.getSpaceCelllCoords(), start.getLevel());
+        parser.parseMap(Node.getSpaceCelllCoords(), start.getLevel());
 
         Set<Map.Entry<CoordinatesPair,Double>> hashSet=parser.getCellWeights().entrySet();
         for(Map.Entry entry:hashSet ) {
@@ -130,8 +131,15 @@ public class Launcher {
             System.out.println("Box: " + goalsBoxes.get(cell));
             System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
         }
-
-
+        /*Cell finishcell = start.getCellAtCoords(new CoordinatesPair(15,15));
+        Cell boxCell = start.getCellAtCoords(start.getBoxCellCoords().get(0));
+          Action deliver = new DeliverBoxSurelyAction((Box) boxCell.getEntity(), finishcell.getCoordinates(),
+                start.getAgents().get(0), null);
+        ArrayList<Node> bfssolvedthishit = BestFirstSearch.AStarEnhanced(start, (AtomicAction) deliver);
+        for (Node node : bfssolvedthishit){
+            System.out.println(node.getAction().toString());
+        }*/
+        boolean lol = true;
 
         //ExpandableAction someaction = (ExpandableAction) actions.get(0);
         //List<Action> actions2 = someaction.decompose(start);
@@ -159,7 +167,7 @@ public class Launcher {
 
         */
 
-        /*World world = new World(start);
+        World world = new World(start);
 
         ExpandableAction solveLevel = new SolveLevelAction(start);
         List<Action> actions = solveLevel.decompose(start);
@@ -278,7 +286,7 @@ public class Launcher {
         // The above works for now; the below is in testing phase
 
         System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
-        boolean testttt = true; //sentinel */
+        boolean testttt = true; //sentinel
 
         // some testing from Arturs's side;
        // ExpandableAction solveLevelTest = new SolveLevelAction(start);
