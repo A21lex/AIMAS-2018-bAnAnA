@@ -15,6 +15,7 @@ import aimas.board.CoordinatesPair;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 import aimas.board.entities.Color;
+import aimas.board.entities.Entity;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,12 +32,14 @@ import java.util.logging.Level;
  */
 public class Launcher {
 
+    private static  Map<CoordinatesPair, Double> cellWeights;
+
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-             //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtowersOfSaigon04.lvl"));
-            start.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP17/SAHiveMind.lvl"));
-            //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtestfull.lvl"));
+            // start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtnrbts.lvl"));
+           // start.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP17/SAOmnics.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtowersOfSaigon10.lvl"));
             // git smith
         }
         catch (IOException e){
@@ -60,6 +63,7 @@ public class Launcher {
         MapParser parser = new MapParser(start.getLevel());
         parser.parseMap(start.getSpaceCelllCoords(), start.getLevel());
 
+        cellWeights = parser.getCellWeights();
         Set<Map.Entry<CoordinatesPair,Double>> hashSet=parser.getCellWeights().entrySet();
         for(Map.Entry entry:hashSet ) {
 
@@ -87,15 +91,7 @@ public class Launcher {
         // TODO2: Make A* have a pending list of goals which had been disachieved
         // TODO3: Make boxes immutable/unmovable once they satisfy a goal
         // Let's say we have the following list of goals to achieve
-        ArrayList<Character> goalsToAchieve = new ArrayList<>();
-          //goalsToAchieve.add('w');
 
-        goalsToAchieve.add('w');
-        goalsToAchieve.add('u');
-//        goalsToAchieve.add('d');
-//        goalsToAchieve.add('c');
-//        goalsToAchieve.add('d');
-//        goalsToAchieve.add('a');
 
 
         /*ArrayList<Node> totalShortestPath = new ArrayList<>(); // combine paths from A* and GP to solve level
@@ -167,45 +163,6 @@ public class Launcher {
 
         */
 
-      /* sentinel  ExpandableAction solveLevel = new SolveLevelAction(start);
-        List<Action> actions = solveLevel.decompose(start);
-        List<Action> actionsToPerform = new ArrayList<>();
-        for (Action action : actions){
-            ExpandableAction expandableAction = (ExpandableAction) action;
-            for (Action subAction: expandableAction.decompose(start)){
-                ExpandableAction expandableSubaction;
-                if (subAction instanceof ExpandableAction) {
-                    expandableSubaction = (ExpandableAction) subAction;
-                    try {
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(0));
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(1));
-
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(2));
-                        actionsToPerform.add(expandableSubaction.decompose(start).get(3));
-                    }
-                    catch (IndexOutOfBoundsException ex){
-                        // likely we are at a node which is already achieved
-                        // not as many actions, it's fine, continue
-                        continue;
-                    }
-                }
-                else { // is not expandable
-                    actionsToPerform.add(subAction);
-                }
-            }
-        }
-
-        List<Node> path = getTotalPath(actionsToPerform, start);
-        System.out.println("Printing total shortest path");
-        for (int i = path.size() - 1; i >= 0; i--) {
-            if (path.get(i).getAction() != null) { // if the action is null, this is a start node
-                System.out.println(path.get(i).getAction().toString());
-                //System.out.println(path.get(i));
-            }
-        }
-        // Check last node of solution on whether it is achieved
-        System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
-        boolean test = true; sentinel */
 
         // some testing from Arturs's side;
        // ExpandableAction solveLevelTest = new SolveLevelAction(start);
@@ -219,7 +176,6 @@ public class Launcher {
 
 
         SolveLevelAction solveLevel1 = new SolveLevelAction(start);
-       // MoveSurelyAction msAction = new MoveSurelyAction(new CoordinatesPair(3,4), new SolveLevelAction(start));
         System.out.println(solveLevel1.getChildrenActions().size());
        // buildTree(solveLevel1, start);
         //printTree(solveLevel1);
@@ -377,17 +333,19 @@ public class Launcher {
         boolean finished = false;
         Action curAchieveGoalAction = htnroot; // will 100% be overwritten
         ArrayList<Command> allCommands = new ArrayList<>();
-        System.out.println();
+        ArrayList<AchieveGoalAction> achievedGoals = new ArrayList<>();
         while(!finished) {
+            //if (curAction instanceof RemoveBoxAction) ((RemoveBoxAction)curAction).triggerParkingCellSearch(curNode);
             System.out.println(curState + " " + curAction + "***" + curAction.getParent());
             switch (curState) {
-                case 1:
+                case 1: // checkin nature of action
+                    System.out.println(achievedGoals);
                     if (curAction instanceof AchieveGoalAction) curAchieveGoalAction = curAction;
                     if (curAction.isAchieved(curNode)) {
                         curState = 2;
                     }
                     else if (curAction instanceof ExpandableAction) {
-                        if (curAction instanceof RemoveBoxAction){
+                        /*if (curAction instanceof RemoveBoxAction){
                             Box box = ((RemoveBoxAction)curAction).box;
                             Cell cell = curNode.getCellAtCoords(box.getCoordinates(curNode));
                             if (cell.isGoal()
@@ -409,7 +367,7 @@ public class Launcher {
                                     System.out.println(act + " *** " + act.getNumberAsChild());
                                 }
                             }
-                        }
+                        } */
                         curState = 3;
                     }
                     else if (curAction instanceof AtomicAction) {
@@ -417,9 +375,14 @@ public class Launcher {
                     }
                     break;
 
-                case 2:
+                case 2: // achieved, find successor
                     Action successor = findNextHTNnode(curAction);
-                    if (successor.equals(curAction)) {
+
+                    if (successor instanceof  AchieveGoalAction){ //cur goal achieved add to list
+                        achievedGoals.add((AchieveGoalAction)curAchieveGoalAction);
+                    }
+
+                    if (successor.equals(curAction)) { // no more successors, finished
                        /* System.out.println("cur action before finish " + curAction);
                         System.out.println(curNode);
                         System.out.println(curAction.isAchieved(curNode));
@@ -431,16 +394,20 @@ public class Launcher {
                                 //System.out.println(level.get(i).get(j).getCoordinates()+" "+level.get(i).get(j).getEntity());
                             }
                         } */
-
+                        for (Action act : achievedGoals){
+                            System.out.println(act +" "+ act.isAchieved(curNode));
+                        }
+                        System.out.println(curAction);
+                        System.out.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
                         finished = true;
                     }
-                    else {
+                    else { // proceeding
                         curAction = successor;
                         curState = 1;
                     }
                     break;
 
-                case 3:
+                case 3: // expandable, not achieved, decomposing
                     ((ExpandableAction)curAction).decompose(curNode);
                    try {
                        Action firstChild = curAction.getChildOfNumber(0);
@@ -459,7 +426,8 @@ public class Launcher {
                        System.out.println("Faling action: " + curAction);
                    }
 
-                case 4:
+                case 4: // execute atomic
+                    System.out.println("state 4 " + curAction);
                     ArrayList<Node> pathOfNodes = BestFirstSearch.AStar(curNode,(AtomicAction) curAction);
                     Collections.reverse(pathOfNodes);
                     //ArrayList<Command> commands = new ArrayList<>();
@@ -474,7 +442,7 @@ public class Launcher {
                            // System.out.println(world.getState());
                         }
                         else {
-                            System.out.println("problem: " +pathNode.getAction().toString());
+                          //  System.out.println("problem: " +pathNode.getAction().toString());
                             curState = 4;
                             break;
                         }
@@ -483,10 +451,44 @@ public class Launcher {
                         atomicActionDone = true;
                     }
 
+                    /*for (AchieveGoalAction act : achievedGoals){
+                        if (!act.isAchieved(curNode)){
+                            AchieveGoalAction achieveAgain = new AchieveGoalAction(act.goalCell, act.box, act.getParent());
+                            curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain,curAchieveGoalAction.getNumberAsChild()+1);
+                            achievedGoals.remove(act);
+                        }
+                    } */
+
+                    Iterator<AchieveGoalAction> iter = achievedGoals.iterator();
+                    while (iter.hasNext()) {
+                        AchieveGoalAction act = iter.next();
+                        if (!act.isAchieved(curNode)){
+                            AchieveGoalAction achieveAgain = new AchieveGoalAction(act.goalCell, act.box, act.getParent());
+                            boolean contained = false;
+                            for (int i = act.getNumberAsChild(); i < act.getParent().getChildrenActions().size(); i++){
+                                if (act.getParent().getChildOfNumber(i).equals(achieveAgain)) {
+                                    contained = true;
+                                    break;
+                                }
+                            }
+                           if (!contained) {
+                               curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain,curAchieveGoalAction.getNumberAsChild()+1);
+                               iter.remove();
+                           }
+
+                        }
+                    }
+
+                    for (Action act1 : curAchieveGoalAction.getParent().getChildrenActions()){
+                        //System.out.println(act1 + " xxx " + act1.getNumberAsChild());
+                     }
+
+
                     if (atomicActionDone) {
 
                         if (curAchieveGoalAction.isAchieved(world.getState())){
-                            curAction = findNextHTNnode(curAchieveGoalAction);
+                           // achievedGoals.add((AchieveGoalAction)curAchieveGoalAction);
+                           // curAction = findNextHTNnode(curAchieveGoalAction);
                             curState = 1;
                          }
                         else {
@@ -521,14 +523,108 @@ public class Launcher {
                         curState = 1;
                     }
                     else {
-                        curAction = curAction.getParent(); // repeating
-                        curState = 1;
+                      //  if(curAction.getParent().numberOfAttempts < 5) {
+                            curAction = curAction.getParent(); // repeating
+                       //     curAction.getParent().numberOfAttempts++;
+                            curState = 1;
+                       // }
+                        //else {
+                       //     System.out.println("happens ever?");
+                       //     curAction.getParent().numberOfAttempts = 0;
+                       //     curState = 2;
+                        //}
                     }
                     break;
             }
         }
+    }
 
+    // shift this somewhereele pls
+    public static CoordinatesPair findParkingCell(Node node, CoordinatesPair initialCell, RemoveBoxAction remBoxAct,
+                                                  ArrayList<CoordinatesPair> blackList){
+       /* ArrayList<ArrayList<Cell>> level = node.getLevel();
+        ArrayList<CoordinatesPair> toChooseBetween = new ArrayList<>();
+        Map<CoordinatesPair, Double> subsetOfCellWeights;
+        toChooseBetween.add(new CoordinatesPair(-2,-2)); // dummy element for random function to workproperly
 
+        for (int i=0; i<level.size(); i++){
+            for (int j = 0; j<level.get(i).size();j++){
+                if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(), true, false, true) &&
+                        !level.get(i).get(j).isGoal() &&
+                        !(level.get(i).get(j).getEntity() instanceof Box))
+                    toChooseBetween.add(level.get(i).get(j).getCoordinates());
+            }
+        }
+
+        System.out.println("ic " + initialCell);
+        System.out.println(node);
+        Random generator = new Random();
+        int resIndex = generator.nextInt(toChooseBetween.size()-1)+1;
+        return toChooseBetween.get(resIndex);*/
+
+        ArrayList<ArrayList<Cell>> level = node.getLevel();
+        Map<CoordinatesPair, Double> subsetOfCellWeights = new HashMap<>();
+        CoordinatesPair bestParkingCell = new CoordinatesPair(-5,-5);
+        for (int i=0; i<level.size(); i++){
+            for (int j = 0; j<level.get(i).size();j++){
+                Entity prevEntity =  node.getCellAtCoords(level.get(i).get(j).getCoordinates()).getEntity();
+                //node.getCellAtCoords(level.get(i).get(j).getCoordinates()).setEntity(remBoxAct.box);
+               // node.getCellAtCoords(initialCell).setEntity(prevEntity);
+                if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(), true, false, true) &&
+                        !(level.get(i).get(j).getEntity() instanceof Box) /*&&
+                        remBoxAct.isAchieved(node)*/
+                        && !blackList.contains(level.get(i).get(j).getCoordinates())) {
+                    subsetOfCellWeights.put(level.get(i).get(j).getCoordinates(),
+                            cellWeights.get(level.get(i).get(j).getCoordinates()));
+                }
+               // node.getCellAtCoords(level.get(i).get(j).getCoordinates()).setEntity(prevEntity);
+                //node.getCellAtCoords(initialCell).setEntity(remBoxAct.box);
+            }
+        }
+        if (!subsetOfCellWeights.isEmpty()) {
+            bestParkingCell = findBestAmongReachable(subsetOfCellWeights,node,initialCell);
+        }
+        else {
+            bestParkingCell = findBestAmongReachable(cellWeights,node,initialCell);
+        }
+        return bestParkingCell;
+    }
+
+    public static CoordinatesPair findBestAmongReachable(Map<CoordinatesPair, Double> subsetOfCellWeights, Node node,
+                                                         CoordinatesPair initialCell){
+        double min = 999.0;
+       // CoordinatesPair bestParkingCell = new CoordinatesPair(-5,-5);
+        CoordinatesPair bestParkingCell = initialCell;
+
+        System.out.println("how come");
+
+        for (Map.Entry<CoordinatesPair, Double> entry : subsetOfCellWeights.entrySet()){
+            Double curWeight = entry.getValue();
+            if(entry.getKey().equals(node.getAgentCellCoords().get(0))) curWeight +=10;
+            if (node.getCellAtCoords(entry.getKey()).isGoal()) {
+                if (Character.toUpperCase(node.getCellAtCoords(entry.getKey()).getGoalLetter())
+                        == ((Box)node.getCellAtCoords(initialCell).getEntity()).getLetter()){
+                    curWeight -= 10;
+                }
+                else curWeight += 50;
+            }
+            if(curWeight.doubleValue()
+                    +2*Action.manhDist(initialCell.getX(), initialCell.getY(), entry.getKey().getX(), entry.getKey().getY()) < min){
+                if(!(node.getCellAtCoords(entry.getKey()).getEntity() instanceof Box)) {
+                    min = curWeight.doubleValue()
+                    +2*Action.manhDist(initialCell.getX(), initialCell.getY(),entry.getKey().getX(),entry.getKey().getY());
+                    bestParkingCell = entry.getKey();
+                }
+            }
+            /*else if(curWeight.doubleValue() == min){
+                if (Action.manhDist(initialCell.getX(), initialCell.getY(),entry.getKey().getX(),entry.getKey().getY())<
+                        Action.manhDist(initialCell.getX(), initialCell.getY(),bestParkingCell.getX(),bestParkingCell.getY())){
+                        bestParkingCell = entry.getKey();
+                }
+            }*/
+        }
+        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+5));
+        return bestParkingCell;
     }
 
 
