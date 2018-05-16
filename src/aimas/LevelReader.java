@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public final class LevelReader {
 
@@ -150,9 +151,8 @@ public final class LevelReader {
                 line = bufferedReader.readLine();
             }
 
-            /*redundant now
             //determine tunnel cells
-            for (CoordinatesPair spc: spaceCellCoords) {
+            /*for (CoordinatesPair spc: spaceCellCoords) {
                 // wall on top and bellow or  wall on sides
                 if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
                         (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL) && level.get(spc.getX()).get(spc.getY() + 1).getType().equals(Type.WALL))) {
@@ -185,7 +185,7 @@ public final class LevelReader {
                                 && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL))) {
                     tunnelCellCoords.add(spc);
                 }
-            }*/
+            } */
             return level;
         }
         finally {
@@ -208,8 +208,9 @@ public final class LevelReader {
     public static ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
-
     public static ArrayList<CoordinatesPair> getSpaceCellCoords(){
         return spaceCellCoords;
     }
+
+
 }

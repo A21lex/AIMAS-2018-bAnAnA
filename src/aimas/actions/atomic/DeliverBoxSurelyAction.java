@@ -1,6 +1,7 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
+import aimas.PathFinder;
 import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
 import aimas.actions.ActionType;
@@ -40,6 +41,7 @@ public class DeliverBoxSurelyAction extends AtomicAction {
     @Override
     public int heuristic(Node node) {
         int punishmentForMovingOtherBoxes = 0;
+        int punishmentForPullingInstead = 0;
         if (node.getAction() != null) {
             if (node.getAction().actionCommandType == Command.CommandType.Push ||
                     node.getAction().actionCommandType == Command.CommandType.Pull) {
@@ -47,13 +49,11 @@ public class DeliverBoxSurelyAction extends AtomicAction {
                     punishmentForMovingOtherBoxes += 20;
                 }
             }
+            if (node.getAction().actionCommandType == Command.CommandType.Pull) punishmentForPullingInstead += 5;
         }
-//        if (manhDist(agent.getCoordinates(node).getX(), agent.getCoordinates(node).getY(),
-//                box.getCoordinates(node).getX(), box.getCoordinates(node).getY()) > 1){
-//            punishmentForMovingOtherBoxes += 20;
-//        }
         return manhDist(box.getCoordinates(node).getX(), box.getCoordinates(node).getY(),
-                finish.getX(), finish.getY()) + punishmentForMovingOtherBoxes;
+                finish.getX(), finish.getY()) + punishmentForMovingOtherBoxes
+                + punishmentForPullingInstead;
     }
 
     @Override

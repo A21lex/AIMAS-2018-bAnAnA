@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static aimas.aiutils.TaskDistrubitor.assignTasksToAgents;
-
 public class SolveLevelAction extends ExpandableAction {
     //potentially store boxes and cells to satisfy with these
     Node node;
@@ -32,6 +30,7 @@ public class SolveLevelAction extends ExpandableAction {
         this.childrenActions = new ArrayList<>();
         this.actionType = ActionType.SOLVE_LEVEL;
         this.numberAsChild = -1; // emergency case
+        this.numberOfAttempts = 0;
     }
 
     // Check if all the goal cells have on them a box of corresponding type; if not, return false
@@ -63,18 +62,78 @@ public class SolveLevelAction extends ExpandableAction {
         }
         List<Action> expandedActions = new ArrayList<>();
         HashMap<Cell, Box> goalsBoxes = BoxAssigner.assignBoxesToGoals(node);
-        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node,goalsBoxes);
+        HashMap<Agent,List<Task>> agentTasks = TaskDistrubitor.assignTasksToAgents(node, goalsBoxes);
         int i = 0;
         for (Agent agent : agentTasks.keySet()){
             // for every agent, create goals corresponding to what he can do
             for (Task task : agentTasks.get(agent)){
-                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
+                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(),/* agent,*/ this));
                 expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
                 i++;
             }
         }
+        //dbca - test
         /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
 
+        //bacdfegh
+        /*for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='b'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='a'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='c'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='d'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='f'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='e'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='g'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        }
+        for (Cell cell : goalsBoxes.keySet()){
+            if (cell.getGoalLetter()=='h'){
+                expandedActions.add(new AchieveGoalAction(cell, goalsBoxes.get(cell), this));
+                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                i++;
+            }
+        } */
+        //expandedActions.add(new AchieveGoalAction())
         childrenActions = expandedActions;
 
         return expandedActions;

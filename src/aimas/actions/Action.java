@@ -2,6 +2,7 @@ package aimas.actions;
 
 import aimas.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public abstract class Action {
     }
     //public abstract int heuristic(Node node);
     public abstract boolean isAchieved(Node node);
+    public int numberOfAttempts;
 
     public Action getParent(){
         return this.parent;
@@ -27,7 +29,7 @@ public abstract class Action {
     }
 
     // From Warm-Up assignment
-    protected static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
+    public static int manhDist(int i1, int j1, int i2, int j2){ // between cells of a map, not between state nodes
         int diffI = Math.abs(i1 - i2);
         int diffJ = Math.abs(j1 - j2);
         return diffI + diffJ;
@@ -44,5 +46,12 @@ public abstract class Action {
     }
     public Action getChildOfNumber (int number){
         return childrenActions.get(number);
+    }
+    public void setChildOfNumber(Action childAction, int number){
+        childrenActions.add(number, childAction);
+        childrenActions.get(number).setNumberAsChild(number);
+        for (int i = number+1; i<childrenActions.size(); i++){
+            childrenActions.get(i).setNumberAsChild(childrenActions.get(i).getNumberAsChild()+1);
+        }
     }
 }

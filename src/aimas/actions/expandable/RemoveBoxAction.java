@@ -1,5 +1,7 @@
 package aimas.actions.expandable;
 
+import aimas.Launcher;
+import aimas.LevelReader;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
@@ -8,7 +10,6 @@ import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
-import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
@@ -16,18 +17,19 @@ import java.util.List;
 
 public class RemoveBoxAction extends ExpandableAction {
 
-    Box box;
+    public Box box;
     CoordinatesPair start; // unblock path from here
     CoordinatesPair finish; // to here
-    Agent agent; // by this agent
+    ArrayList<CoordinatesPair> blackList;
 
-    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Agent agent, Action parent){
+    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Action parent){
         this.box = box;
         this.start = start;
         this.finish = finish;
-        this.agent = agent;
         this.parent = parent;
         this.childrenActions = new ArrayList<>();
+        this.blackList = new ArrayList<>();
+        this.numberOfAttempts = 0;
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.CLEAR_PATH);
@@ -43,8 +45,28 @@ public class RemoveBoxAction extends ExpandableAction {
         /**
          * Artur will implement this
          */
-        return !PathFinder.getBoxesOnPath(node, start, finish,
-                true, true, true).contains(box);
+
+        ((ClearPathAction)parent).fromHere = (
+                (ClearPathAction)parent).updateCoordinates(((ClearPathAction)parent).first, node, start);
+        ((ClearPathAction)parent).toThere =
+                ((ClearPathAction)parent).updateCoordinates(((ClearPathAction) parent).second, node, finish);
+
+        //System.out.println(box);
+        //System.out.println("fromHere " + ((ClearPathAction)parent).fromHere);
+        //System.out.println("toThere " + ((ClearPathAction)parent).toThere);
+
+
+
+        System.out.println(PathFinder.getBoxesOnPath(node, ((ClearPathAction) parent).fromHere, ((ClearPathAction) parent).toThere,
+                true, false, true, ((ClearPathAction) parent).exceptionBoxes).size());
+
+        return !PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
+                true, false, false, ((ClearPathAction) parent).exceptionBoxes).contains(box);
+
+       // if ((PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
+       //                true, false, false).contains(box))
+       //         && PathFinder.getFoundPath().get(PathFinder.getFoundPath().size()-1).equals(box)) return true;
+        //return false;
     }
 
     @Override
@@ -56,11 +78,24 @@ public class RemoveBoxAction extends ExpandableAction {
 
         // ClearBox - ClearCell - GotoBox - DeliverBox
 
-        Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
+       /* Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearCell = new ClearPathAction(box.getCoordinates(node), finish, node, this);
-        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), agent,this);
-        Action deliverBox = new DeliverBoxSurelyAction(box, finish, agent, this);
+       
+        List<Action> expandedActions = new ArrayList<>(); */
+
+        CoordinatesPair parkingCellCoords = triggerParkingCellSearch(node);
+        //if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
+        System.out.println("****");
+        System.out.println(node);
+
+        System.out.println(blackList);
+
+
+        CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
+        Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), node, this);
+        Action clearCell = new ClearPathAction(box.getCoordinates(node), parkingCellCoords, node, this);
+        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), this);
+        Action deliverBox = new DeliverBoxSurelyAction(box, parkingCellCoords, this);
         List<Action> expandedActions = new ArrayList<>();
 
         // manually (not to traverse the tree for this purpose specifically)
@@ -74,13 +109,20 @@ public class RemoveBoxAction extends ExpandableAction {
         expandedActions.add(gotoBox);
         expandedActions.add(deliverBox);
 
-        //childrenActions = expandedActions;
+        childrenActions = expandedActions;
 
         return expandedActions;
     }
 
+    public CoordinatesPair triggerParkingCellSearch(Node node){
+        CoordinatesPair parkingCellCoords = Launcher.findParkingCell(node, box.getCoordinates(node), this,
+                blackList);
+        if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
+        return parkingCellCoords;
+    }
+
     @Override
     public String toString() {
-        return "RemoveBoxAction: removing Box " + box + " from cell " + start + " to cell " + finish;
+        return "RemoveBoxAction: removing Box " + box;
     }
 }

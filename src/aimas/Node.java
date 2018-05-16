@@ -323,7 +323,6 @@ public class Node {
                         CoordinatesPair curBoxCellCoords = new CoordinatesPair(curBoxCell);
                         Node n = new Node(this);
                         n.action = c;
-                        n.agentNumber = agentNumber;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
