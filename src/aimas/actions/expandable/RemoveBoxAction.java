@@ -1,7 +1,7 @@
 package aimas.actions.expandable;
 
-import aimas.Launcher;
 import aimas.LevelReader;
+import aimas.Launcher;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
@@ -10,6 +10,7 @@ import aimas.actions.ActionType;
 import aimas.actions.ExpandableAction;
 import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
+import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 
 import java.util.ArrayList;
@@ -20,12 +21,19 @@ public class RemoveBoxAction extends ExpandableAction {
     public Box box;
     CoordinatesPair start; // unblock path from here
     CoordinatesPair finish; // to here
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    Agent agent; // by this agent
     ArrayList<CoordinatesPair> blackList;
 
-    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Action parent){
+    public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Agent agent, Action parent){
         this.box = box;
         this.start = start;
         this.finish = finish;
+        this.agent = agent;
         this.parent = parent;
         this.childrenActions = new ArrayList<>();
         this.blackList = new ArrayList<>();
@@ -92,10 +100,10 @@ public class RemoveBoxAction extends ExpandableAction {
 
 
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-        Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), node, this);
-        Action clearCell = new ClearPathAction(box.getCoordinates(node), parkingCellCoords, node, this);
-        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), this);
-        Action deliverBox = new DeliverBoxSurelyAction(box, parkingCellCoords, this);
+        Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), agent, node, this);
+        Action clearCell = new ClearPathAction(box.getCoordinates(node), parkingCellCoords, agent, node, this);
+        Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), agent, this);
+        Action deliverBox = new DeliverBoxSurelyAction(box, parkingCellCoords, agent, this);
         List<Action> expandedActions = new ArrayList<>();
 
         // manually (not to traverse the tree for this purpose specifically)

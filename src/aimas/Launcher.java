@@ -3,10 +3,12 @@ package aimas;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
+import aimas.actions.atomic.DeliverBoxSurelyAction;
 import aimas.actions.atomic.MoveSurelyAction;
 import aimas.actions.expandable.AchieveGoalAction;
 import aimas.actions.expandable.RemoveBoxAction;
 import aimas.actions.expandable.SolveLevelAction;
+import aimas.aiutils.AlexSimpleMASASolver;
 import aimas.aiutils.BestFirstSearch;
 import aimas.aiutils.BoxAssigner;
 import aimas.aiutils.World;
@@ -37,10 +39,8 @@ public class Launcher {
     public static void main(String[] args) {
         Node start = new Node(null);
         try{
-            // start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtnrbts.lvl"));
-           // start.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP17/SAOmnics.lvl"));
-            start.setLevel(LevelReader.getLevel("res/levels/test_levels/SAtowersOfSaigon10.lvl"));
-            // git smith
+            //start.setLevel(LevelReader.getLevel("res/levels/test_levels/SADangerBot.lvl"));
+            start.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP17/SAtnrbts.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -55,13 +55,12 @@ public class Launcher {
 
         World world =  new World(start);
 
-
         //test tunnels
         System.out.println("tunnels:");
         System.out.println(start.getTunnelCellCoords());
         //testing..
         MapParser parser = new MapParser(start.getLevel());
-        parser.parseMap(start.getSpaceCelllCoords(), start.getLevel());
+        parser.parseMap(Node.getSpaceCelllCoords(), start.getLevel());
 
         cellWeights = parser.getCellWeights();
         Set<Map.Entry<CoordinatesPair,Double>> hashSet=parser.getCellWeights().entrySet();
@@ -77,52 +76,6 @@ public class Launcher {
                 new CoordinatesPair(4,10), true, true, true);
 
 
-        /*double startTime = System.nanoTime();
-        ArrayList<Node> shortestPath = BestFirstSearch.AStar(start, 'd');
-        double timeElapsed = (System.nanoTime() - startTime) / 1000000000.0;
-        System.out.println("Printing shortest path");
-        for (int i = shortestPath.size()-1; i >= 0; i--) {
-            if (shortestPath.get(i).getAction() != null) { // if the action is null, this is a start node
-                System.out.println(shortestPath.get(i).getAction());
-            }
-        }
-        System.out.println("the time elapsed: " + timeElapsed);*/
-        // TODO: Boxes can be set as immutable if put in dead end cells
-        // TODO2: Make A* have a pending list of goals which had been disachieved
-        // TODO3: Make boxes immutable/unmovable once they satisfy a goal
-        // Let's say we have the following list of goals to achieve
-
-
-
-        /*ArrayList<Node> totalShortestPath = new ArrayList<>(); // combine paths from A* and GP to solve level
-        Node curNode = start;
-        for (Character goal : goalsToAchieve){
-            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, goal);
-            for (int i = tempPath.size() - 1; i >= 0; i--){
-                totalShortestPath.add(0,tempPath.get(i)); // add to start of list
-            }
-            tempPath.clear();
-            curNode = totalShortestPath.get(0); // we are at last element of the totpath
-            System.out.println(curNode);
-        }
-
-        System.out.println("Printing total shortest path");
-        for (int i = totalShortestPath.size() - 1; i >= 0; i--) {
-            if (totalShortestPath.get(i).getAction() != null) { // if the action is null, this is a start node
-                System.out.println(totalShortestPath.get(i).getAction().toString());
-                //System.out.println(totalShortestPath.get(i));
-            }
-        }*/
-
-//        // Testing new action stuff
-//        Action movesomewhere = new MoveSurelyAction(new CoordinatesPair(2,1), null);
-//        AtomicAction atomic = (AtomicAction) movesomewhere;
-//        ArrayList<Node> pathh = BestFirstSearch.AStar(start,atomic);
-//        for (int i = pathh.size() - 1; i > 0; i--){
-//            System.out.println(pathh.get(i).getAction().toString());
-//        }
-//
-//        int a = 777;
         List<CoordinatesPair> boxCoords = start.getBoxCellCoords();
         List<Box> boxes = new ArrayList<>();
         //AtomicAction gettobox = new MoveSurelyAction(new CoordinatesPair(3, 10));
@@ -137,34 +90,23 @@ public class Launcher {
             System.out.println("Box coords: " + goalsBoxes.get(cell).getCoordinates(start));
         }
 
-        //ExpandableAction someaction = (ExpandableAction) actions.get(0);
-        //List<Action> actions2 = someaction.decompose(start);
-        //Action one = actions2.get(2);
-        //Action two = actions2.get(3);
-       /* actionsToPerform.add(one);
-        actionsToPerform.add(two);
-
-        ExpandableAction someotheraction = (ExpandableAction) actions.get(1);
-        actionsToPerform.add(someotheraction.decompose(start).get(2));
-        actionsToPerform.add(someotheraction.decompose(start).get(3));*/
-
-        /* THIS IS JUST A TEST
-         FOR NOW ONLY WORKS FOR LEVELS WHERE IT IS POSSIBLE
-        TO ACHIEVE GOALS WITHOUT HAVING TO CLEAR PATHS
-        AND THUS WITHOUT HAVING TO CONSIDER ORDER OF ACHIEVING GOALS
-        SAanagram
-        SAchoice
-        SAD1
-        SAsoko3_48
-        SAbAnAnA  (our SA level for now)
-
-        Possibly add BDI in this loop... reconsideration when goal achieved for example
-        Need to avoid agent being stuck in the corner/dead-end, else this also does not work of course
-
-        */
+        boolean lol = true;
 
 
-        // some testing from Arturs's side;
+        /**
+         * Simple solver by Alex; works for simple SA (no clearing) and MA (no clearings, only simple conflicts)
+          */
+        /*List<String> Solution = AlexSimpleMASASolver.getSolutionForLevel(start);
+        for (String string : Solution){
+            System.out.println(string);
+        }*/
+
+
+       /* System.out.println(solveLevel.isAchieved(path.get(0)) ? "Success" : "Failure");
+        boolean testttt = true; //sentinel*/
+
+           // ARTUR
+      // some testing from Arturs's side;
        // ExpandableAction solveLevelTest = new SolveLevelAction(start);
         //buildTree(solveLevelTest,start);
        // printTree(solveLevelTest);
@@ -177,7 +119,7 @@ public class Launcher {
 
         SolveLevelAction solveLevel1 = new SolveLevelAction(start);
         System.out.println(solveLevel1.getChildrenActions().size());
-       // buildTree(solveLevel1, start);
+        //buildTree(solveLevel1, start);
         //printTree(solveLevel1);
 
        // System.out.println(findLeftMostDesc(solveLevel1.getChildrenActions().get(1)));
@@ -186,7 +128,15 @@ public class Launcher {
         System.out.println(PathFinder.getBoxesOnPath(start, new CoordinatesPair(1, 3),
                 new CoordinatesPair(5, 1), true, false, false, new ArrayList<Box>()).size());
 
-        HTNBDIFSM(world.getState().getAgents().get(0), solveLevel1, world);
+        Agent agent = world.getState().getAgents().get(0);
+        ArrayList<Command> Solution;
+        Solution = HTNBDIFSM(agent, solveLevel1, world);
+        for (Command command : Solution){
+            System.out.println(command.toString());
+        }
+
+
+
         //System.out.println("kk "+LevelReader.findParkingCell(start, new CoordinatesPair(3,5)));
 
         // System.out.println("last " + PathFinder.getBoxesOnPath(start, new CoordinatesPair(5,4), new CoordinatesPair(3,2),
@@ -272,7 +222,7 @@ public class Launcher {
                 path.add(0,tempPath.get(i)); // add to start of list
             }
             tempPath.clear();
-            if (path.size() > 0) { // if path.size()==0, it means action had already been completed, so do nothing
+            if (path.size() > 0) { // if path.size() == 0, it means action had already been completed, so do nothing
                 curNode = path.get(0); // we are at last element of the totpath
             }
             System.out.println(curNode);
@@ -325,7 +275,7 @@ public class Launcher {
     }
 
     // state machine (move to separate class)
-    static void HTNBDIFSM(Agent agent, Action htnroot, World world) {
+    static ArrayList<Command> HTNBDIFSM(Agent agent, Action htnroot, World world) {
         Action curAction = htnroot;
         Node curNode = world.getState();
         int curState = 1;
@@ -463,7 +413,7 @@ public class Launcher {
                     while (iter.hasNext()) {
                         AchieveGoalAction act = iter.next();
                         if (!act.isAchieved(curNode)){
-                            AchieveGoalAction achieveAgain = new AchieveGoalAction(act.goalCell, act.box, act.getParent());
+                            AchieveGoalAction achieveAgain = new AchieveGoalAction(act.goalCell, act.box, agent, act.getParent());
                             boolean contained = false;
                             for (int i = act.getNumberAsChild(); i < act.getParent().getChildrenActions().size(); i++){
                                 if (act.getParent().getChildOfNumber(i).equals(achieveAgain)) {
@@ -537,6 +487,7 @@ public class Launcher {
                     break;
             }
         }
+        return allCommands;
     }
 
     // shift this somewhereele pls
@@ -561,7 +512,7 @@ public class Launcher {
         Random generator = new Random();
         int resIndex = generator.nextInt(toChooseBetween.size()-1)+1;
         return toChooseBetween.get(resIndex);*/
-
+        Agent agent = remBoxAct.getAgent(); // agent removing box
         ArrayList<ArrayList<Cell>> level = node.getLevel();
         Map<CoordinatesPair, Double> subsetOfCellWeights = new HashMap<>();
         CoordinatesPair bestParkingCell = new CoordinatesPair(-5,-5);
@@ -582,16 +533,16 @@ public class Launcher {
             }
         }
         if (!subsetOfCellWeights.isEmpty()) {
-            bestParkingCell = findBestAmongReachable(subsetOfCellWeights,node,initialCell);
+            bestParkingCell = findBestAmongReachable(subsetOfCellWeights,node,initialCell, agent);
         }
         else {
-            bestParkingCell = findBestAmongReachable(cellWeights,node,initialCell);
+            bestParkingCell = findBestAmongReachable(cellWeights,node,initialCell, agent);
         }
         return bestParkingCell;
     }
 
     public static CoordinatesPair findBestAmongReachable(Map<CoordinatesPair, Double> subsetOfCellWeights, Node node,
-                                                         CoordinatesPair initialCell){
+                                                         CoordinatesPair initialCell, Agent agent){
         double min = 999.0;
        // CoordinatesPair bestParkingCell = new CoordinatesPair(-5,-5);
         CoordinatesPair bestParkingCell = initialCell;
@@ -600,7 +551,7 @@ public class Launcher {
 
         for (Map.Entry<CoordinatesPair, Double> entry : subsetOfCellWeights.entrySet()){
             Double curWeight = entry.getValue();
-            if(entry.getKey().equals(node.getAgentCellCoords().get(0))) curWeight +=10;
+            if(entry.getKey().equals(agent.getCoordinates(node))) curWeight +=10;
             if (node.getCellAtCoords(entry.getKey()).isGoal()) {
                 if (Character.toUpperCase(node.getCellAtCoords(entry.getKey()).getGoalLetter())
                         == ((Box)node.getCellAtCoords(initialCell).getEntity()).getLetter()){
@@ -623,7 +574,7 @@ public class Launcher {
                 }
             }*/
         }
-        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+5));
+        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+1.5));
         return bestParkingCell;
     }
 

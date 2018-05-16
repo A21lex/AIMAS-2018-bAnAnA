@@ -67,7 +67,7 @@ public class SolveLevelAction extends ExpandableAction {
         for (Agent agent : agentTasks.keySet()){
             // for every agent, create goals corresponding to what he can do
             for (Task task : agentTasks.get(agent)){
-                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(),/* agent,*/ this));
+                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
                 expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
                 i++;
             }

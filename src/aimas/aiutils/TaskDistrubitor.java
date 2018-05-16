@@ -1,6 +1,7 @@
 package aimas.aiutils;
 
 import aimas.Node;
+import aimas.PathFinder;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.board.entities.Agent;
@@ -41,9 +42,11 @@ public class TaskDistrubitor {
             List<Task> availableTasks = new ArrayList<>();
             for (Task task : tasks){
                 if (areOfSameColor(agent, task.box)){
-                    if (!isAlreadyAssigned(task)) {
-                        if (!task.isAchieved(node)) {
-                            availableTasks.add(task);
+                    if (isReachable(agent, task.box, node)) {
+                        if (!isAlreadyAssigned(task)) {
+                            if (!task.isAchieved(node)) {
+                                availableTasks.add(task);
+                            }
                         }
                     }
                 }
@@ -56,6 +59,11 @@ public class TaskDistrubitor {
 
     private static boolean areOfSameColor(Agent agent, Box box){
         return agent.getColor() == box.getColor();
+    }
+
+    private static boolean isReachable(Agent agent, Box box, Node node){
+        return PathFinder.pathExists(node.getLevel(), agent.getCoordinates(node), box.getCoordinates(node),
+                true, false, false);
     }
 
     // Check if a task is already assigned to any agent

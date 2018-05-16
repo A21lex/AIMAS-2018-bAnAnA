@@ -22,17 +22,19 @@ public class ClearPathAction extends ExpandableAction {
     Node node; // at this state of the level
     Entity first; // potential entity at start (box/agent)
     Entity second; // potential entity at finish (box/agent)
+    Agent agent; // by this agent
 
     //writing quickly now
     public CoordinatesPair fromHere;
     public CoordinatesPair toThere;
     public ArrayList<Box> exceptionBoxes;
 
-    public ClearPathAction(CoordinatesPair start, CoordinatesPair finish, Node node, Action parent){
+    public ClearPathAction(CoordinatesPair start, CoordinatesPair finish, Agent agent, Node node, Action parent){
         this.start = start;
         this.finish = finish;
         this.node = node;
         this.parent = parent;
+        this.agent = agent;
         this.childrenActions = new ArrayList<>();
         this.exceptionBoxes = new ArrayList<>();
         //boolean referToFirstEntity = false;
@@ -142,7 +144,7 @@ public class ClearPathAction extends ExpandableAction {
         int i = 0; // nmber of action as a child of current action
         for (Box box : boxes){
             CoordinatesPair parkingCell = finish;// Alina's magic function (not here actually)
-            expandedActions.add(new RemoveBoxAction(box, start, parkingCell , this));
+            expandedActions.add(new RemoveBoxAction(box, start, parkingCell , agent, this));
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }

@@ -1,5 +1,6 @@
 package aimas.aiutils;
 
+import aimas.PathFinder;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -57,6 +58,10 @@ public class BoxAssigner {
             for (Box box : relevantBoxes){
                 // find the box closest to the goalcell
                 CoordinatesPair potentialWinnerBoxCoord = box.getCoordinates(node);
+                if (!PathFinder.pathExists(node.getLevel(), potentialWinnerBoxCoord, goalCell.getCoordinates(), true,
+                        false,false)){
+                    continue; // there is no path from the box to the goal; go for next box
+                }
                 int potentialWinnerApproxDistance = BestFirstSearch.manhDist(potentialWinnerBoxCoord.getX(),
                         potentialWinnerBoxCoord.getY(), goalCell.getI(), goalCell.getJ());
 

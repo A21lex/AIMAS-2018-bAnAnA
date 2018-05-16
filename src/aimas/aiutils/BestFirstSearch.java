@@ -88,7 +88,7 @@ public class BestFirstSearch {
             visited.add(currentNode);
 
 //            ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
-            for (Node neighbour : currentNode.getNeighbourNodes(0)){
+            for (Node neighbour : currentNode.getNeighbourNodes(startState.getAgents().get(0))){
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }
@@ -188,6 +188,7 @@ public class BestFirstSearch {
         frontier.add(startState); // start node is the only one known initially
         startState.fScore = heuristic(startState);
         Node currentNode;
+        Agent agent = startState.getAgents().get(0);
         while (!frontier.isEmpty()){
             currentNode = getLowestFNode(frontier);
             //System.out.println("Going here: ");
@@ -203,7 +204,7 @@ public class BestFirstSearch {
             visited.add(currentNode);
 
 //            ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
-            for (Node neighbour : currentNode.getNeighbourNodes(0)){
+            for (Node neighbour : currentNode.getNeighbourNodes(agent)){
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }
@@ -233,8 +234,8 @@ public class BestFirstSearch {
     public static ArrayList<Node> AStar(Node startState, AtomicAction action){
         startState.gScore = 0; // need this line to "chain" A* calls. New start state - new gScore.
         startState.setParent(null); // same as above. New start state's parent must be null in current implementation.
-        //int agentNumber = action.getAgent().getNumber(); // this is the agent number executing this action!
-        int agentNumber = 0;
+        Agent agent = action.getAgent(); // this is the agent number executing this action!
+        //int agentNumber = 0;
         ArrayList<Node> shortestPath = new ArrayList<>();
         HashSet<Node> visited = new HashSet<>();
         HashSet<Node> frontier = new HashSet<>();
@@ -246,7 +247,7 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-           // System.err.println(Node.nodeCount); // debug
+            //System.err.println(Node.nodeCount); // debug
             if (action.isAchieved(currentNode)){
                 //  System.out.println("satisfied h yeah");
                 System.err.println(action.toString() + " is satisfied.");
@@ -257,7 +258,7 @@ public class BestFirstSearch {
             visited.add(currentNode);
 
 //            ArrayList<Node> curNeighbours = currentNode.getNeighbourNodes(0);
-            for (Node neighbour : currentNode.getNeighbourNodes(agentNumber)){
+            for (Node neighbour : currentNode.getNeighbourNodes(agent)){
                 if (visited.contains(neighbour)){ // Ignore nodes already evaluated
                     continue;
                 }

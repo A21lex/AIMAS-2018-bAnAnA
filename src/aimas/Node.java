@@ -202,32 +202,38 @@ public class Node {
 
     /**
      * Essentially a remake of getExpandedNodes() from Warm-Up assignment
-     * @param agentNumber Number of agent movements of whom we consider
+     * @param agent Agent movements of whom we consider
      * @return List of nodes available by making any legal move by the agent
      */
-    public ArrayList<Node> getNeighbourNodes(int agentNumber){
+    public ArrayList<Node> getNeighbourNodes(Agent agent){
         ArrayList<Node> neighbourNodes = new ArrayList<>(Command.EVERY.length);
 
         // Neighbour nodes are nodes which can result from movements of the agent from whose
         // point of view we are looking
 
         // Find the agent in the current node
-        int curAgentRow = 0;
-        int curAgentCol = 0;
-        CoordinatesPair curAgentCellCoords = null;
-        Agent curAgent = null;
-        Color curAgentColor = null;
-        ArrayList<CoordinatesPair> agentCellCoords = this.getAgentCellCoords();
-        for (CoordinatesPair thisCellCoords: agentCellCoords){
-            curAgent = (Agent) getCellAtCoords(thisCellCoords).getEntity();
-            if (curAgent.getNumber() == agentNumber){
-                curAgentRow = thisCellCoords.getX();
-                curAgentCol = thisCellCoords.getY();
-                curAgentCellCoords = thisCellCoords;
-                curAgentColor = curAgent.getColor();
-                break; // found our agent
-            }
-        }
+        Agent curAgent = agent;
+        int curAgentRow = curAgent.getCoordinates(this).getX();
+        int curAgentCol = curAgent.getCoordinates(this).getY();
+        CoordinatesPair curAgentCellCoords = curAgent.getCoordinates(this);
+        Color curAgentColor = curAgent.getColor();
+        int agentNumber = curAgent.getNumber();
+        //int curAgentRow = 0;
+        //int curAgentCol = 0;
+        //CoordinatesPair curAgentCellCoords = null;
+        //Agent curAgent = null;
+        //Color curAgentColor = null;
+        //ArrayList<CoordinatesPair> agentCellCoords = this.getAgentCellCoords();
+//        for (CoordinatesPair thisCellCoords: agentCellCoords){
+//            curAgent = (Agent) getCellAtCoords(thisCellCoords).getEntity();
+//            if (curAgent.getNumber() == agentNumber){
+//                curAgentRow = thisCellCoords.getX();
+//                curAgentCol = thisCellCoords.getY();
+//                curAgentCellCoords = thisCellCoords;
+//                curAgentColor = curAgent.getColor();
+//                break; // found our agent
+//            }
+//        }
         for (Command c: Command.EVERY){
             int newAgentRow = curAgentRow + Command.dirToRowChange(c.dir1);
             int newAgentCol = curAgentCol + Command.dirToColChange(c.dir1);
@@ -323,6 +329,7 @@ public class Node {
                         CoordinatesPair curBoxCellCoords = new CoordinatesPair(curBoxCell);
                         Node n = new Node(this);
                         n.action = c;
+                        n.agentNumber = agentNumber;
                         // Update level
                         /*ArrayList<ArrayList<Cell>> updatedLevel =
                                 (ArrayList<ArrayList<Cell>>) this.getLevel().clone();*/
