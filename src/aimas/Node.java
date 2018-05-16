@@ -76,6 +76,8 @@ public class Node {
     // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
     private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
+    private static ArrayList<CoordinatesPair> spaceCellCoords=new ArrayList<>();
+    private static ArrayList<CoordinatesPair> artSquaresCoords=new ArrayList<>();
 
     public Box getBoxBeingMoved() {
         return boxBeingMoved;
@@ -171,6 +173,9 @@ public class Node {
     ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
+    public static ArrayList<CoordinatesPair> getSpaceCelllCoords(){
+        return spaceCellCoords;
+    }
 
     public void setAgentCellCoords(ArrayList<CoordinatesPair> agentCellCoords){
         this.agentCellCoords = agentCellCoords;
@@ -179,10 +184,9 @@ public class Node {
         this.boxCellCoords = boxCellCoords;
     }
 
-    public void setGoalCellCoords(ArrayList<CoordinatesPair> goalCellCoords){
-        this.goalCellCoords = goalCellCoords;
-    }
+    public void setGoalCellCoords(ArrayList<CoordinatesPair> goalCellCoords){ this.goalCellCoords = goalCellCoords; }
 
+    public void setSpaceCells(ArrayList<CoordinatesPair> spaceCellCoords){this.spaceCellCoords = spaceCellCoords;}
     public void setTunnelCellCoords(ArrayList<CoordinatesPair> tunnelCellCoords){
         this.tunnelCellCoords = tunnelCellCoords;
     }

@@ -85,4 +85,13 @@ public class CoordinatesPair {
 //        }
         return children;
     }
+
+    public ArrayList<CoordinatesPair> getNeighbouringCoords(CoordinatesPair pair){
+        ArrayList<CoordinatesPair> neighbours = new ArrayList<CoordinatesPair>();
+        neighbours.add(new CoordinatesPair(pair.getX(),pair.getY()+1));
+        neighbours.add(new CoordinatesPair(pair.getX(),pair.getY()-1));
+        neighbours.add(new CoordinatesPair(pair.getX()-1,pair.getY()));
+        neighbours.add(new CoordinatesPair(pair.getX()+1,pair.getY()));
+        return neighbours;
+    }
 }
