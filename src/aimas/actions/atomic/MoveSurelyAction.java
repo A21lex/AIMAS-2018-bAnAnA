@@ -30,6 +30,7 @@ public class MoveSurelyAction extends AtomicAction {
         this.parent = parent;
         this.actionType = ActionType.MOVE_SURELY;
         this.childrenActions = new ArrayList<>();
+        this.numberOfAttempts = 0;
 
 //        if (node.getCellAtCoords(finish).getEntity() != null) {
 //            this.potentialEntity = node.getCellAtCoords(finish).getEntity();

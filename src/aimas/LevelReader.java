@@ -212,22 +212,5 @@ public final class LevelReader {
         return spaceCellCoords;
     }
 
-    public static CoordinatesPair findParkingCell(Node node, CoordinatesPair initialCell){
-        ArrayList<ArrayList<Cell>> level = node.getLevel();
-        ArrayList<CoordinatesPair> toChooseBetween = new ArrayList<>();
-        toChooseBetween.add(new CoordinatesPair(-2,-2)); // dummy element for random function to workproperly
-        for (int i=0; i<level.size(); i++){
-            for (int j = 0; j<level.get(i).size();j++){
-                if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(), true, false, true) &&
-                        !level.get(i).get(j).isGoal() &&
-                        !(level.get(i).get(j).getEntity() instanceof Box))
-                    toChooseBetween.add(level.get(i).get(j).getCoordinates());
-            }
-        }
-        System.out.println(initialCell);
-        System.out.println(node);
-        Random generator = new Random();
-        int resIndex = generator.nextInt(toChooseBetween.size()-1)+1;
-        return toChooseBetween.get(resIndex);
-    }
+
 }

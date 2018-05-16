@@ -30,6 +30,7 @@ public class SolveLevelAction extends ExpandableAction {
         this.childrenActions = new ArrayList<>();
         this.actionType = ActionType.SOLVE_LEVEL;
         this.numberAsChild = -1; // emergency case
+        this.numberOfAttempts = 0;
     }
 
     // Check if all the goal cells have on them a box of corresponding type; if not, return false

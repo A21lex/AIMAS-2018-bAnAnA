@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AchieveGoalAction extends ExpandableAction {
-    Cell goalCell; // this is what we want to achieve
-    Box box; // .. with this box
+    public Cell goalCell; // this is what we want to achieve
+    public Box box; // .. with this box
     Agent agent; // .. by this agent
 
     public Agent getAgent() {
@@ -38,6 +38,7 @@ public class AchieveGoalAction extends ExpandableAction {
         decomposedTo.add(ActionType.DELIVER_BOX_SURELY);
         this.canBeDecomposedTo = decomposedTo;
         this.actionType = ActionType.ACHIEVE_GOAL;
+        this.numberOfAttempts = 0;
     }
 
     @Override
@@ -97,5 +98,10 @@ public class AchieveGoalAction extends ExpandableAction {
     @Override
     public String toString() {
         return "AchieveGoalAction: achieving goal " + goalCell.toStringPrime() + " with box " + box;
+    }
+
+    public boolean equals(AchieveGoalAction achieveGoalAction){
+        if (this.box.equals(achieveGoalAction.box) && this.goalCell.equals(achieveGoalAction.goalCell)) return true;
+        return false;
     }
 }

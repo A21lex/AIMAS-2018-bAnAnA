@@ -1,5 +1,6 @@
 package aimas.actions.expandable;
 
+import aimas.Launcher;
 import aimas.LevelReader;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -19,6 +20,7 @@ public class RemoveBoxAction extends ExpandableAction {
     public Box box;
     CoordinatesPair start; // unblock path from here
     CoordinatesPair finish; // to here
+    ArrayList<CoordinatesPair> blackList;
 
     public RemoveBoxAction(Box box, CoordinatesPair start, CoordinatesPair finish, Action parent){
         this.box = box;
@@ -26,6 +28,8 @@ public class RemoveBoxAction extends ExpandableAction {
         this.finish = finish;
         this.parent = parent;
         this.childrenActions = new ArrayList<>();
+        this.blackList = new ArrayList<>();
+        this.numberOfAttempts = 0;
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.CLEAR_PATH);
@@ -79,7 +83,13 @@ public class RemoveBoxAction extends ExpandableAction {
        
         List<Action> expandedActions = new ArrayList<>(); */
 
-        CoordinatesPair parkingCellCoords = LevelReader.findParkingCell(node, box.getCoordinates(node));
+        CoordinatesPair parkingCellCoords = triggerParkingCellSearch(node);
+        //if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
+        System.out.println("****");
+        System.out.println(node);
+
+        System.out.println(blackList);
+
 
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
         Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), node, this);
@@ -102,6 +112,13 @@ public class RemoveBoxAction extends ExpandableAction {
         childrenActions = expandedActions;
 
         return expandedActions;
+    }
+
+    public CoordinatesPair triggerParkingCellSearch(Node node){
+        CoordinatesPair parkingCellCoords = Launcher.findParkingCell(node, box.getCoordinates(node), this,
+                blackList);
+        if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
+        return parkingCellCoords;
     }
 
     @Override

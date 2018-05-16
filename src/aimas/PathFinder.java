@@ -37,6 +37,8 @@ public class PathFinder {
 
     public static boolean pathExists(ArrayList<ArrayList<Cell>> level, Cell startingCell, Cell finishingCell,
                                      boolean wObstacles, boolean aObstacles, boolean bObstacles){
+        foundPath.clear();
+
         // convert level to array of 1s and 0s depending on the defined obstacles
         Integer[][] simplifiedLevel = getSimplifiedLevelArray(level,
                 startingCell.getCoordinates(), finishingCell.getCoordinates(), wObstacles, aObstacles, bObstacles);
@@ -156,7 +158,8 @@ public class PathFinder {
          * cell has a box, it still counts as "0" (as we are trying to "reach" this goal)
          */
         ArrayList<Box> boxesOnPath = new ArrayList<>();
-
+        System.out.println("Exception boxes");
+        System.out.println(exceptionBoxes);
         ArrayList<ArrayList<Cell>> level = node.getLevel();
         //System.out.println("debug " + pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
         //        wObstacles, aObstacles, bObstacles));

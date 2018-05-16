@@ -37,6 +37,7 @@ public class ClearPathAction extends ExpandableAction {
         this.exceptionBoxes = new ArrayList<>();
         //boolean referToFirstEntity = false;
         //boolean referToSecondEntity = false;
+        this.numberOfAttempts = 0;
 
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.REMOVE_BOX);
@@ -48,11 +49,11 @@ public class ClearPathAction extends ExpandableAction {
 
         if (node.getCellAtCoords(this.start).getEntity() != null){
             first = node.getCellAtCoords(this.start).getEntity();
-            if (first instanceof Box ) exceptionBoxes.add((Box) first);
+            if (first instanceof Box && !(second instanceof Box)) exceptionBoxes.add((Box) first);
         }
         if (node.getCellAtCoords(this.finish).getEntity() != null){
             second = node.getCellAtCoords(this.finish).getEntity();
-            if (second instanceof Box ) exceptionBoxes.add((Box) second);
+            if (second instanceof Box && !(first instanceof Box)) exceptionBoxes.add((Box) second);
         }
 
         fromHere = updateCoordinates(first, node, start);
@@ -119,6 +120,14 @@ public class ClearPathAction extends ExpandableAction {
             //System.err.println("ClearPathAction is already achieved for " + start + " to " + finish);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
+        System.out.println("not achieved node");
+        /*for (CoordinatesPair cp : PathFinder.getFoundPath()){
+            System.out.println(node.getCellAtCoords(cp).getEntity());
+        }*/
+        System.out.println(fromHere);
+        System.out.println(toThere);
+        System.out.println( PathFinder.pathExists(node.getLevel(), fromHere, toThere,
+                true, false, false));
 
        // System.out.println("never getting here");
 
