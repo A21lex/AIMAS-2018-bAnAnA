@@ -1,16 +1,11 @@
 package aimas.competition;
 
-import aimas.Command;
 import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
-import aimas.actions.ExpandableAction;
-import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.AlexSimpleMASASolver;
 import aimas.aiutils.BestFirstSearch;
-import aimas.aiutils.World;
 import aimas.board.Cell;
-import aimas.board.entities.Agent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
