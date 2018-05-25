@@ -104,9 +104,11 @@ public class AlexSimpleMASASolver {
                     compositeCommand.append(",");
                 }
                 else{
-                    System.err.println("Wrong move detected");
+                    //System.err.println("Wrong move detected");
                     agentsActions.get(agent).add(i,new Command(Command.Dir.N)); // shift commands of that agent by one to right
-                    compositeCommand.append("NoOp"); // and do noop
+
+                    compositeCommand.append("NoOp");
+
                     compositeCommand.append(",");
                     // Conflict resolution here please
                 }
@@ -120,10 +122,10 @@ public class AlexSimpleMASASolver {
         }
 
         boolean grandfinale = true;
-        System.err.println("Printing overall result");
-        for (String command : Solution){
-            System.out.println(command);
-        }
+//        System.err.println("Printing overall result");
+//        for (String command : Solution){
+//            System.out.println(command);
+//        }
         System.err.println(solveLevel.isAchieved(worldAlex.getState()) ? "Level solved" : "Level not solved");
 
         return Solution;
@@ -142,7 +144,7 @@ public class AlexSimpleMASASolver {
             if (path.size() > 0) { // if path.size()==0, it means action had already been completed, so do nothing
                 curNode = path.get(0); // we are at last element of the totpath
             }
-            System.out.println(curNode);
+            //System.out.println(curNode);
         }
         return path;
     }
