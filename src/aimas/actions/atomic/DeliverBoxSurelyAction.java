@@ -49,7 +49,7 @@ public class DeliverBoxSurelyAction extends AtomicAction {
                     punishmentForMovingOtherBoxes += 20;
                 }
             }
-            if (node.getAction().actionCommandType == Command.CommandType.Pull) punishmentForPullingInstead += 5;
+            if (node.getAction().actionCommandType == Command.CommandType.Pull) punishmentForPullingInstead += 1; // 0 works for MA level
         }
         return manhDist(box.getCoordinates(node).getX(), box.getCoordinates(node).getY(),
                 finish.getX(), finish.getY()) + punishmentForMovingOtherBoxes

@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Call when need to solve MA if did not manage to incorporate it into state machine in time :)
  */
-public class AlexSimpleMASASolver {
+public class SimpleMASASolver {
 
     public static List<String> getSolutionForLevel(Node node){
         World worldAlex = new World(node);

@@ -22,49 +22,6 @@ import java.util.Random;
  * Also contains getNeighbourNodes method inspired by the Warm-Up Assignment
  */
 public class Node {
-    /*public static void main(String[] args) {
-        ArrayList<ArrayList<Cell>> level = new ArrayList<>();
-        try {
-            level = LevelReader.getLevel("testNode.lvl");
-        } catch (IOException e) {
-            System.out.println("########");
-            System.out.println("Probably incorrect path.");
-        }
-        ArrayList<Cell.CoordinatesPair> agentCellCoords = LevelReader.getAgentCellCoords();
-        ArrayList<Cell.CoordinatesPair> boxCellCoords = LevelReader.getBoxCellCoords();
-        ArrayList<Cell.CoordinatesPair> goalCellCoords = LevelReader.getGoalCellCoords();
-
-        Node node = new Node(null);
-        ArrayList<ArrayList<Cell>> newLevel = Node.copyLevel(level);
-        System.out.println("NEW level");
-        System.out.println(newLevel);
-        //Node node = new Node(null);
-        node.setLevel(level);
-        node.setAgentCellCoords(agentCellCoords);
-        node.setBoxCellCoords(boxCellCoords);
-        node.setGoalCellCoords(goalCellCoords);
-        //Node node2 = new Node(null);
-        //node2.setLevel(level);
-        //boolean equals = node.equals(node2);
-
-        System.out.println(node);
-
-        ArrayList<Node> testArrayOfNodes = node.getNeighbourNodes(0);
-        for (int i = 0; i < testArrayOfNodes.size(); i++){
-            System.out.println("Node " + i);
-            System.out.println(testArrayOfNodes.get(i));
-        }
-        System.out.println(node.getAgents());
-        for (Node thisNode : testArrayOfNodes){
-            if (thisNode.isSatisfied('a')){
-                System.out.println("this node is satisfied");
-                Node satisfiedNode = thisNode;
-                boolean test = true;
-            }
-        }
-        //boolean test = true;
-
-    }*/
 
     private Node parent;
     private ArrayList<ArrayList<Cell>> level;
@@ -73,7 +30,7 @@ public class Node {
     // (at least the agent)
     public ArrayList<CoordinatesPair> boxCellCoords = new ArrayList<>();
     public ArrayList<CoordinatesPair> agentCellCoords = new ArrayList<>();
-    // And one goalCellCoords is shared by all the nodes - goals do not move from state to state
+    // And one of the following is shared by all the nodes - they do not change from state to state
     private static ArrayList<CoordinatesPair> goalCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> tunnelCellCoords = new ArrayList<>();
     private static ArrayList<CoordinatesPair> spaceCellCoords=new ArrayList<>();
@@ -173,7 +130,7 @@ public class Node {
     ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
-    public static ArrayList<CoordinatesPair> getSpaceCelllCoords(){
+    public static ArrayList<CoordinatesPair> getSpaceCellCoords(){
         return spaceCellCoords;
     }
 
@@ -367,12 +324,17 @@ public class Node {
             }
 
         }
-        //Collections.shuffle(neighbourNodes, RND);
         return neighbourNodes;
     }
-    private static final Random RND = new Random(2);
 
     public boolean cellIsFree(int row, int col){
+        try{
+            Cell tryCell = this.getLevel().get(row).get(col); // this try-catch had to be added due to SANikrima
+        }
+        catch (IndexOutOfBoundsException ex){
+            System.err.println("cellIsFree(Node, line 378) with params " + row + " , " + col + "throws IndexOutOfBounds");
+            return false;
+        }
         if (this.getLevel().get(row).get(col).getType().equals(Type.WALL)
                 || this.getLevel().get(row).get(col).getEntity() != null){
             return false;
@@ -381,8 +343,15 @@ public class Node {
     }
 
     public boolean boxAt(int row, int col){
-        if (this.getLevel().get(row).get(col).getEntity() instanceof Box){
-            return true;
+        try{
+            if (this.getLevel().get(row).get(col).getEntity() != null){
+                if (this.getLevel().get(row).get(col).getEntity() instanceof Box){
+                    return true;
+                }
+            }
+        }
+        catch (IndexOutOfBoundsException ex){
+            System.err.println("BoxAt throws IndexOutOfBounds Node(line 397) "); // Same as above: SANikrima fix
         }
         return false;
     }
@@ -460,7 +429,6 @@ public class Node {
             Node p = (Node) o;
             return getAgentCellCoords().equals(p.getAgentCellCoords()) &&
                     getBoxCellCoords().equals(p.getBoxCellCoords());
-            //return getLevel().equals(p.getLevel()); //<- this is super performance heavy so don't use it!
         }
         return false;
     }

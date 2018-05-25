@@ -1,11 +1,17 @@
 package aimas.competition;
 
+import aimas.Command;
+import aimas.MapParser;
 import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
-import aimas.aiutils.AlexSimpleMASASolver;
+import aimas.actions.expandable.SolveLevelAction;
+import aimas.aiutils.SimpleMASASolver;
+import aimas.aiutils.BdiHtnFsmSolver;
 import aimas.aiutils.BestFirstSearch;
+import aimas.aiutils.World;
 import aimas.board.Cell;
+import aimas.board.entities.Agent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,17 +28,25 @@ Basic usage for the server is either of:
 
    Command to run our program will be as follows:
    First compile:
-   javac aimas/competition/Client.java
-   Then run:
-   java -Dsun.java2d.opengl=true -jar server.jar -l levels/SAsimple1.lvl
- -c "java aimas.competition.Client" -g -p
+   From the folder with server jar, and where competition folder has our jars:
+
+   javac -cp ".:aimas/competition/*" aimas/competition/Client.java
+
+   Then from server, in the quotes:
+
+   java -cp ".:aimas/competition/*" aimas/competition/Client
+
+   i.e something like:
+
+   java -Dsun.java2d.opengl=true
+   -jar server.jar -l levels/SAsokobanLevel96.lvl -c "java -cp ".:aimas/competition/*" aimas/competition/Client" -g
 
    Remember to replace all System.out.println calls in our program to stderr, else they will go to the server
  */
 public class Client {
 
     private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
+    private static boolean isMA = false;
     public static void main(String[] args) {
         System.err.println("Hello from Client. I am sending this using the error outputstream.");
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
@@ -45,18 +59,53 @@ public class Client {
         System.err.println(InputLevelReader.getAgentCellCoords().get(0)); // just print first agent's position
         System.err.println("Level read successfully");
 
-        // Try to solve level using the simplest technique we have for now
+        // Try to solve level
         Node node = new Node(null);
         node.setLevel(level);
         node.setBoxCellCoords(Node.copyList(InputLevelReader.getBoxCellCoords()));
         node.setAgentCellCoords(Node.copyList(InputLevelReader.getAgentCellCoords()));
         node.setGoalCellCoords(Node.copyList(InputLevelReader.getGoalCellCoords()));
         node.setTunnelCellCoords(Node.copyList(InputLevelReader.getTunnelCellCoords()));
+        node.setSpaceCells(Node.copyList(InputLevelReader.getSpaceCellCoords()));
 
-        List<String> Solution = AlexSimpleMASASolver.getSolutionForLevel(node);
+        if (node.getAgents().size()>1){
+            isMA = true;
+        }
+        if (isMA){
+            List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
+            for (String string : Solution){
+                System.out.println(string);
+            }
+        }
+        else{
+            World world =  new World(node);
+            MapParser parser = new MapParser(node.getLevel());
+            parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
+            BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
+            SolveLevelAction solveLevel = new SolveLevelAction(node);
+            Agent agent = world.getState().getAgents().get(0); // take the only agent
+            ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
+            for (Command command : Solution){
+                System.out.println(command.toString());
+            }
+        }
+        // Using simple solver which works for MA (but not perfect)
+        /*List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
         for (String string : Solution){
             System.out.println(string);
-        }
+        }*/
+        // Using more advanced solver which works for SA
+        /*World world =  new World(node);
+        MapParser parser = new MapParser(node.getLevel());
+        parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
+        BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
+        SolveLevelAction solveLevel = new SolveLevelAction(node);
+        Agent agent = world.getState().getAgents().get(0); // any for now
+        ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
+        for (Command command : Solution){
+            System.out.println(command.toString());
+        }*/
+
 
     }
 

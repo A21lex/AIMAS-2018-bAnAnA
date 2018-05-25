@@ -122,13 +122,13 @@ public class ClearPathAction extends ExpandableAction {
             //System.err.println("ClearPathAction is already achieved for " + start + " to " + finish);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
-        System.out.println("not achieved node");
+        //System.out.println("not achieved node");
         /*for (CoordinatesPair cp : PathFinder.getFoundPath()){
             System.out.println(node.getCellAtCoords(cp).getEntity());
         }*/
-        System.out.println(fromHere);
-        System.out.println(toThere);
-        System.out.println( PathFinder.pathExists(node.getLevel(), fromHere, toThere,
+       // System.out.println(fromHere);
+       // System.out.println(toThere);
+        System.err.println( PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, false));
 
        // System.out.println("never getting here");
@@ -148,7 +148,7 @@ public class ClearPathAction extends ExpandableAction {
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }
-        System.out.println(boxes.size());
+        //System.out.println(boxes.size());
         // for every box in list of boxed: add remove(box) to expandedActions
         // will return corresponding actions or empty list if there are no boxes on path (although
         // in this case this method shouldn't be called at all)

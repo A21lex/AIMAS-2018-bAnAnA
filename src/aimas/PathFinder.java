@@ -7,7 +7,6 @@ import aimas.board.CoordinatesPair;
 import aimas.board.Type;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 import java.util.*;
 
@@ -158,8 +157,8 @@ public class PathFinder {
          * cell has a box, it still counts as "0" (as we are trying to "reach" this goal)
          */
         ArrayList<Box> boxesOnPath = new ArrayList<>();
-        System.out.println("Exception boxes");
-        System.out.println(exceptionBoxes);
+        //System.out.println("Exception boxes");
+        //System.out.println(exceptionBoxes);
         ArrayList<ArrayList<Cell>> level = node.getLevel();
         //System.out.println("debug " + pathExists(level, startingCoordinatesPair, finishingCoordinatesPair,
         //        wObstacles, aObstacles, bObstacles));

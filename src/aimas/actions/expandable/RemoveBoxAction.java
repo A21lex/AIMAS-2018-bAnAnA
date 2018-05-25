@@ -2,6 +2,7 @@ package aimas.actions.expandable;
 
 import aimas.LevelReader;
 import aimas.Launcher;
+import aimas.aiutils.BdiHtnFsmSolver;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
 import aimas.PathFinder;
@@ -65,7 +66,7 @@ public class RemoveBoxAction extends ExpandableAction {
 
 
 
-        System.out.println(PathFinder.getBoxesOnPath(node, ((ClearPathAction) parent).fromHere, ((ClearPathAction) parent).toThere,
+        System.err.println(PathFinder.getBoxesOnPath(node, ((ClearPathAction) parent).fromHere, ((ClearPathAction) parent).toThere,
                 true, false, true, ((ClearPathAction) parent).exceptionBoxes).size());
 
         return !PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
@@ -93,10 +94,10 @@ public class RemoveBoxAction extends ExpandableAction {
 
         CoordinatesPair parkingCellCoords = triggerParkingCellSearch(node);
         //if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
-        System.out.println("****");
-        System.out.println(node);
+        System.err.println("****");
+        System.err.println(node);
 
-        System.out.println(blackList);
+        System.err.println(blackList);
 
 
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
@@ -123,7 +124,7 @@ public class RemoveBoxAction extends ExpandableAction {
     }
 
     public CoordinatesPair triggerParkingCellSearch(Node node){
-        CoordinatesPair parkingCellCoords = Launcher.findParkingCell(node, box.getCoordinates(node), this,
+        CoordinatesPair parkingCellCoords = BdiHtnFsmSolver.findParkingCell(node, box.getCoordinates(node), this,
                 blackList);
         if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
         return parkingCellCoords;

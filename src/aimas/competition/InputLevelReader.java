@@ -103,7 +103,7 @@ public class InputLevelReader {
                 line = bufferedReader.readLine();
             }
 
-            //determine tunnel cells
+            /*//determine tunnel cells
             for (CoordinatesPair spc: spaceCellCoords) {
                 // wall on top and bellow or  wall on sides
                 if ((level.get(spc.getX() - 1).get(spc.getY()).getType().equals(Type.WALL) && level.get(spc.getX() + 1).get(spc.getY()).getType().equals(Type.WALL)) ||
@@ -137,7 +137,7 @@ public class InputLevelReader {
                                 && level.get(spc.getX() - 1).get(spc.getY() - 1).getType().equals(Type.WALL))) {
                     tunnelCellCoords.add(spc);
                 }
-            }
+            }*/
             return level;
         }
         finally {
@@ -160,4 +160,9 @@ public class InputLevelReader {
     public static ArrayList<CoordinatesPair> getTunnelCellCoords(){
         return tunnelCellCoords;
     }
+
+    public static ArrayList<CoordinatesPair> getSpaceCellCoords(){
+        return spaceCellCoords;
+    }
+
 }
