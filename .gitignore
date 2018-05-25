@@ -11,6 +11,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+.idea/libraries
+
 # IntelliJ
 /out/
 
