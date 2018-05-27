@@ -58,10 +58,14 @@ public class MASolver {
                     command = commands.get(i);
                 }
                 catch (IndexOutOfBoundsException ex){
-//                    command = commands.get(i-1);
-//                    if (command.dir1==Command.Dir.S){
-//
+//                    Command prevCommand;
+//                    try {
+//                        prevCommand = commands.get(i - 1);
 //                    }
+//                    catch (IndexOutOfBoundsException e){
+//                        prevCommand = new Command(Command.CommandType.NoOp);
+//                    }
+//                    command = Command.getOppositeMoveCommand(prevCommand);
 //                    ArrayList<Command> potentialCommands = new ArrayList<>();
 //                    for (Command c : Command.EVERY){
 //                        if (c.actionCommandType == Command.CommandType.Move){
@@ -96,6 +100,7 @@ public class MASolver {
                     commands.addAll(i+1, newCommands); // and add new ones
 
                     longestSolutionLength += newCommands.size();
+                    System.err.println("Num of conflicts occured: " + counterOfConflicts);
                 }
                 editedCommand = command.toString().replaceAll(regex, "");
                 compositeCommand.append(editedCommand);

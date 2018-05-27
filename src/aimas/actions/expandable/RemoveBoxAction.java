@@ -72,9 +72,9 @@ public class RemoveBoxAction extends ExpandableAction {
         return !PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
                 true, false, false, ((ClearPathAction) parent).exceptionBoxes).contains(box);
 
-       // if ((PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
-       //                true, false, false).contains(box))
-       //         && PathFinder.getFoundPath().get(PathFinder.getFoundPath().size()-1).equals(box)) return true;
+        // if ((PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
+        //                true, false, false).contains(box))
+        //         && PathFinder.getFoundPath().get(PathFinder.getFoundPath().size()-1).equals(box)) return true;
         //return false;
     }
 
@@ -89,7 +89,7 @@ public class RemoveBoxAction extends ExpandableAction {
 
        /* Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
         CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-       
+
         List<Action> expandedActions = new ArrayList<>(); */
 
         CoordinatesPair parkingCellCoords = triggerParkingCellSearch(node);
@@ -100,7 +100,8 @@ public class RemoveBoxAction extends ExpandableAction {
         System.err.println(blackList);
 
 
-        CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
+        //CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
+        CoordinatesPair agentCellCoords = agent.getCoordinates(node);
         Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), agent, node, this);
         Action clearCell = new ClearPathAction(box.getCoordinates(node), parkingCellCoords, agent, node, this);
         Action gotoBox = new MoveSurelyAction(box.getCoordinates(node), agent, this);

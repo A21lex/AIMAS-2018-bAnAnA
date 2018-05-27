@@ -10,13 +10,13 @@ public class Entity {
     protected Color color;
 
 
-//    Cell getCurrentCell(){
+    //    Cell getCurrentCell(){
 //        return this.currentCell;
 //    }
 //    void setCurrentCell(Cell currentCell){
 //        this.currentCell = currentCell;
 //    }
-public Color getColor(){
+    public Color getColor(){
         return this.color;
     }
     void setColor(Color color){

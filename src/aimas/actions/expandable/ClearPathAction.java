@@ -92,11 +92,11 @@ public class ClearPathAction extends ExpandableAction {
         fromHere = updateCoordinates(first, node, start);
         toThere = updateCoordinates(second,node,finish);
         //System.out.println("* "+fromHere);
-       // System.out.println("* "+toThere);
+        // System.out.println("* "+toThere);
 
         // If path exists from current position of entity to current position of another entity
         // or cell in case there are no entities, return true
-       // return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
+        // return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
         //        true, true, true);
         return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, true);
@@ -126,17 +126,17 @@ public class ClearPathAction extends ExpandableAction {
         /*for (CoordinatesPair cp : PathFinder.getFoundPath()){
             System.out.println(node.getCellAtCoords(cp).getEntity());
         }*/
-       // System.out.println(fromHere);
-       // System.out.println(toThere);
+        // System.out.println(fromHere);
+        // System.out.println(toThere);
         System.err.println( PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, false));
 
-       // System.out.println("never getting here");
+        // System.out.println("never getting here");
 
         // List of boxes on path from start to  finish
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Artur will implement this<<<<<<<
         //ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node.getLevel(), start, finish,
-         //       true, true, true);
+        //       true, true, true);
         ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node, start, finish,
                 true, false, false, exceptionBoxes); // ingoring other agents on the path for now
 

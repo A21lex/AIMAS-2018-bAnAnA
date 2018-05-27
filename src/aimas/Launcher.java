@@ -3,9 +3,16 @@ package aimas;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.ExpandableAction;
+import aimas.actions.expandable.AchieveGoalAction;
+import aimas.actions.expandable.RemoveBoxAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.*;
+import aimas.board.Cell;
+import aimas.board.CoordinatesPair;
 import aimas.board.entities.Agent;
+import aimas.board.entities.Box;
+import aimas.board.entities.Entity;
+import aimas.competition.InputLevelReader;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,40 +28,27 @@ import java.util.*;
  */
 public class Launcher {
 
+    private static  Map<CoordinatesPair, Double> cellWeights;
     private static boolean isMA = false;
     public static void main(String[] args) {
+        ArrayList<ArrayList<Cell>> level = new ArrayList<>();
+        try {
+            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SABeTrayEd.lvl");
+        }
+        catch (IOException ex){
+            // Nowhere to write to or nothing to read (latter unlikely)
+        }
+        System.err.println(LevelReader.getAgentCellCoords().get(0)); // just print first agent's position
+        System.err.println("Level read successfully");
+
+        // Try to solve level
         Node node = new Node(null);
-        try{
-            node.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP18/SAbongu.lvl"));
-//            node.setLevel(LevelReader.getLevel("res/levels/test_levels/MAmultiagentSort.lvl"));
-        }
-        catch (IOException e){
-            System.out.println("########");
-            System.out.println("Probably incorrect path");
-        }
-        // The lines below are mandatory as nodes are compared using box/agent coords!
+        node.setLevel(level);
         node.setBoxCellCoords(Node.copyList(LevelReader.getBoxCellCoords()));
         node.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
         node.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
         node.setTunnelCellCoords(Node.copyList(LevelReader.getTunnelCellCoords()));
         node.setSpaceCells(Node.copyList(LevelReader.getSpaceCellCoords()));
-
-
-//        /**
-//         * Simple solver by Alex; works for simple SA (no clearing) and MA (no clearings, only simple conflicts)
-//          */
-//        List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
-//        int countAllNoopTimes = 0;
-//        for (String string : Solution){
-//            System.out.println(string);
-//            if (string.startsWith("[NoOp,NoOp,NoOp")){
-//                countAllNoopTimes++;
-//            }
-//            if (countAllNoopTimes>10){
-//                System.err.println("Got stuck, 10 times 3 agents did NoOp");
-//                break;
-//            }
-//        }
 
         if (node.getAgents().size()>1){
             isMA = true;
@@ -71,20 +65,20 @@ public class Launcher {
             parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
             BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
             SolveLevelAction solveLevel = new SolveLevelAction(node);
-            Agent agent = world.getState().getAgents().get(0); // take the only agent
+            Agent agent = world.getState().getAgents().get(0); // any for now
             ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
             for (Command command : Solution){
                 System.out.println(command.toString());
             }
-//            try {
-//                Thread.sleep(300); // not to interrupt printing
-//            }
-//            catch (InterruptedException ex){
-//                ex.printStackTrace();
-//            }
-            //System.err.println("Solution length: " + Solution.size());
+            try{
+                Thread.sleep(300);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            System.err.println("Solution length " + Solution.size());
         }
-        // Main out.
+
     }
 
     static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
@@ -104,49 +98,4 @@ public class Launcher {
         }
         return path;
     }
-
-
-    // HTN tree related functions
-    static void buildTree(Action action, Node node){
-        if (action instanceof  ExpandableAction) {
-            ((ExpandableAction) action).decompose(node);
-        }
-        for (Action childAct: action.getChildrenActions()){
-            buildTree(childAct, node);
-        }
-    }
-
-    // pre-order traversal of HTN tree
-    static void printTree(Action action){
-        System.out.println(action.toString());
-        for (Action childAct: action.getChildrenActions()){
-            printTree(childAct);
-        }
-    }
-
-    static Action findLeftMostDesc(Action action){
-        Action tempAction = action;
-        while (!tempAction.getChildrenActions().isEmpty()){
-            tempAction = tempAction.getChildrenActions().get(0);
-        }
-        return tempAction;
-    }
-
-    static Action findNextHTNnode(Action action){ // find successor
-        Action tempChild = action;
-        Action tempParent = tempChild.getParent();
-        /*if (parent.hasMoreChildren(action.getNumberAsChild()))
-            return parent.getChildOfNumber(action.getNumberAsChild()+1);
-        else */
-        Action tempNode;
-        while (!tempParent.hasMoreChildren(tempChild.getNumberAsChild())){
-            if (tempParent.getParent() == null) return action;
-            tempNode = tempParent;
-            tempChild = tempParent;
-            tempParent = tempNode.getParent();
-        }
-        //return findLeftMostDesc(tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1));
-        return tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1);
-    }
-
 }

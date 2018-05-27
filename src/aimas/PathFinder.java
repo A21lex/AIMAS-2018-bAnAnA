@@ -167,10 +167,10 @@ public class PathFinder {
         List<CoordinatesPair> foundPathLoc = getFoundPath();
         //System.out.println("Pray it is not reversed");
         //for (CoordinatesPair cp : foundPathLoc){
-      //      System.out.println(cp);
+        //      System.out.println(cp);
         //}
-       // foundPathLoc.remove(0);
-       // System.out.println("debug " + foundPathLoc.size());
+        // foundPathLoc.remove(0);
+        // System.out.println("debug " + foundPathLoc.size());
         for (CoordinatesPair coordPair : foundPathLoc){
             if (node.getCellAtCoords(coordPair).getEntity() instanceof Box &&
                     !exceptionBoxes.contains(node.getCellAtCoords(coordPair).getEntity())){
@@ -195,7 +195,7 @@ public class PathFinder {
                 if ((cell.getType()== Type.WALL && wObstacles) ||
                         (cell.getType()==Type.SPACE && cell.getEntity() instanceof Box && bObstacles
                                 && !cell.getCoordinates().equals(finishingCoordinatesPair)
-                        && !cell.getCoordinates().equals(startingCoordinatesPair)) ||
+                                && !cell.getCoordinates().equals(startingCoordinatesPair)) ||
                         (cell.getType()== Type.SPACE && cell.getEntity() instanceof Agent && aObstacles
                                 && !(((Agent)cell.getEntity()).getNumber()==0))){ //todo change 0 to agentnumber!!!!!!!!
                     num = 1;

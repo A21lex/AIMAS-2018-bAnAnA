@@ -6,7 +6,10 @@ import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.expandable.SolveLevelAction;
-import aimas.aiutils.*;
+import aimas.aiutils.MASolver;
+import aimas.aiutils.BdiHtnFsmSolver;
+import aimas.aiutils.BestFirstSearch;
+import aimas.aiutils.World;
 import aimas.board.Cell;
 import aimas.board.entities.Agent;
 
@@ -71,6 +74,9 @@ public class Client {
         if (isMA){
             List<String> Solution = MASolver.getSolutionForLevel(node);
             for (String string : Solution){
+                System.err.println(string);
+            }
+            for (String string : Solution){
                 System.out.println(string);
             }
         }
@@ -80,30 +86,12 @@ public class Client {
             parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
             BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
             SolveLevelAction solveLevel = new SolveLevelAction(node);
-            Agent agent = world.getState().getAgents().get(0); // take the only agent
+            Agent agent = world.getState().getAgents().get(0); // any for now
             ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
             for (Command command : Solution){
                 System.out.println(command.toString());
             }
         }
-        // Using simple solver which works for MA (but not perfect)
-        /*List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
-        for (String string : Solution){
-            System.out.println(string);
-        }*/
-        // Using more advanced solver which works for SA
-        /*World world =  new World(node);
-        MapParser parser = new MapParser(node.getLevel());
-        parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
-        BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
-        SolveLevelAction solveLevel = new SolveLevelAction(node);
-        Agent agent = world.getState().getAgents().get(0); // any for now
-        ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
-        for (Command command : Solution){
-            System.out.println(command.toString());
-        }*/
-
-
     }
 
     static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){

@@ -87,12 +87,30 @@ public class Command {
         this.dir1 = null;
         this.dir2 = null;
     }
-
+    public static Command getOppositeMoveCommand(Command c){
+        if (c.actionCommandType == CommandType.Move){
+            if (c.dir1 == Dir.N){
+                return new Command(Dir.S);
+            }
+            else if (c.dir1 == Dir.S){
+                return new Command(Dir.N);
+            }
+            else if(c.dir1 == Dir.W){
+                return new Command(Dir.E);
+            }
+            else {
+                return new Command(Dir.W);
+            }
+        }
+        else {
+            return new Command(CommandType.NoOp);
+        }
+    }
     @Override
     public String toString() {
         if (this.actionCommandType == CommandType.Move)
             return String.format("[%s(%s)]", this.actionCommandType.toString(), this.dir1.toString());
-        else if(this.actionCommandType == CommandType.Push || this.actionCommandType == CommandType.Pull)
+        else if (this.actionCommandType == CommandType.Push || this.actionCommandType == CommandType.Pull)
             return String.format("[%s(%s,%s)]", this.actionCommandType.toString(), this.dir1.toString(), this.dir2.toString());
         else
             return "[NoOp]";

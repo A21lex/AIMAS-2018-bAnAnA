@@ -85,9 +85,7 @@ public class BdiHtnFsmSolver {
             switch (curState) {
                 case 1: // checkin nature of action
                     System.err.println(achievedGoals);
-                    if (curAction instanceof AchieveGoalAction) {
-                        curAchieveGoalAction = curAction;
-                    }
+                    if (curAction instanceof AchieveGoalAction) curAchieveGoalAction = curAction;
                     if (curAction.isAchieved(curNode)) {
                         curState = 2;
                     }
@@ -145,7 +143,7 @@ public class BdiHtnFsmSolver {
                             System.err.println(act +" "+ act.isAchieved(curNode));
                         }
                         System.err.println(curAction);
-                        //System.err.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
+//                        System.err.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
                         System.err.println("Solution found");
                         finished = true;
 
@@ -346,7 +344,7 @@ public class BdiHtnFsmSolver {
                 }
             }*/
         }
-        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+1.5));
+        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+50));
         return bestParkingCell;
     }
 }
