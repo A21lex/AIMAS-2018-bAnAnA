@@ -33,6 +33,9 @@ public class World {
     }
 
     public boolean isAValidMove(int agentNumber, Command c){
+        if (c.actionCommandType == Command.CommandType.NoOp){
+            return true;
+        }
         // Find the agent in the current node
         int curAgentRow = 0;
         int curAgentCol = 0;
@@ -92,6 +95,9 @@ public class World {
     }
 
     public void makeAMove(int agentNumber, Command c){
+        if (c.actionCommandType == Command.CommandType.NoOp){
+            return;
+        }
         // Find the agent in the current node
         int curAgentRow = 0;
         int curAgentCol = 0;

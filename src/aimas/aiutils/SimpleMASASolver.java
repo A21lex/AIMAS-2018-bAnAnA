@@ -106,7 +106,6 @@ public class SimpleMASASolver {
                 else{
                     //System.err.println("Wrong move detected");
                     agentsActions.get(agent).add(i,new Command(Command.Dir.N)); // shift commands of that agent by one to right
-
                     compositeCommand.append("NoOp");
 
                     compositeCommand.append(",");

@@ -378,6 +378,27 @@ public class Node {
         return false;
     }
 
+    // Check if all goals are satisfied
+    public boolean isSolved(){
+        ArrayList<CoordinatesPair> goalCoords = Node.getGoalCellCoords();
+        ArrayList<Cell> goalCells = new ArrayList<>();
+        for (CoordinatesPair coordinatesPair : goalCoords){
+            goalCells.add(getCellAtCoords(coordinatesPair));
+        }
+        for (Cell cell : goalCells){
+            if (!(cell.getEntity() instanceof Box)){
+                return false;
+            }
+            else{
+                Box box = (Box) cell.getEntity();
+                if (!(Character.toLowerCase(box.getLetter()) == cell.getGoalLetter())){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public ArrayList<Node> extractPlan(){
         ArrayList<Node> plan = new ArrayList<>();
         Node n = this;

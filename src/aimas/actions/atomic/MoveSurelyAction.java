@@ -45,7 +45,7 @@ public class MoveSurelyAction extends AtomicAction {
         int h = manhDist(agentRow, agentCol, finish.getX(), finish.getY());
         if (node.getAction() != null) {
             if (node.getAction().actionCommandType == Command.CommandType.Pull || node.getAction().actionCommandType == Command.CommandType.Push) {
-                h += 25; // punish the agent for moving boxes while moving from one cell to another
+                h += 50; // punish the agent for moving boxes while moving from one cell to another
             }
         }
         return h;

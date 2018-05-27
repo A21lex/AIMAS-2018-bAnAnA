@@ -11,7 +11,7 @@ public class Command {
     };
 
     public static enum CommandType {
-        Move, Push, Pull
+        Move, Push, Pull, NoOp
     };
 
     public static final Command[] EVERY;
@@ -82,11 +82,19 @@ public class Command {
         this.dir2 = d2;
     }
 
+    public Command(CommandType t){
+        this.actionCommandType = t;
+        this.dir1 = null;
+        this.dir2 = null;
+    }
+
     @Override
     public String toString() {
         if (this.actionCommandType == CommandType.Move)
             return String.format("[%s(%s)]", this.actionCommandType.toString(), this.dir1.toString());
-        else
+        else if(this.actionCommandType == CommandType.Push || this.actionCommandType == CommandType.Pull)
             return String.format("[%s(%s,%s)]", this.actionCommandType.toString(), this.dir1.toString(), this.dir2.toString());
+        else
+            return "[NoOp]";
     }
 }

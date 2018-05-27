@@ -55,6 +55,9 @@ public class BdiHtnFsmSolver {
         /*if (parent.hasMoreChildren(action.getNumberAsChild()))
             return parent.getChildOfNumber(action.getNumberAsChild()+1);
         else */
+        if (tempParent == null){
+            return action; // added for MA support, seems to be causing no issues in SA
+        }
         Action tempNode;
         while (!tempParent.hasMoreChildren(tempChild.getNumberAsChild())){
             if (tempParent.getParent() == null) return action;
@@ -83,11 +86,13 @@ public class BdiHtnFsmSolver {
             //  System.out.println(htnroot.getChildOfNumber(i) + " " +
             //    htnroot.getChildOfNumber(i).getNumberAsChild());
             //}
-            System.out.println();
+            //System.out.println();
             switch (curState) {
                 case 1: // checkin nature of action
                     System.err.println(achievedGoals);
-                    if (curAction instanceof AchieveGoalAction) curAchieveGoalAction = curAction;
+                    if (curAction instanceof AchieveGoalAction) {
+                        curAchieveGoalAction = curAction;
+                    }
                     if (curAction.isAchieved(curNode)) {
                         curState = 2;
                     }
@@ -145,7 +150,7 @@ public class BdiHtnFsmSolver {
                             System.err.println(act +" "+ act.isAchieved(curNode));
                         }
                         System.err.println(curAction);
-                        System.err.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
+                        //System.err.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
                         System.err.println("Solution found");
                         finished = true;
 
@@ -231,9 +236,9 @@ public class BdiHtnFsmSolver {
                         }
                     }
 
-                    for (Action act1 : curAchieveGoalAction.getParent().getChildrenActions()){
-                        //System.out.println(act1 + " xxx " + act1.getNumberAsChild());
-                    }
+//                    for (Action act1 : curAchieveGoalAction.getParent().getChildrenActions()){
+//                        //System.out.println(act1 + " xxx " + act1.getNumberAsChild());
+//                    }
 
 
                     if (atomicActionDone) {

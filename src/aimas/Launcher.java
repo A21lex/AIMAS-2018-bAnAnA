@@ -25,8 +25,8 @@ public class Launcher {
     public static void main(String[] args) {
         Node node = new Node(null);
         try{
-            node.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP18/SABeTrayEd.lvl"));
-            //node.setLevel(LevelReader.getLevel("res/levels/test_levels/SAHiveMind.lvl"));
+            node.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP18/MAbAnAnA.lvl"));
+//            node.setLevel(LevelReader.getLevel("res/levels/test_levels/SACrunch.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -60,7 +60,7 @@ public class Launcher {
             isMA = true;
         }
         if (isMA){
-            List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
+            List<String> Solution = MASolver.getSolutionForLevel(node);
             for (String string : Solution){
                 System.out.println(string);
             }

@@ -6,10 +6,7 @@ import aimas.Node;
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
 import aimas.actions.expandable.SolveLevelAction;
-import aimas.aiutils.SimpleMASASolver;
-import aimas.aiutils.BdiHtnFsmSolver;
-import aimas.aiutils.BestFirstSearch;
-import aimas.aiutils.World;
+import aimas.aiutils.*;
 import aimas.board.Cell;
 import aimas.board.entities.Agent;
 
@@ -72,7 +69,7 @@ public class Client {
             isMA = true;
         }
         if (isMA){
-            List<String> Solution = SimpleMASASolver.getSolutionForLevel(node);
+            List<String> Solution = MASolver.getSolutionForLevel(node);
             for (String string : Solution){
                 System.out.println(string);
             }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TaskDistrubitor {
+public class TaskDistributor {
     // Keeps track of which agent is responsible for which tasks
     private static Map<Agent, List<Task>> agentTasks = new HashMap<>();
 
