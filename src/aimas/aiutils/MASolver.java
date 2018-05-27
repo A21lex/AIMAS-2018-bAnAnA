@@ -12,6 +12,7 @@ import aimas.board.entities.Agent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class MASolver {
 
@@ -57,6 +58,23 @@ public class MASolver {
                     command = commands.get(i);
                 }
                 catch (IndexOutOfBoundsException ex){
+//                    command = commands.get(i-1);
+//                    if (command.dir1==Command.Dir.S){
+//
+//                    }
+//                    ArrayList<Command> potentialCommands = new ArrayList<>();
+//                    for (Command c : Command.EVERY){
+//                        if (c.actionCommandType == Command.CommandType.Move){
+//                            potentialCommands.add(c);
+//                        }
+//                    }
+//                    int r = new Random().nextInt(potentialCommands.size());
+//                    command = potentialCommands.get(r);
+//                    while (!(globalWorld.isAValidMove(agentNum, command))){
+//                        potentialCommands.remove(command); // remove invalid command from list
+//                        r = new Random().nextInt(potentialCommands.size());
+//                        command = potentialCommands.get(r);
+//                    }
                     command = new Command(Command.CommandType.NoOp);
                 }
 

@@ -25,8 +25,8 @@ public class Launcher {
     public static void main(String[] args) {
         Node node = new Node(null);
         try{
-            node.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP18/MAbAnAnA.lvl"));
-//            node.setLevel(LevelReader.getLevel("res/levels/test_levels/SACrunch.lvl"));
+            node.setLevel(LevelReader.getLevel("res/levels/competition_levelsSP18/SAbongu.lvl"));
+//            node.setLevel(LevelReader.getLevel("res/levels/test_levels/MAmultiagentSort.lvl"));
         }
         catch (IOException e){
             System.out.println("########");
@@ -76,12 +76,12 @@ public class Launcher {
             for (Command command : Solution){
                 System.out.println(command.toString());
             }
-            try {
-                Thread.sleep(300); // not to interrupt printing
-            }
-            catch (InterruptedException ex){
-                ex.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(300); // not to interrupt printing
+//            }
+//            catch (InterruptedException ex){
+//                ex.printStackTrace();
+//            }
             //System.err.println("Solution length: " + Solution.size());
         }
         // Main out.

@@ -69,7 +69,7 @@ public class BdiHtnFsmSolver {
         return tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1);
     }
 
-    // state machine
+    // state machine (move to separate class)
     public static ArrayList<Command> HTNBDIFSM(Agent agent, Action htnroot, World world) {
         Action curAction = htnroot;
         Node curNode = world.getState();
@@ -82,11 +82,6 @@ public class BdiHtnFsmSolver {
         while(!finished) {
             //if (curAction instanceof RemoveBoxAction) ((RemoveBoxAction)curAction).triggerParkingCellSearch(curNode);
             System.err.println(curState + " " + curAction + "***" + curAction.getParent());
-            //for (int i =0; i<htnroot.getChildrenActions().size(); i++){
-            //  System.out.println(htnroot.getChildOfNumber(i) + " " +
-            //    htnroot.getChildOfNumber(i).getNumberAsChild());
-            //}
-            //System.out.println();
             switch (curState) {
                 case 1: // checkin nature of action
                     System.err.println(achievedGoals);
@@ -227,9 +222,6 @@ public class BdiHtnFsmSolver {
                             }
                             if (!contained) {
                                 curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain,curAchieveGoalAction.getNumberAsChild()+1);
-//                                curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain,
-//                                        curAchieveGoalAction.getParent().getChildrenActions().size()-1);
-// does not work...
                                 iter.remove();
                             }
 
