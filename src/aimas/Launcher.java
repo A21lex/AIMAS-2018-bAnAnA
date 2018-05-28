@@ -33,7 +33,7 @@ public class Launcher {
     public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
-            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SABeTrayEd.lvl");
+            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SACybot.lvl");
         }
         catch (IOException ex){
             // Nowhere to write to or nothing to read (latter unlikely)
@@ -64,7 +64,7 @@ public class Launcher {
             MapParser parser = new MapParser(node.getLevel());
             parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
             BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
-            SolveLevelAction solveLevel = new SolveLevelAction(node);
+            SolveLevelAction solveLevel = new SolveLevelAction(node, BdiHtnFsmSolver.cellWeights);
             Agent agent = world.getState().getAgents().get(0); // any for now
             ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
             for (Command command : Solution){

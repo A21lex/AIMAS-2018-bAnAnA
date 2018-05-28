@@ -15,14 +15,16 @@ import aimas.board.entities.Box;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SolveLevelAction extends ExpandableAction {
     //potentially store boxes and cells to satisfy with these
     Node node;
+    Map<CoordinatesPair, Double> cellWeights;
 
-    public SolveLevelAction(Node node){
+    public SolveLevelAction(Node node, Map<CoordinatesPair, Double> cellWeights){
         this.node = node;
-
+        this.cellWeights = cellWeights;
         ArrayList<ActionType> decomposedTo = new ArrayList<>();
         decomposedTo.add(ActionType.ACHIEVE_GOAL);
         this.canBeDecomposedTo = decomposedTo;
@@ -67,10 +69,16 @@ public class SolveLevelAction extends ExpandableAction {
         for (Agent agent : agentTasks.keySet()){
             // for every agent, create goals corresponding to what he can do
             for (Task task : agentTasks.get(agent)){
-                expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
-                expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+                //expandedActions.add(new AchieveGoalAction(task.getGoal(), task.getBox(), agent, this));
+                //expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
+
+                expandedActions = addPrioritizedGoal(expandedActions, new AchieveGoalAction(task.getGoal(),
+                        task.getBox(), agent, this));
                 i++;
             }
+        }
+        for (int j = 0; j < expandedActions.size(); j++){
+            expandedActions.get(j).setNumberAsChild(j);
         }
         //dbca - test
         /* Here we need to use GoalPrioritizer to make sure goal actions are added in the correct order */
@@ -138,6 +146,21 @@ public class SolveLevelAction extends ExpandableAction {
 
         return expandedActions;
     }
+
+    public List<Action> addPrioritizedGoal(List<Action> expandedActions, AchieveGoalAction action){
+        double curWeight = cellWeights.get(action.goalCell.getCoordinates());
+
+        for (int i = 0; i<expandedActions.size(); i++){
+            AchieveGoalAction curExpAction = (AchieveGoalAction)expandedActions.get(i);
+            if (curWeight < cellWeights.get(curExpAction.goalCell.getCoordinates())) {
+                expandedActions.add(i,action);
+                return expandedActions;
+            }
+        }
+        expandedActions.add(action);
+        return expandedActions;
+    }
+
     @Override
     public String toString() {
         return "SolveLevelAction: solving level";

@@ -17,7 +17,7 @@ public class SimpleMASASolver {
 
     public static List<String> getSolutionForLevel(Node node){
         World worldAlex = new World(node);
-        ExpandableAction solveLevel = new SolveLevelAction(node);
+        ExpandableAction solveLevel = new SolveLevelAction(node, BdiHtnFsmSolver.cellWeights);
         List<Action> actions = solveLevel.decompose(node);
         List<Action> actionsToPerform = new ArrayList<>();
         for (Action action : actions){

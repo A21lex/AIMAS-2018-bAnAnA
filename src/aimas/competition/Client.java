@@ -85,7 +85,7 @@ public class Client {
             MapParser parser = new MapParser(node.getLevel());
             parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
             BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
-            SolveLevelAction solveLevel = new SolveLevelAction(node);
+            SolveLevelAction solveLevel = new SolveLevelAction(node, BdiHtnFsmSolver.cellWeights);
             Agent agent = world.getState().getAgents().get(0); // any for now
             ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
             for (Command command : Solution){

@@ -9,10 +9,7 @@ import aimas.actions.expandable.AchieveGoalAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.board.entities.Agent;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MASolver {
 
@@ -21,7 +18,7 @@ public class MASolver {
         MapParser parser = new MapParser(node.getLevel());
         parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
         BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
-        SolveLevelAction solveLevel = new SolveLevelAction(node);
+        SolveLevelAction solveLevel = new SolveLevelAction(node, BdiHtnFsmSolver.cellWeights);
 
         List<List<Command>> GlobalSolution = new ArrayList<>();
         List<Agent> orderedAgents = world.getState().getAgents();
@@ -53,7 +50,7 @@ public class MASolver {
             compositeCommand.append("[");
             int agentNum = 0;
             for (List<Command> commands : GlobalSolution){
-                Command command;
+                Command command; // iterate over commands of every agent.
                 try {
                     command = commands.get(i);
                 }
@@ -91,7 +88,8 @@ public class MASolver {
                     command = new Command(Command.CommandType.NoOp); // do noop this time
                     commands.add(i, command); // shift by 1 correspondingly
                     // Replan !
-                    SolveLevelAction resolveLevel = new SolveLevelAction(globalWorld.getState());
+                    SolveLevelAction resolveLevel = new SolveLevelAction(globalWorld.getState(),
+                            BdiHtnFsmSolver.cellWeights);
                     List<Command> newCommands = getSolutionForAgent(orderedAgents.get(agentNum), resolveLevel, globalWorld);
                     if (counterOfConflicts>10){
                         break;

@@ -344,7 +344,8 @@ public class BdiHtnFsmSolver {
                 }
             }*/
         }
-        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+50));
+        double p = 50; // punishment value to avoid parking in the same cell again
+        cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+p));
         return bestParkingCell;
     }
 }
