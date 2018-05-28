@@ -1,6 +1,8 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
+import aimas.Launcher;
+import aimas.PathFinder;
 import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -42,7 +44,22 @@ public class MoveSurelyAction extends AtomicAction {
         CoordinatesPair agentCellCoord = agent.getCoordinates(node); // just take the only agent for now
         int agentRow = agentCellCoord.getX();
         int agentCol = agentCellCoord.getY();
-        int h = manhDist(agentRow, agentCol, finish.getX(), finish.getY());
+
+        int h;
+        if (Launcher.HEURISTIC_USED == Launcher.Heuristic.BFS){
+            PathFinder.pathExists(node.getLevel(), agentCellCoord, finish, true, false,
+                    false);
+            h = PathFinder.getFoundPath().size();
+        }
+        else if(Launcher.HEURISTIC_USED == Launcher.Heuristic.MANHATTAN){
+            h = manhDist(agentRow, agentCol, finish.getX(), finish.getY());
+        }
+        else{ // Default to BFS if no option specified
+            PathFinder.pathExists(node.getLevel(), agentCellCoord, finish, true, false,
+                    false);
+            h = PathFinder.getFoundPath().size();
+        }
+
         if (node.getAction() != null) {
             if (node.getAction().actionCommandType == Command.CommandType.Pull || node.getAction().actionCommandType == Command.CommandType.Push) {
                 h += 25; // punish the agent for moving boxes while moving from one cell to another

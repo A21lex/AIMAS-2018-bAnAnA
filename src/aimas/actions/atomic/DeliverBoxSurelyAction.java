@@ -1,6 +1,7 @@
 package aimas.actions.atomic;
 
 import aimas.Command;
+import aimas.Launcher;
 import aimas.PathFinder;
 import aimas.actions.Action;
 import aimas.board.CoordinatesPair;
@@ -51,9 +52,25 @@ public class DeliverBoxSurelyAction extends AtomicAction {
             }
             if (node.getAction().actionCommandType == Command.CommandType.Pull) punishmentForPullingInstead += 1; // 0 works for MA level
         }
-        return manhDist(box.getCoordinates(node).getX(), box.getCoordinates(node).getY(),
-                finish.getX(), finish.getY()) + punishmentForMovingOtherBoxes
-                + punishmentForPullingInstead;
+
+        int h;
+        if (Launcher.HEURISTIC_USED == Launcher.Heuristic.BFS){
+            PathFinder.pathExists(node.getLevel(), box.getCoordinates(node), finish, true, false,
+                    false);
+            h = PathFinder.getFoundPath().size();
+        }
+        else if (Launcher.HEURISTIC_USED == Launcher.Heuristic.MANHATTAN){
+            h = manhDist(box.getCoordinates(node).getX(), box.getCoordinates(node).getY(),
+                    finish.getX(), finish.getY());
+        }
+        else{ // Default to BFS if no option specified
+            PathFinder.pathExists(node.getLevel(), box.getCoordinates(node), finish, true, false,
+                    false);
+            h = PathFinder.getFoundPath().size();
+        }
+
+        return h + punishmentForMovingOtherBoxes + punishmentForPullingInstead;
+
     }
 
     @Override

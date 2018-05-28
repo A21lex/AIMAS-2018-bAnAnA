@@ -87,6 +87,7 @@ public class PathFinder {
     public static boolean pathExists(ArrayList<ArrayList<Cell>> level, CoordinatesPair startingCoordinatesPair,
                                      CoordinatesPair finishingCoordinatesPair,
                                      boolean wObstacles, boolean aObstacles, boolean bObstacles){
+        foundPath.clear();
         // convert level to array of 1s and 0s depending on the defined obstacles
         Integer[][] simplifiedLevel = getSimplifiedLevelArray(level,
                 startingCoordinatesPair, finishingCoordinatesPair, wObstacles, aObstacles, bObstacles);

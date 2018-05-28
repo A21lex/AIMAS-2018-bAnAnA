@@ -27,19 +27,27 @@ import java.util.*;
  *
  */
 public class Launcher {
+    // Some options for testing
+    // using Manhattan distance or bfs calculated shorted path length for guiding A*
+    public enum Heuristic{
+        BFS, MANHATTAN
+    }
+    public static final Heuristic HEURISTIC_USED = Heuristic.BFS;
 
     private static  Map<CoordinatesPair, Double> cellWeights;
     private static boolean isMA = false;
     public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
-            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SACybot.lvl");
+            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SAAiAiCap.lvl");
+            //level = LevelReader.getLevel("res/levels/test_levels/SACrunch.lvl");
         }
         catch (IOException ex){
             // Nowhere to write to or nothing to read (latter unlikely)
         }
         System.err.println(LevelReader.getAgentCellCoords().get(0)); // just print first agent's position
         System.err.println("Level read successfully");
+        System.err.println("Heuristic used: " + HEURISTIC_USED.toString());
 
         // Try to solve level
         Node node = new Node(null);

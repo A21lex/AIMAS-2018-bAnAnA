@@ -1,6 +1,7 @@
 package aimas.competition;
 
 import aimas.Command;
+import aimas.Launcher;
 import aimas.MapParser;
 import aimas.Node;
 import aimas.actions.Action;
@@ -58,6 +59,7 @@ public class Client {
         }
         System.err.println(InputLevelReader.getAgentCellCoords().get(0)); // just print first agent's position
         System.err.println("Level read successfully");
+        System.err.println("Heuristic used: " + Launcher.HEURISTIC_USED.toString());
 
         // Try to solve level
         Node node = new Node(null);
