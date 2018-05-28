@@ -39,7 +39,7 @@ public class Launcher {
     public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
-            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SAAiAiCap.lvl");
+            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SACybot.lvl");
             //level = LevelReader.getLevel("res/levels/test_levels/SACrunch.lvl");
         }
         catch (IOException ex){
