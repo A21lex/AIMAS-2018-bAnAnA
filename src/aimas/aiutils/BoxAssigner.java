@@ -55,6 +55,9 @@ public class BoxAssigner {
             CoordinatesPair winnerBoxCoord = winnerBox.getCoordinates(node);
             int winnerApproxDistance = BestFirstSearch.manhDist(winnerBoxCoord.getX(), winnerBoxCoord.getY(),
                     goalCell.getI(), goalCell.getJ());
+//            PathFinder.pathExists(node.getLevel(), winnerBoxCoord, goalCell.getCoordinates(),
+//                    true, false, false);
+//            int winnerApproxDistance = PathFinder.getFoundPath().size();
             for (Box box : relevantBoxes){
                 // find the box closest to the goalcell
                 CoordinatesPair potentialWinnerBoxCoord = box.getCoordinates(node);
@@ -64,6 +67,9 @@ public class BoxAssigner {
                 }
                 int potentialWinnerApproxDistance = BestFirstSearch.manhDist(potentialWinnerBoxCoord.getX(),
                         potentialWinnerBoxCoord.getY(), goalCell.getI(), goalCell.getJ());
+//                PathFinder.pathExists(node.getLevel(),potentialWinnerBoxCoord, goalCell.getCoordinates(),
+//                        true, false, false);
+//                int potentialWinnerApproxDistance = PathFinder.getFoundPath().size();
 
                 if (potentialWinnerApproxDistance < winnerApproxDistance){
                     winnerApproxDistance = potentialWinnerApproxDistance;

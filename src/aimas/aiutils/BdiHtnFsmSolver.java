@@ -80,6 +80,10 @@ public class BdiHtnFsmSolver {
         ArrayList<Command> allCommands = new ArrayList<>();
         ArrayList<AchieveGoalAction> achievedGoals = new ArrayList<>();
         while(!finished) {
+            if (curNode.isSolved()){
+                finished = true;
+                break;
+            }
             //if (curAction instanceof RemoveBoxAction) ((RemoveBoxAction)curAction).triggerParkingCellSearch(curNode);
             System.err.println(curState + " " + curAction + "***" + curAction.getParent());
             switch (curState) {

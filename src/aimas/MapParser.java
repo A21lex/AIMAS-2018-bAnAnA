@@ -1,10 +1,7 @@
 package aimas;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
@@ -130,6 +127,29 @@ public class MapParser{
             }
         }
         return walls;
+    }
+
+    public Set<Set<CoordinatesPair>> findGroupedGoals(ArrayList<CoordinatesPair> goals) {
+        Set<Set<CoordinatesPair>> groupsGoals = new HashSet<>();
+        for (CoordinatesPair goalCoords : goals) {
+            Set<CoordinatesPair> goalsGroup = new HashSet<>();
+            goalsGroup=getMyNeighbourgGoals(goalCoords,goalsGroup,goals);
+            groupsGoals.add(goalsGroup);
+        }
+        return groupsGoals;
+    }
+
+    public Set<CoordinatesPair> getMyNeighbourgGoals(CoordinatesPair goal, Set<CoordinatesPair> goalGroup,
+                                                     ArrayList<CoordinatesPair> goalCells){
+        ArrayList<CoordinatesPair> neighbours = goal.getNeighbouringCoords(goal);
+        for (CoordinatesPair n:neighbours){
+            if (goalCells.contains(n) && !goalGroup.contains(n)){
+                goalGroup.add(n);
+                //recursion
+                getMyNeighbourgGoals(n, goalGroup, goalCells);
+            }
+        }
+        return goalGroup;
     }
 
     /*might be reduntant

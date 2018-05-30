@@ -21,38 +21,6 @@ import java.util.*;
  */
 public class BestFirstSearch {
 
-    public static void main(String[] args){
-        Node start = new Node(null);
-        try {
-            start.setLevel(LevelReader.getLevel("testNode.lvl"));
-        } catch (IOException e) {
-            System.out.println("########");
-            System.out.println("Probably incorrect path");
-        }
-        start.setBoxCellCoords(Node.copyList(LevelReader.getBoxCellCoords()));
-        start.setAgentCellCoords(Node.copyList(LevelReader.getAgentCellCoords()));
-        start.setGoalCellCoords(Node.copyList(LevelReader.getGoalCellCoords()));
-        BestFirstSearch bfs = new BestFirstSearch();
-        int h = bfs.heuristic(start, 'a');
-        double startTime = System.nanoTime();
-        ArrayList<Node> shortestPath = AStar(start, 'a');
-        double timeElapsed = (System.nanoTime() - startTime) / 1000000000.0;
-        //boolean solved = new BestFirstSearch().aStar(start,'a');
-        System.out.println("Printing shortest path");
-        for (int i = shortestPath.size()-1; i >= 0; i--) {
-            if (shortestPath.get(i).getAction() != null) { // if the action is null, this is a start node
-                System.out.println(shortestPath.get(i).getAction());
-            }
-        }
-        System.out.println("the time elapsed: " + timeElapsed);
-       /* for (Node pathNode : shortestPath){
-            if (pathNode.getAction() != null) { // this is start node if action is null
-                System.out.println(pathNode.getAction().toString());
-            }
-        }*/
-        boolean test = true;
-    }
-
     /**
      * A* function. Returns a list containing Nodes in the shortest path order.
      * @param startState Node where we are at the moment
@@ -247,7 +215,7 @@ public class BestFirstSearch {
             //System.out.println("Going here: ");
             //System.out.println(currentNode.getAction()); //<< uncomment this to see steps taken while executing
             //System.out.println(currentNode);
-            System.err.println(Node.nodeCount); // debug
+            //System.err.println(Node.nodeCount); // debug
             if (action.isAchieved(currentNode)){
                 //  System.out.println("satisfied h yeah");
                 System.err.println(action.toString() + " is satisfied.");

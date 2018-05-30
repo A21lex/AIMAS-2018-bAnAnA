@@ -17,13 +17,8 @@ import aimas.competition.InputLevelReader;
 import java.io.IOException;
 import java.util.*;
 
-
 /**
- * Created by aleksandrs on 4/19/18.
- */
-
-/**
- * Run everything.. basically can be used for testing for now.
+ * Run solver on a text file. Can be used for testing.
  *
  */
 public class Launcher {
@@ -34,13 +29,14 @@ public class Launcher {
     }
     public static final Heuristic HEURISTIC_USED = Heuristic.BFS;
 
-    private static  Map<CoordinatesPair, Double> cellWeights;
+    //private static  Map<CoordinatesPair, Double> cellWeights;
     private static boolean isMA = false;
     public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
             level = LevelReader.getLevel("res/levels/competition_levelsSP18/SACybot.lvl");
-            //level = LevelReader.getLevel("res/levels/test_levels/SACrunch.lvl");
+            //level = LevelReader.getLevel("res/levels/test_levels/SAboXboXboX.lvl");
+            //level = LevelReader.getLevel("res/levels/test_levels/test.lvl");
         }
         catch (IOException ex){
             // Nowhere to write to or nothing to read (latter unlikely)
@@ -73,7 +69,7 @@ public class Launcher {
             parser.parseMap(Node.getSpaceCellCoords(), node.getLevel());
             BdiHtnFsmSolver.cellWeights = parser.getCellWeights();
             SolveLevelAction solveLevel = new SolveLevelAction(node, BdiHtnFsmSolver.cellWeights);
-            Agent agent = world.getState().getAgents().get(0); // any for now
+            Agent agent = world.getState().getAgents().get(0);
             ArrayList<Command> Solution = BdiHtnFsmSolver.HTNBDIFSM(agent, solveLevel, world);
             for (Command command : Solution){
                 System.out.println(command.toString());
@@ -93,7 +89,7 @@ public class Launcher {
         List<Node> path = new ArrayList<>();
         Node curNode = node;
         for (Action action : actionsToPerform){
-            AtomicAction atomicAction = (AtomicAction) action; // is there a better way than casting all the time?
+            AtomicAction atomicAction = (AtomicAction) action;
             ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, atomicAction);
             for (int i = tempPath.size() - 1; i >= 0; i--){
                 path.add(0,tempPath.get(i)); // add to start of list
