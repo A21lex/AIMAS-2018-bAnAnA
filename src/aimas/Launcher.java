@@ -2,17 +2,10 @@ package aimas;
 
 import aimas.actions.Action;
 import aimas.actions.AtomicAction;
-import aimas.actions.ExpandableAction;
-import aimas.actions.expandable.AchieveGoalAction;
-import aimas.actions.expandable.RemoveBoxAction;
 import aimas.actions.expandable.SolveLevelAction;
 import aimas.aiutils.*;
 import aimas.board.Cell;
-import aimas.board.CoordinatesPair;
 import aimas.board.entities.Agent;
-import aimas.board.entities.Box;
-import aimas.board.entities.Entity;
-import aimas.competition.InputLevelReader;
 
 import java.io.IOException;
 import java.util.*;
@@ -34,7 +27,7 @@ public class Launcher {
     public static void main(String[] args) {
         ArrayList<ArrayList<Cell>> level = new ArrayList<>();
         try {
-            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SACybot.lvl");
+            level = LevelReader.getLevel("res/levels/competition_levelsSP18/SAZEROagent.lvl");
             //level = LevelReader.getLevel("res/levels/test_levels/SAboXboXboX.lvl");
             //level = LevelReader.getLevel("res/levels/test_levels/test.lvl");
         }
@@ -85,21 +78,4 @@ public class Launcher {
 
     }
 
-    static List<Node> getTotalPath(List<Action> actionsToPerform, Node node){
-        List<Node> path = new ArrayList<>();
-        Node curNode = node;
-        for (Action action : actionsToPerform){
-            AtomicAction atomicAction = (AtomicAction) action;
-            ArrayList<Node> tempPath = BestFirstSearch.AStar(curNode, atomicAction);
-            for (int i = tempPath.size() - 1; i >= 0; i--){
-                path.add(0,tempPath.get(i)); // add to start of list
-            }
-            tempPath.clear();
-            if (path.size() > 0) { // if path.size() == 0, it means action had already been completed, so do nothing
-                curNode = path.get(0); // we are at last element of the totpath
-            }
-            System.out.println(curNode);
-        }
-        return path;
-    }
 }

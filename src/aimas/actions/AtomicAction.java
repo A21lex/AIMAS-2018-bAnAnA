@@ -4,7 +4,7 @@ import aimas.Node;
 import aimas.board.entities.Agent;
 
 /**
- * Action - atomic, same as non-atomic plus heuristic function (to guide A*)
+ * Action - atomic, has to implement a heuristic function (to guide A*)
  */
 public abstract class AtomicAction extends Action{
 

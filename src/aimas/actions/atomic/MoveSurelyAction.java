@@ -15,7 +15,7 @@ import aimas.board.entities.Entity;
 import java.util.ArrayList;
 
 /**
- * Atomic action MOVE. This is called when path betweeen agent and "finish" is clear.
+ * Atomic action MOVE. This is called when path between agent and "finish" is clear.
  */
 public class MoveSurelyAction extends AtomicAction {
 
@@ -24,7 +24,6 @@ public class MoveSurelyAction extends AtomicAction {
     }
 
     CoordinatesPair finish;
-    //Entity potentialEntity; // if we "move surely" to a box, this helps to move to one cell earlier than the box itself
 
     public MoveSurelyAction(CoordinatesPair finish, Agent agent, Action parent){
         this.finish = finish;
@@ -33,15 +32,11 @@ public class MoveSurelyAction extends AtomicAction {
         this.actionType = ActionType.MOVE_SURELY;
         this.childrenActions = new ArrayList<>();
         this.numberOfAttempts = 0;
-
-//        if (node.getCellAtCoords(finish).getEntity() != null) {
-//            this.potentialEntity = node.getCellAtCoords(finish).getEntity();
-//        }
     }
 
     @Override
     public int heuristic(Node node) {
-        CoordinatesPair agentCellCoord = agent.getCoordinates(node); // just take the only agent for now
+        CoordinatesPair agentCellCoord = agent.getCoordinates(node);
         int agentRow = agentCellCoord.getX();
         int agentCol = agentCellCoord.getY();
 
@@ -61,7 +56,8 @@ public class MoveSurelyAction extends AtomicAction {
         }
 
         if (node.getAction() != null) {
-            if (node.getAction().actionCommandType == Command.CommandType.Pull || node.getAction().actionCommandType == Command.CommandType.Push) {
+            if (node.getAction().actionCommandType == Command.CommandType.Pull ||
+                    node.getAction().actionCommandType == Command.CommandType.Push) {
                 h += 25; // punish the agent for moving boxes while moving from one cell to another
             }
         }
@@ -70,15 +66,14 @@ public class MoveSurelyAction extends AtomicAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        CoordinatesPair agentCellCoord = agent.getCoordinates(node); // just take the only agent for now
-        // CoordinatesPair agentCellCoord = agent.getCoordinates(node);
+        CoordinatesPair agentCellCoord = agent.getCoordinates(node);
         int agentRow = agentCellCoord.getX();
         int agentCol = agentCellCoord.getY();
         Entity potentialEntity = null;
         if (node.getCellAtCoords(finish).getEntity() != null) {
             potentialEntity = node.getCellAtCoords(finish).getEntity();
         }
-        if (potentialEntity instanceof Box) { // instanceof checks for null by default, no need for explicit check
+        if (potentialEntity instanceof Box) {
             // if we need to "move surely" to a box, we stop when we are close to it, not when we are at its cell
             return manhDist(agentRow, agentCol, finish.getX(), finish.getY()) == 1;
         }

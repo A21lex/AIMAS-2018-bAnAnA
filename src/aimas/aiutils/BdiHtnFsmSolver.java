@@ -17,7 +17,7 @@ import aimas.board.entities.Entity;
 import java.util.*;
 
 /**
- * Artur's state machine in a separate class
+ * State machine for building HTN tree and selecting intentions (actions) to work with
  */
 public class BdiHtnFsmSolver {
 
@@ -52,9 +52,6 @@ public class BdiHtnFsmSolver {
     static Action findNextHTNnode(Action action){ // find successor
         Action tempChild = action;
         Action tempParent = tempChild.getParent();
-        /*if (parent.hasMoreChildren(action.getNumberAsChild()))
-            return parent.getChildOfNumber(action.getNumberAsChild()+1);
-        else */
         if (tempParent == null){
             return action; // added for MA support, seems to be causing no issues in SA
         }
@@ -65,11 +62,10 @@ public class BdiHtnFsmSolver {
             tempChild = tempParent;
             tempParent = tempNode.getParent();
         }
-        //return findLeftMostDesc(tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1));
         return tempParent.getChildOfNumber(tempChild.getNumberAsChild() + 1);
     }
 
-    // state machine (move to separate class)
+    // state machine
     public static ArrayList<Command> HTNBDIFSM(Agent agent, Action htnroot, World world) {
         Action curAction = htnroot;
         Node curNode = world.getState();
@@ -84,39 +80,15 @@ public class BdiHtnFsmSolver {
                 finished = true;
                 break;
             }
-            //if (curAction instanceof RemoveBoxAction) ((RemoveBoxAction)curAction).triggerParkingCellSearch(curNode);
             System.err.println(curState + " " + curAction + "***" + curAction.getParent());
             switch (curState) {
-                case 1: // checkin nature of action
+                case 1: // checking nature of action
                     System.err.println(achievedGoals);
                     if (curAction instanceof AchieveGoalAction) curAchieveGoalAction = curAction;
                     if (curAction.isAchieved(curNode)) {
                         curState = 2;
                     }
                     else if (curAction instanceof ExpandableAction) {
-                        /*if (curAction instanceof RemoveBoxAction){
-                            Box box = ((RemoveBoxAction)curAction).box;
-                            Cell cell = curNode.getCellAtCoords(box.getCoordinates(curNode));
-                            if (cell.isGoal()
-                                && cell.getGoalLetter() == Character.toLowerCase(box.getLetter())){
-                                AchieveGoalAction achieveAgain = new AchieveGoalAction(cell, box, curAchieveGoalAction.getParent());
-                                curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain, curAchieveGoalAction.getNumberAsChild() + 1);
-                                curAchieveGoalAction.getParent().getChildrenActions().
-                                        get(curAchieveGoalAction.getNumberAsChild()+1).
-                                        setNumberAsChild(curAchieveGoalAction.getNumberAsChild()+1);
-                                for (int i = curAchieveGoalAction.getNumberAsChild()+2;
-                                     i<curAchieveGoalAction.getParent().getChildrenActions().size(); i++){
-                                    curAchieveGoalAction.getParent().getChildOfNumber(i).
-                                           // setNumberAsChild(curAchieveGoalAction.getParent().getChildOfNumber(i).getNumberAsChild()+1);
-                                           setNumberAsChild(i);
-                                }
-                                System.out.println("whole tree");
-                               // printTree(curAchieveGoalAction.getParent());
-                                for (Action act : curAchieveGoalAction.getParent().getChildrenActions()){
-                                    System.out.println(act + " *** " + act.getNumberAsChild());
-                                }
-                            }
-                        } */
                         curState = 3;
                     }
                     else if (curAction instanceof AtomicAction) {
@@ -132,22 +104,10 @@ public class BdiHtnFsmSolver {
                     }
 
                     if (successor.equals(curAction)) { // no more successors, finished
-                       /* System.out.println("cur action before finish " + curAction);
-                        System.out.println(curNode);
-                        System.out.println(curAction.isAchieved(curNode));
-
-                        ArrayList<ArrayList<Cell>> level = curNode.getLevel();
-                        System.out.println(curNode.getCellAtCoords(new CoordinatesPair(11,8)));
-                        for(int i=0; i<level.size(); i++){
-                            for (int j=0; j<level.get(i).size(); j++) {
-                                //System.out.println(level.get(i).get(j).getCoordinates()+" "+level.get(i).get(j).getEntity());
-                            }
-                        } */
                         for (Action act : achievedGoals){
                             System.err.println(act +" "+ act.isAchieved(curNode));
                         }
                         System.err.println(curAction);
-//                        System.err.println(curAction.getParent().hasMoreChildren(curAction.getNumberAsChild()));
                         System.err.println("Solution found");
                         finished = true;
 
@@ -181,19 +141,18 @@ public class BdiHtnFsmSolver {
                     System.err.println("state 4 " + curAction);
                     ArrayList<Node> pathOfNodes = BestFirstSearch.AStar(curNode,(AtomicAction) curAction);
                     Collections.reverse(pathOfNodes);
-                    //ArrayList<Command> commands = new ArrayList<>();
                     boolean atomicActionDone = false;
                     System.err.println(curAction);
                     //System.err.println("size: " + pathOfNodes.size());
                     for (Node pathNode : pathOfNodes){
-                        // System.out.println(pathNode);
+                        // System.err.println(pathNode);
                         if(world.isAValidMove(agent.getNumber(),pathNode.getAction())){
                             allCommands.add(pathNode.getAction());
                             world.makeAMove(agent.getNumber(), pathNode.getAction());
-                            // System.out.println(world.getState());
+                            // System.err.println(world.getState());
                         }
                         else {
-                            //  System.out.println("problem: " +pathNode.getAction().toString());
+                            //  System.err.println("problem: " +pathNode.getAction().toString());
                             curState = 4;
                             break;
                         }
@@ -201,14 +160,6 @@ public class BdiHtnFsmSolver {
                         System.err.println(curNode);
                         atomicActionDone = true;
                     }
-
-                    /*for (AchieveGoalAction act : achievedGoals){
-                        if (!act.isAchieved(curNode)){
-                            AchieveGoalAction achieveAgain = new AchieveGoalAction(act.goalCell, act.box, act.getParent());
-                            curAchieveGoalAction.getParent().setChildOfNumber(achieveAgain,curAchieveGoalAction.getNumberAsChild()+1);
-                            achievedGoals.remove(act);
-                        }
-                    } */
 
                     Iterator<AchieveGoalAction> iter = achievedGoals.iterator();
                     while (iter.hasNext()) {
@@ -230,16 +181,8 @@ public class BdiHtnFsmSolver {
                         }
                     }
 
-//                    for (Action act1 : curAchieveGoalAction.getParent().getChildrenActions()){
-//                        //System.out.println(act1 + " xxx " + act1.getNumberAsChild());
-//                    }
-
-
                     if (atomicActionDone) {
-
                         if (curAchieveGoalAction.isAchieved(world.getState())){
-                            // achievedGoals.add((AchieveGoalAction)curAchieveGoalAction);
-                            // curAction = findNextHTNnode(curAchieveGoalAction);
                             curState = 1;
                         }
                         else {
@@ -282,7 +225,7 @@ public class BdiHtnFsmSolver {
         }
         return allCommands;
     }
-    // this is also in Launcher but I think should be here? Or idk
+
     public static CoordinatesPair findParkingCell(Node node, CoordinatesPair initialCell, RemoveBoxAction remBoxAct,
                                                   ArrayList<CoordinatesPair> blackList){
 
@@ -293,17 +236,14 @@ public class BdiHtnFsmSolver {
         for (int i=0; i<level.size(); i++){
             for (int j = 0; j<level.get(i).size();j++){
                 Entity prevEntity =  node.getCellAtCoords(level.get(i).get(j).getCoordinates()).getEntity();
-                //node.getCellAtCoords(level.get(i).get(j).getCoordinates()).setEntity(remBoxAct.box);
-                // node.getCellAtCoords(initialCell).setEntity(prevEntity);
-                if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(), true, false, true) &&
-                        !(level.get(i).get(j).getEntity() instanceof Box) /*&&
-                        remBoxAct.isAchieved(node)*/
+
+                if (PathFinder.pathExists(level,initialCell,level.get(i).get(j).getCoordinates(),
+                        true, false, true) &&
+                        !(level.get(i).get(j).getEntity() instanceof Box)
                         && !blackList.contains(level.get(i).get(j).getCoordinates())) {
                     subsetOfCellWeights.put(level.get(i).get(j).getCoordinates(),
                             cellWeights.get(level.get(i).get(j).getCoordinates()));
                 }
-                // node.getCellAtCoords(level.get(i).get(j).getCoordinates()).setEntity(prevEntity);
-                //node.getCellAtCoords(initialCell).setEntity(remBoxAct.box);
             }
         }
         if (!subsetOfCellWeights.isEmpty()) {
@@ -318,7 +258,6 @@ public class BdiHtnFsmSolver {
     public static CoordinatesPair findBestAmongReachable(Map<CoordinatesPair, Double> subsetOfCellWeights, Node node,
                                                          CoordinatesPair initialCell, Agent agent){
         double min = 999.0;
-        // CoordinatesPair bestParkingCell = new CoordinatesPair(-5,-5);
         CoordinatesPair bestParkingCell = initialCell;
 
         System.err.println("how come");
@@ -341,12 +280,6 @@ public class BdiHtnFsmSolver {
                     bestParkingCell = entry.getKey();
                 }
             }
-            /*else if(curWeight.doubleValue() == min){
-                if (Action.manhDist(initialCell.getX(), initialCell.getY(),entry.getKey().getX(),entry.getKey().getY())<
-                        Action.manhDist(initialCell.getX(), initialCell.getY(),bestParkingCell.getX(),bestParkingCell.getY())){
-                        bestParkingCell = entry.getKey();
-                }
-            }*/
         }
         double p = 50; // punishment value to avoid parking in the same cell again
         cellWeights.put(bestParkingCell, (Double)(cellWeights.get(bestParkingCell).doubleValue()+p));

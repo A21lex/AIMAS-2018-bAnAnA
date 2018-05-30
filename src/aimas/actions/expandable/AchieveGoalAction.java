@@ -43,22 +43,12 @@ public class AchieveGoalAction extends ExpandableAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        /*if (goalCell.getEntity() == null){
-            return false;
-        }
-        if (goalCell.getEntity() instanceof Box) {
-            System.out.println(goalCell);
-            Box boxOnCell = (Box) goalCell.getEntity();
-            return goalCell.getGoalLetter() == Character.toLowerCase(boxOnCell.getLetter());
-        }
-        return false;
-        */
         Cell newGoalCell = node.getCellAtCoords(goalCell.getCoordinates());
         if (newGoalCell.getEntity() == null){
             return false;
         }
         if (newGoalCell.getEntity() instanceof Box) {
-            //System.out.println(goalCell);
+            //System.err.println(goalCell);
             Box boxOnCell = (Box) newGoalCell.getEntity();
             return newGoalCell.getGoalLetter() == Character.toLowerCase(boxOnCell.getLetter());
         }
@@ -73,7 +63,7 @@ public class AchieveGoalAction extends ExpandableAction {
 
         //Clear box - clear goal - gotoBox - deliverBox
         //CoordinatesPair agentCellCoord = agent.getCoordinates(node);
-        CoordinatesPair agentCellCoord = agent.getCoordinates(node); // just take the only agent for now
+        CoordinatesPair agentCellCoord = agent.getCoordinates(node);
         Action clearBox = new ClearPathAction(agentCellCoord ,box.getCoordinates(node), agent, node, this);
         Action clearGoal = new ClearPathAction(box.getCoordinates(node), goalCell.getCoordinates(), agent, node, this);
         Action gotobox = new MoveSurelyAction(box.getCoordinates(node), agent, this);

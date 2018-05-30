@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Box extends Entity{
-    //public static final Box NO_BOX = new Box(Color.BLUE, '0');
 
     private char letter;
     private int id; // every box has a unique ID - helps distinguish between boxes of same color/letter!

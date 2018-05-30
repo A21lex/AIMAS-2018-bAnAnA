@@ -1,6 +1,5 @@
 package aimas;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+
 import java.util.*;
 
 import aimas.board.Cell;
@@ -8,11 +7,8 @@ import aimas.board.CoordinatesPair;
 import aimas.board.Type;
 import aimas.board.entities.*;
 import edu.uci.ics.jung.algorithms.importance.BetweennessCentrality;
-import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
-
-import static oracle.jrockit.jfr.events.Bits.doubleValue;
 
 
 public class MapParser{

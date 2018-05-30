@@ -16,7 +16,7 @@ public class BoxAssigner {
     /**
      * Decide which goal to satisfy with which box
      * @param node State of the level for which calculation takes place
-     * @return
+     * @return Pairs of goals and boxes
      */
     public static HashMap<Cell, Box> assignBoxesToGoals(Node node) {
         HashMap<Cell, Box> goalsBoxes = new HashMap<>();
@@ -79,10 +79,7 @@ public class BoxAssigner {
             }
             goalsBoxes.put(goalCell, winnerBox);
             allBoxes.remove(winnerBox); // this box is now occupied, remove from box list
-
         }
-
         return goalsBoxes;
     }
-
 }

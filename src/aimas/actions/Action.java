@@ -2,7 +2,6 @@ package aimas.actions;
 
 import aimas.Node;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +16,6 @@ public abstract class Action {
     public ActionType getType(){
         return actionType;
     }
-    //public abstract int heuristic(Node node);
     public abstract boolean isAchieved(Node node);
     public int numberOfAttempts;
 

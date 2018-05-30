@@ -12,7 +12,6 @@ import aimas.board.entities.Box;
 import aimas.Node;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Atomic action DELIVER_BOX_SURELY. This is called when path betweeen box and "finish" is clear.

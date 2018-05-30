@@ -1,17 +1,13 @@
 package aimas.competition;
 
-import aimas.LevelReader;
-import aimas.PathFinder;
 import aimas.board.Cell;
 import aimas.board.CoordinatesPair;
 import aimas.board.Type;
 import aimas.board.entities.Agent;
 import aimas.board.entities.Box;
 import aimas.board.entities.Color;
-import aimas.board.entities.Entity;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,7 +114,6 @@ public class InputLevelReader {
                 }
 
                 //one wall on side and one wall in diagonal
-                //TODO make hasmap to avoid duplicates; disegard corners
                 if ((level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)
                         && level.get(spc.getX() + 1).get(spc.getY() + 1).getType().equals(Type.WALL)) ||
                         (level.get(spc.getX()).get(spc.getY() - 1).getType().equals(Type.WALL)

@@ -1,6 +1,4 @@
-package aimas.board.entities; /**
- * Created by aleksandrs on 4/10/18.
- */
+package aimas.board.entities;
 
 /**
  * This class is a superclass for Agent and Box which are both game entities able to  move between cells
@@ -10,12 +8,6 @@ public class Entity {
     protected Color color;
 
 
-    //    Cell getCurrentCell(){
-//        return this.currentCell;
-//    }
-//    void setCurrentCell(Cell currentCell){
-//        this.currentCell = currentCell;
-//    }
     public Color getColor(){
         return this.color;
     }

@@ -65,39 +65,13 @@ public class ClearPathAction extends ExpandableAction {
 
     @Override
     public boolean isAchieved(Node node) {
-      /*  CoordinatesPair fromHere = start;
-        CoordinatesPair toThere = finish;
-
-        if (first != null){
-            if (first instanceof Box){
-                Box box = (Box) first;
-                fromHere = box.getCoordinates(node);
-            }
-            else if (first instanceof Agent){
-                Agent agent = (Agent) first;
-                fromHere = agent.getCoordinates(node);
-            }
-        }
-        if (second != null){
-            if (second instanceof Box){
-                Box box = (Box) second;
-                toThere = box.getCoordinates(node);
-            }
-            else if (second instanceof Agent){
-                Agent agent = (Agent) second;
-                toThere = agent.getCoordinates(node);
-            }
-        }  */
 
         fromHere = updateCoordinates(first, node, start);
-        toThere = updateCoordinates(second,node,finish);
-        //System.out.println("* "+fromHere);
-        // System.out.println("* "+toThere);
+        toThere = updateCoordinates(second, node, finish);
 
-        // If path exists from current position of entity to current position of another entity
+        // If a box-free path exists from current position of entity to current position of another entity
         // or cell in case there are no entities, return true
-        // return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
-        //        true, true, true);
+
         return PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, true);
     }
@@ -122,36 +96,20 @@ public class ClearPathAction extends ExpandableAction {
             //System.err.println("ClearPathAction is already achieved for " + start + " to " + finish);
             return new ArrayList<>(); // if is already achieved, zero actions are required..
         }
-        //System.out.println("not achieved node");
-        /*for (CoordinatesPair cp : PathFinder.getFoundPath()){
-            System.out.println(node.getCellAtCoords(cp).getEntity());
-        }*/
-        // System.out.println(fromHere);
-        // System.out.println(toThere);
         System.err.println( PathFinder.pathExists(node.getLevel(), fromHere, toThere,
                 true, false, false));
 
-        // System.out.println("never getting here");
-
-        // List of boxes on path from start to  finish
-        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Artur will implement this<<<<<<<
-        //ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node.getLevel(), start, finish,
-        //       true, true, true);
         ArrayList<Box> boxes = PathFinder.getBoxesOnPath(node, start, finish,
                 true, false, false, exceptionBoxes); // ingoring other agents on the path for now
 
         ArrayList<Action> expandedActions = new ArrayList<>();
-        int i = 0; // nmber of action as a child of current action
+        int i = 0; // number of action as a child of current action
         for (Box box : boxes){
             CoordinatesPair parkingCell = finish;// Alina's magic function (not here actually)
             expandedActions.add(new RemoveBoxAction(box, start, parkingCell , agent, this));
             expandedActions.get(expandedActions.size()-1).setNumberAsChild(i);
             i++;
         }
-        //System.out.println(boxes.size());
-        // for every box in list of boxed: add remove(box) to expandedActions
-        // will return corresponding actions or empty list if there are no boxes on path (although
-        // in this case this method shouldn't be called at all)
 
         childrenActions = expandedActions;
 

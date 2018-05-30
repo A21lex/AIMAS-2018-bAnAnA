@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Agent extends Entity{
-    //public static final Agent NO_AGENT = new Agent(Color.BLUE, -1);
 
     private int number;
     // commands this agent has to do; to be filled during runtime of the program

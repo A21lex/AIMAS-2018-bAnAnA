@@ -69,7 +69,6 @@ public class Cell {
         return true;
     }
 
-
     // Returns neighboring cells which are results of legal moves
     ArrayList<Cell> getChildren(Integer[][] level){
         int[][] values={{0,1},{0,-1},{1,0},{-1,0}};
@@ -108,10 +107,6 @@ public class Cell {
         }
         if (o instanceof Cell){
             Cell p = (Cell) o;
-//            return  (getEntity() == null ? (p.getEntity() == null) : (getI() == p.getI()) && (getJ() == p.getJ())
-//                    && getType().equals(p.getType()) && getEntity().equals(p.getEntity())
-//                    && getGoalLetter() == p.getGoalLetter());
-
             if (getEntity() == null){
                 if (p.getEntity() == null){
                     return (getI() == p.getI()) && (getJ() == p.getJ())

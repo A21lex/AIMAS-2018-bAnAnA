@@ -1,7 +1,5 @@
 package aimas.actions.expandable;
 
-import aimas.LevelReader;
-import aimas.Launcher;
 import aimas.aiutils.BdiHtnFsmSolver;
 import aimas.board.CoordinatesPair;
 import aimas.Node;
@@ -51,20 +49,11 @@ public class RemoveBoxAction extends ExpandableAction {
 
     @Override
     public boolean isAchieved(Node node) {
-        /**
-         * Artur will implement this
-         */
 
         ((ClearPathAction)parent).fromHere = (
                 (ClearPathAction)parent).updateCoordinates(((ClearPathAction)parent).first, node, start);
         ((ClearPathAction)parent).toThere =
                 ((ClearPathAction)parent).updateCoordinates(((ClearPathAction) parent).second, node, finish);
-
-        //System.out.println(box);
-        //System.out.println("fromHere " + ((ClearPathAction)parent).fromHere);
-        //System.out.println("toThere " + ((ClearPathAction)parent).toThere);
-
-
 
         System.err.println(PathFinder.getBoxesOnPath(node, ((ClearPathAction) parent).fromHere, ((ClearPathAction) parent).toThere,
                 true, false, true, ((ClearPathAction) parent).exceptionBoxes).size());
@@ -72,10 +61,6 @@ public class RemoveBoxAction extends ExpandableAction {
         return !PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
                 true, false, false, ((ClearPathAction) parent).exceptionBoxes).contains(box);
 
-        // if ((PathFinder.getBoxesOnPath(node, ((ClearPathAction)parent).fromHere, ((ClearPathAction)parent).toThere,
-        //                true, false, false).contains(box))
-        //         && PathFinder.getFoundPath().get(PathFinder.getFoundPath().size()-1).equals(box)) return true;
-        //return false;
     }
 
     @Override
@@ -87,20 +72,12 @@ public class RemoveBoxAction extends ExpandableAction {
 
         // ClearBox - ClearCell - GotoBox - DeliverBox
 
-       /* Action clearBox = new ClearPathAction(start, box.getCoordinates(node), node, this);
-        CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
-
-        List<Action> expandedActions = new ArrayList<>(); */
-
         CoordinatesPair parkingCellCoords = triggerParkingCellSearch(node);
-        //if(!blackList.contains(parkingCellCoords))blackList.add(parkingCellCoords);
         System.err.println("****");
         System.err.println(node);
 
         System.err.println(blackList);
 
-
-        //CoordinatesPair agentCellCoords = node.getAgentCellCoords().get(0); // just take the only agent for now
         CoordinatesPair agentCellCoords = agent.getCoordinates(node);
         Action clearBox = new ClearPathAction(agentCellCoords, box.getCoordinates(node), agent, node, this);
         Action clearCell = new ClearPathAction(box.getCoordinates(node), parkingCellCoords, agent, node, this);

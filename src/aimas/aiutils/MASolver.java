@@ -1,7 +1,6 @@
 package aimas.aiutils;
 
 import aimas.Command;
-import aimas.LevelReader;
 import aimas.MapParser;
 import aimas.Node;
 import aimas.actions.Action;
